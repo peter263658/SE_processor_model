@@ -1,6 +1,6 @@
-# BCCTN_sep_conv_causal_slide_win_quant_256dim — Quantized, 256-dim Embedding
+# BCCTN_sep_conv_causal_slide_win_quant_256dim — FP8 QAT, 256-dim Embedding
 
-Reduced embedding dimension (256 instead of 512) for further memory and compute savings, combined with PTQ.
+Reduced embedding dimension (256 instead of 512) combined with FP8 QAT for further memory and compute savings.
 
 See the [root README](../README.md) for full setup, training, and evaluation instructions.
 
@@ -8,4 +8,5 @@ See the [root README](../README.md) for full setup, training, and evaluation ins
 
 - Based on `BCCTN_sep_conv_causal_slide_win_quant`
 - `model.embed_dim = 256` (halved from the default 512)
-- Explores accuracy vs. model size trade-off
+- `training.fp8_qat = true`, `training.fp8_dtype = "e4m3"`
+- Explores accuracy vs. model size trade-off under QAT
