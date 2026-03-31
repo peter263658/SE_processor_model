@@ -1,0 +1,11 @@
+# Shape: [8]
+# Total elements: 8
+# Data format: text (precision: 6)
+# Data starts below:
+-0.006063 0.039719 -0.054321 0.013348 0.062349 0.004588 0.073949 -0.001478
+
+# Statistics:
+# Min: -0.054321
+# Max: 0.073949
+# Mean: 0.016511
+# Std: 0.038635

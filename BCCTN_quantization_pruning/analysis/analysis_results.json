@@ -1,0 +1,5639 @@
+{
+  "total_layers": 98,
+  "fp8_compatibility": {
+    "e4m3": {
+      "compatible_layers": 57,
+      "total_score": 7450,
+      "avg_score": 76.0204081632653
+    },
+    "e5m2": {
+      "compatible_layers": 83,
+      "total_score": 8370,
+      "avg_score": 85.40816326530613
+    }
+  },
+  "layer_details": {
+    "model.mattn.input_proj.weight": {
+      "stats": {
+        "name": "model.mattn.input_proj.weight",
+        "type": "complex",
+        "shape": [
+          512,
+          512
+        ],
+        "dtype": "torch.complex64",
+        "total_elements": 262144,
+        "non_zero_elements": 262144,
+        "sparsity": 0.0,
+        "abs_mean": 0.10834696143865585,
+        "abs_std": 0.05707700550556183,
+        "abs_min": 9.43464765441604e-05,
+        "abs_max": 0.443539023399353,
+        "percentiles": {
+          "p1": 0.012233655182644725,
+          "p5": 0.027341385185718537,
+          "p25": 0.06548571027815342,
+          "p50": 0.1014307253062725,
+          "p75": 0.14383146911859512,
+          "p95": 0.2128998018801212,
+          "p99": 0.26451836943626406
+        },
+        "dynamic_range_db": 73.44412300437006,
+        "has_outliers": true,
+        "distribution_type": "right_skewed",
+        "phase_stats": {
+          "mean": 0.009283744730055332,
+          "std": 1.8072761297225952,
+          "min": -3.141573429107666,
+          "max": 3.14157772064209
+        }
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u2139\ufe0f  Complex tensor detected. Consider separate quantization for magnitude and phase, or convert to magnitude-only representation.",
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 9.43e-05. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u2139\ufe0f  Complex tensor detected. Consider separate quantization for magnitude and phase, or convert to magnitude-only representation.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.mattn.mattn.MultiheadAttention_re.in_proj_weight": {
+      "stats": {
+        "name": "model.mattn.mattn.MultiheadAttention_re.in_proj_weight",
+        "type": "real",
+        "shape": [
+          1536,
+          512
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 786432,
+        "non_zero_elements": 786432,
+        "sparsity": 0.0,
+        "abs_mean": 0.07883293181657791,
+        "abs_std": 0.06079313904047012,
+        "abs_min": 2.5832804340097937e-07,
+        "abs_max": 0.6980948448181152,
+        "percentiles": {
+          "p1": 0.0012163048156071455,
+          "p5": 0.006122958008199931,
+          "p25": 0.03109932690858841,
+          "p50": 0.06581734865903854,
+          "p75": 0.11315400153398514,
+          "p95": 0.1959555923938751,
+          "p99": 0.2636599135398859
+        },
+        "dynamic_range_db": 128.63485752658045,
+        "mean": -2.2940168491913937e-05,
+        "std": 0.09955120086669922,
+        "min": -0.6980948448181152,
+        "max": 0.6217686533927917,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "False",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 40,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 2.58e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  Dynamic range (128.6 dB) too large for E4M3 (4-bit exponent, 3-bit mantissa) (107.2 dB). Consider block-wise quantization or mixed precision.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 2.58e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.mattn.mattn.MultiheadAttention_re.out_proj.weight": {
+      "stats": {
+        "name": "model.mattn.mattn.MultiheadAttention_re.out_proj.weight",
+        "type": "real",
+        "shape": [
+          512,
+          512
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 262144,
+        "non_zero_elements": 262144,
+        "sparsity": 0.0,
+        "abs_mean": 0.0718010663986206,
+        "abs_std": 0.05597437173128128,
+        "abs_min": 1.0523301341436309e-07,
+        "abs_max": 0.5300501585006714,
+        "percentiles": {
+          "p1": 0.001122496984899044,
+          "p5": 0.0055451264139264825,
+          "p25": 0.027996756602078676,
+          "p50": 0.05971522256731987,
+          "p75": 0.10281334444880486,
+          "p95": 0.1800186239182948,
+          "p99": 0.2448992776870729
+        },
+        "dynamic_range_db": 134.04329923674413,
+        "mean": -0.0002405022387392819,
+        "std": 0.09104101359844208,
+        "min": -0.5300501585006714,
+        "max": 0.4994257688522339,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "False",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 40,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.05e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  Dynamic range (134.0 dB) too large for E4M3 (4-bit exponent, 3-bit mantissa) (107.2 dB). Consider block-wise quantization or mixed precision.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 1.05e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.mattn.mattn.MultiheadAttention_im.in_proj_weight": {
+      "stats": {
+        "name": "model.mattn.mattn.MultiheadAttention_im.in_proj_weight",
+        "type": "real",
+        "shape": [
+          1536,
+          512
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 786432,
+        "non_zero_elements": 786432,
+        "sparsity": 0.0,
+        "abs_mean": 0.0791376382112503,
+        "abs_std": 0.06104835495352745,
+        "abs_min": 1.2763210577304562e-07,
+        "abs_max": 0.6484934091567993,
+        "percentiles": {
+          "p1": 0.0012456194311380388,
+          "p5": 0.006195645406842232,
+          "p25": 0.031218794640153646,
+          "p50": 0.06611393392086029,
+          "p75": 0.11339251510798931,
+          "p95": 0.19680175334215153,
+          "p99": 0.2647100958228111
+        },
+        "dynamic_range_db": 134.1189126389759,
+        "mean": 1.1260350447628298e-06,
+        "std": 0.09994831681251526,
+        "min": -0.6061103343963623,
+        "max": 0.6484934091567993,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "False",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 40,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.28e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  Dynamic range (134.1 dB) too large for E4M3 (4-bit exponent, 3-bit mantissa) (107.2 dB). Consider block-wise quantization or mixed precision.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 1.28e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.mattn.mattn.MultiheadAttention_im.out_proj.weight": {
+      "stats": {
+        "name": "model.mattn.mattn.MultiheadAttention_im.out_proj.weight",
+        "type": "real",
+        "shape": [
+          512,
+          512
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 262144,
+        "non_zero_elements": 262144,
+        "sparsity": 0.0,
+        "abs_mean": 0.07209485024213791,
+        "abs_std": 0.056674469262361526,
+        "abs_min": 1.4595293862385006e-07,
+        "abs_max": 0.5665677189826965,
+        "percentiles": {
+          "p1": 0.0010960328718647358,
+          "p5": 0.0055894901975989345,
+          "p25": 0.028080164920538664,
+          "p50": 0.059703610837459564,
+          "p75": 0.10284360125660896,
+          "p95": 0.18199667409062376,
+          "p99": 0.24913479104638103
+        },
+        "dynamic_range_db": 131.78077965624726,
+        "mean": -9.212744771502912e-06,
+        "std": 0.09170421212911606,
+        "min": -0.47056299448013306,
+        "max": 0.5665677189826965,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "False",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 40,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.46e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  Dynamic range (131.8 dB) too large for E4M3 (4-bit exponent, 3-bit mantissa) (107.2 dB). Consider block-wise quantization or mixed precision.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 1.46e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.mattn.output_proj.weight": {
+      "stats": {
+        "name": "model.mattn.output_proj.weight",
+        "type": "complex",
+        "shape": [
+          512,
+          512
+        ],
+        "dtype": "torch.complex64",
+        "total_elements": 262144,
+        "non_zero_elements": 262144,
+        "sparsity": 0.0,
+        "abs_mean": 0.11380745470523834,
+        "abs_std": 0.06261863559484482,
+        "abs_min": 0.00025814963737502694,
+        "abs_max": 0.6048248410224915,
+        "percentiles": {
+          "p1": 0.012516900664195418,
+          "p5": 0.02836436377838254,
+          "p25": 0.06719804368913174,
+          "p50": 0.10519619286060333,
+          "p75": 0.1502613127231598,
+          "p95": 0.22926454022526735,
+          "p99": 0.29589424520730984
+        },
+        "dynamic_range_db": 67.39516201258614,
+        "has_outliers": true,
+        "distribution_type": "right_skewed",
+        "phase_stats": {
+          "mean": -0.0019186233403161168,
+          "std": 1.8126648664474487,
+          "min": -3.1415462493896484,
+          "max": 3.141549825668335
+        }
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u2139\ufe0f  Complex tensor detected. Consider separate quantization for magnitude and phase, or convert to magnitude-only representation.",
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 2.58e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u2139\ufe0f  Complex tensor detected. Consider separate quantization for magnitude and phase, or convert to magnitude-only representation.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.0.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.0.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          1,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 10,
+        "non_zero_elements": 10,
+        "sparsity": 0.0,
+        "abs_mean": 0.10465037822723389,
+        "abs_std": 0.0846032053232193,
+        "abs_min": 0.015177685767412186,
+        "abs_max": 0.29123374819755554,
+        "percentiles": {
+          "p1": 0.016099924948066474,
+          "p5": 0.01978888167068362,
+          "p25": 0.04351192805916071,
+          "p50": 0.06870153546333313,
+          "p75": 0.15063123777508736,
+          "p95": 0.2506730146706103,
+          "p99": 0.28312160149216653
+        },
+        "dynamic_range_db": 25.660722850383337,
+        "mean": -0.005151122342795134,
+        "std": 0.1344725638628006,
+        "min": -0.29123374819755554,
+        "max": 0.20109878480434418,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.0.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.0.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          1,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 10,
+        "non_zero_elements": 10,
+        "sparsity": 0.0,
+        "abs_mean": 0.16480547189712524,
+        "abs_std": 0.11044077575206757,
+        "abs_min": 0.01480445172637701,
+        "abs_max": 0.35821691155433655,
+        "percentiles": {
+          "p1": 0.016084001129493118,
+          "p5": 0.021202198741957546,
+          "p25": 0.09457546472549438,
+          "p50": 0.13310013338923454,
+          "p75": 0.25504809990525246,
+          "p95": 0.3323729291558265,
+          "p99": 0.35304811507463457
+        },
+        "dynamic_range_db": 27.675075140072664,
+        "mean": 0.010177922435104847,
+        "std": 0.19812726974487305,
+        "min": -0.35821691155433655,
+        "max": 0.3007858395576477,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.9391425599435973,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (93.9%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.0.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.0.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          8,
+          1,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 8,
+        "non_zero_elements": 8,
+        "sparsity": 0.0,
+        "abs_mean": 0.599951446056366,
+        "abs_std": 0.24525363743305206,
+        "abs_min": 0.28930217027664185,
+        "abs_max": 1.0684356689453125,
+        "percentiles": {
+          "p1": 0.2899444788694382,
+          "p5": 0.2925137132406235,
+          "p25": 0.40377525240182877,
+          "p50": 0.6187712848186493,
+          "p75": 0.7029719352722168,
+          "p95": 0.9725667566061018,
+          "p99": 1.0492618864774703
+        },
+        "dynamic_range_db": 11.347933731216362,
+        "mean": 0.12245219945907593,
+        "std": 0.6364719271659851,
+        "min": -0.6724544167518616,
+        "max": 1.0684356689453125,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.20201325282351337,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (20.2%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.40402650564702675,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (40.4%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.0.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.0.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          8,
+          1,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 8,
+        "non_zero_elements": 8,
+        "sparsity": 0.0,
+        "abs_mean": 0.4635321795940399,
+        "abs_std": 0.2544420063495636,
+        "abs_min": 0.055599987506866455,
+        "abs_max": 0.997708797454834,
+        "percentiles": {
+          "p1": 0.0748181614279747,
+          "p5": 0.1516908571124077,
+          "p25": 0.36095599830150604,
+          "p50": 0.42230863869190216,
+          "p75": 0.5050572976469994,
+          "p95": 0.8771745175123213,
+          "p99": 0.9736019414663314
+        },
+        "dynamic_range_db": 25.078582153956578,
+        "mean": -0.029426850378513336,
+        "std": 0.5279554128646851,
+        "min": -0.6533251404762268,
+        "max": 0.997708797454834,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2959920507124518,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (29.6%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.5919841014249037,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (59.2%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.0.1.bn_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.0.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          8
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 8,
+        "non_zero_elements": 8,
+        "sparsity": 0.0,
+        "abs_mean": 0.9118308424949646,
+        "abs_std": 0.07720625400543213,
+        "abs_min": 0.7707706689834595,
+        "abs_max": 0.9890286922454834,
+        "percentiles": {
+          "p1": 0.7733384221792221,
+          "p5": 0.7836094349622726,
+          "p25": 0.8662754446268082,
+          "p50": 0.94682776927948,
+          "p75": 0.9705468565225601,
+          "p95": 0.9861102551221848,
+          "p99": 0.9884450048208236
+        },
+        "dynamic_range_db": 2.165674225972352,
+        "mean": 0.9118308424949646,
+        "std": 0.07720625400543213,
+        "min": 0.7707706689834595,
+        "max": 0.9890286922454834,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.13201978655011662,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (13.2%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.26403957310023324,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (26.4%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.0.1.bn_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.0.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          8
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 8,
+        "non_zero_elements": 8,
+        "sparsity": 0.0,
+        "abs_mean": 0.9578465223312378,
+        "abs_std": 0.07076476514339447,
+        "abs_min": 0.8409250378608704,
+        "abs_max": 1.03903067111969,
+        "percentiles": {
+          "p1": 0.8419787961244584,
+          "p5": 0.8461938291788101,
+          "p25": 0.9092821329832077,
+          "p50": 0.9870826900005341,
+          "p75": 1.012309193611145,
+          "p95": 1.0302053689956665,
+          "p99": 1.0372656106948852
+        },
+        "dynamic_range_db": 1.8374216847137046,
+        "mean": 0.9578465223312378,
+        "std": 0.07076476514339447,
+        "min": 0.8409250378608704,
+        "max": 1.03903067111969,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.1266357938056156,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (12.7%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2532715876112312,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (25.3%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.0.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.0.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.15977926552295685,
+        "abs_std": 0.0,
+        "abs_min": 0.15977926552295685,
+        "abs_max": 0.15977926552295685,
+        "percentiles": {
+          "p1": 0.15977926552295685,
+          "p5": 0.15977926552295685,
+          "p25": 0.15977926552295685,
+          "p50": 0.15977926552295685,
+          "p75": 0.15977926552295685,
+          "p95": 0.15977926552295685,
+          "p99": 0.15977926552295685
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.15977926552295685,
+        "std": 0.0,
+        "min": 0.15977926552295685,
+        "max": 0.15977926552295685,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.782329294047482,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (78.2%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.0.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.0.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.16652777791023254,
+        "abs_std": 0.0,
+        "abs_min": 0.16652777791023254,
+        "abs_max": 0.16652777791023254,
+        "percentiles": {
+          "p1": 0.16652777791023254,
+          "p5": 0.16652777791023254,
+          "p25": 0.16652777791023254,
+          "p50": 0.16652777791023254,
+          "p75": 0.16652777791023254,
+          "p95": 0.16652777791023254,
+          "p99": 0.16652777791023254
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.16652777791023254,
+        "std": 0.0,
+        "min": 0.16652777791023254,
+        "max": 0.16652777791023254,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.750625520670682,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (75.1%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.1.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.1.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          8,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 80,
+        "non_zero_elements": 80,
+        "sparsity": 0.0,
+        "abs_mean": 0.17164266109466553,
+        "abs_std": 0.11788789182901382,
+        "abs_min": 0.0020899951923638582,
+        "abs_max": 0.5226419568061829,
+        "percentiles": {
+          "p1": 0.007526378957554698,
+          "p5": 0.014232412632554769,
+          "p25": 0.07016589492559433,
+          "p50": 0.14830197393894196,
+          "p75": 0.25981058180332184,
+          "p95": 0.36500304043292997,
+          "p99": 0.45382156223058645
+        },
+        "dynamic_range_db": 47.96117968223526,
+        "mean": 0.058537743985652924,
+        "std": 0.19983015954494476,
+        "min": -0.37091848254203796,
+        "max": 0.5226419568061829,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.8428748227684703,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (84.3%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.1.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.1.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          8,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 80,
+        "non_zero_elements": 80,
+        "sparsity": 0.0,
+        "abs_mean": 0.1377909779548645,
+        "abs_std": 0.10884559899568558,
+        "abs_min": 0.004536421038210392,
+        "abs_max": 0.37604591250419617,
+        "percentiles": {
+          "p1": 0.0059180523501709105,
+          "p5": 0.009144522715359926,
+          "p25": 0.0555346105247736,
+          "p50": 0.09953786805272102,
+          "p75": 0.21126461774110794,
+          "p95": 0.34229440838098524,
+          "p99": 0.36939751029014584
+        },
+        "dynamic_range_db": 38.370550330649124,
+        "mean": -0.00679808109998703,
+        "std": 0.17546367645263672,
+        "min": -0.3676302134990692,
+        "max": 0.37604591250419617,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.1.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.1.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          16,
+          8,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 128,
+        "non_zero_elements": 128,
+        "sparsity": 0.0,
+        "abs_mean": 0.2033962905406952,
+        "abs_std": 0.11922871321439743,
+        "abs_min": 0.002446456579491496,
+        "abs_max": 0.482938289642334,
+        "percentiles": {
+          "p1": 0.0025073808897286653,
+          "p5": 0.01379510615952313,
+          "p25": 0.10915061086416245,
+          "p50": 0.2029697224497795,
+          "p75": 0.2924714982509613,
+          "p95": 0.40959065258502947,
+          "p99": 0.4499576646089554
+        },
+        "dynamic_range_db": 45.9070825506231,
+        "mean": -0.01923387311398983,
+        "std": 0.23497998714447021,
+        "min": -0.4518774449825287,
+        "max": 0.482938289642334,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.6158554019352742,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (61.6%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.1.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.1.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          16,
+          8,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 128,
+        "non_zero_elements": 128,
+        "sparsity": 0.0,
+        "abs_mean": 0.19096046686172485,
+        "abs_std": 0.127163827419281,
+        "abs_min": 0.0035846983082592487,
+        "abs_max": 0.5843347907066345,
+        "percentiles": {
+          "p1": 0.007251345925033093,
+          "p5": 0.019867942482233048,
+          "p25": 0.08495363220572472,
+          "p50": 0.18574492633342743,
+          "p75": 0.27403929084539413,
+          "p95": 0.4178287625312805,
+          "p99": 0.5370369336009028
+        },
+        "dynamic_range_db": 44.24418267293967,
+        "mean": -0.019343676045536995,
+        "std": 0.2286096215248108,
+        "min": -0.5843347907066345,
+        "max": 0.4776277244091034,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.6729658918145345,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (67.3%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.1.1.bn_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.1.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16,
+        "non_zero_elements": 16,
+        "sparsity": 0.0,
+        "abs_mean": 0.9213557243347168,
+        "abs_std": 0.14109739661216736,
+        "abs_min": 0.711085855960846,
+        "abs_max": 1.158093810081482,
+        "percentiles": {
+          "p1": 0.714435264468193,
+          "p5": 0.7278328984975815,
+          "p25": 0.8079984039068222,
+          "p50": 0.9230943918228149,
+          "p75": 1.0384771227836609,
+          "p95": 1.119378000497818,
+          "p99": 1.1503506481647492
+        },
+        "dynamic_range_db": 4.236434001445032,
+        "mean": 0.9213557243347168,
+        "std": 0.14109739661216736,
+        "min": 0.711085855960846,
+        "max": 1.158093810081482,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.1354141040258788,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (13.5%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2708282080517576,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (27.1%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.1.1.bn_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.1.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16,
+        "non_zero_elements": 16,
+        "sparsity": 0.0,
+        "abs_mean": 0.8651835322380066,
+        "abs_std": 0.10639327764511108,
+        "abs_min": 0.63033527135849,
+        "abs_max": 1.0430516004562378,
+        "percentiles": {
+          "p1": 0.6365309685468674,
+          "p5": 0.6613137573003769,
+          "p25": 0.8042359203100204,
+          "p50": 0.8862577676773071,
+          "p75": 0.9184583127498627,
+          "p95": 1.0377940237522125,
+          "p99": 1.0420000851154327
+        },
+        "dynamic_range_db": 4.374683687761294,
+        "mean": 0.8651835322380066,
+        "std": 0.10639327764511108,
+        "min": 0.63033527135849,
+        "max": 1.0430516004562378,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.14104248736527114,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (14.1%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2820849747305423,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (28.2%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.1.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.1.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.06736477464437485,
+        "abs_std": 0.0,
+        "abs_min": 0.06736477464437485,
+        "abs_max": 0.06736477464437485,
+        "percentiles": {
+          "p1": 0.06736477464437485,
+          "p5": 0.06736477464437485,
+          "p25": 0.06736477464437485,
+          "p50": 0.06736477464437485,
+          "p75": 0.06736477464437485,
+          "p95": 0.06736477464437485,
+          "p99": 0.06736477464437485
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.06736477464437485,
+        "std": 0.0,
+        "min": 0.06736477464437485,
+        "max": 0.06736477464437485,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.1.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.1.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.16682927310466766,
+        "abs_std": 0.0,
+        "abs_min": 0.16682927310466766,
+        "abs_max": 0.16682927310466766,
+        "percentiles": {
+          "p1": 0.16682927310466766,
+          "p5": 0.16682927310466766,
+          "p25": 0.16682927310466766,
+          "p50": 0.16682927310466766,
+          "p75": 0.16682927310466766,
+          "p95": 0.16682927310466766,
+          "p99": 0.16682927310466766
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.16682927310466766,
+        "std": 0.0,
+        "min": 0.16682927310466766,
+        "max": 0.16682927310466766,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7492689842362124,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (74.9%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.2.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.2.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          16,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 160,
+        "non_zero_elements": 160,
+        "sparsity": 0.0,
+        "abs_mean": 0.17315863072872162,
+        "abs_std": 0.11033309996128082,
+        "abs_min": 0.0019440281903371215,
+        "abs_max": 0.5155525207519531,
+        "percentiles": {
+          "p1": 0.004432422800455242,
+          "p5": 0.017505851108580828,
+          "p25": 0.08553284965455532,
+          "p50": 0.15722741931676865,
+          "p75": 0.2530435025691986,
+          "p95": 0.38059204369783395,
+          "p99": 0.4489924010634422
+        },
+        "dynamic_range_db": 48.4714071261761,
+        "mean": 0.010275101289153099,
+        "std": 0.20506517589092255,
+        "min": -0.3844078779220581,
+        "max": 0.5155525207519531,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7950267233488102,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.94e-03. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (79.5%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.2.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.2.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          16,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 160,
+        "non_zero_elements": 160,
+        "sparsity": 0.0,
+        "abs_mean": 0.1642819344997406,
+        "abs_std": 0.11085677146911621,
+        "abs_min": 0.0002366286498727277,
+        "abs_max": 0.4722588062286377,
+        "percentiles": {
+          "p1": 0.0021473681018687784,
+          "p5": 0.00882748756557703,
+          "p25": 0.06974315829575062,
+          "p50": 0.15419813245534897,
+          "p75": 0.240347757935524,
+          "p95": 0.3688531816005706,
+          "p99": 0.42769839644432067
+        },
+        "dynamic_range_db": 66.00225478375603,
+        "mean": 0.02514292299747467,
+        "std": 0.19658486545085907,
+        "min": -0.38869234919548035,
+        "max": 0.4722588062286377,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.8106453561374756,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 2.37e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (81.1%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.2.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.2.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          32,
+          16,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 512,
+        "non_zero_elements": 512,
+        "sparsity": 0.0,
+        "abs_mean": 0.13612937927246094,
+        "abs_std": 0.09364981949329376,
+        "abs_min": 0.00038417623727582395,
+        "abs_max": 0.44169649481773376,
+        "percentiles": {
+          "p1": 0.001730059906840325,
+          "p5": 0.013310484727844596,
+          "p25": 0.056192606687545776,
+          "p50": 0.12189914286136627,
+          "p75": 0.20507804676890373,
+          "p95": 0.30666298568248745,
+          "p99": 0.36975717395544044
+        },
+        "dynamic_range_db": 61.21186908394176,
+        "mean": 0.003467750968411565,
+        "std": 0.1651952564716339,
+        "min": -0.4171307384967804,
+        "max": 0.44169649481773376,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 3.84e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.2.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.2.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          32,
+          16,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 512,
+        "non_zero_elements": 512,
+        "sparsity": 0.0,
+        "abs_mean": 0.1397252380847931,
+        "abs_std": 0.09568546712398529,
+        "abs_min": 0.00016852677799761295,
+        "abs_max": 0.47669264674186707,
+        "percentiles": {
+          "p1": 0.0025509477755986153,
+          "p5": 0.012935852585360407,
+          "p25": 0.05929108615964651,
+          "p50": 0.12741465121507645,
+          "p75": 0.20147598534822464,
+          "p95": 0.31384547799825663,
+          "p99": 0.399211954772472
+        },
+        "dynamic_range_db": 69.03139069983024,
+        "mean": 0.01739174872636795,
+        "std": 0.1684528887271881,
+        "min": -0.42563459277153015,
+        "max": 0.47669264674186707,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.9810488731707901,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.69e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (98.1%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.2.1.bn_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.2.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 32,
+        "non_zero_elements": 32,
+        "sparsity": 0.0,
+        "abs_mean": 0.9288798570632935,
+        "abs_std": 0.1294485330581665,
+        "abs_min": 0.5939951539039612,
+        "abs_max": 1.1608624458312988,
+        "percentiles": {
+          "p1": 0.6440899693965911,
+          "p5": 0.7690113633871078,
+          "p25": 0.8338137567043304,
+          "p50": 0.9226875305175781,
+          "p75": 1.0429756939411163,
+          "p95": 1.1178904056549073,
+          "p99": 1.148542982339859
+        },
+        "dynamic_range_db": 5.819957201634623,
+        "mean": 0.9288798570632935,
+        "std": 0.1294485330581665,
+        "min": 0.5939951539039612,
+        "max": 1.1608624458312988,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.13547381520359522,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (13.5%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.27094763040719044,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (27.1%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.2.1.bn_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.2.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 32,
+        "non_zero_elements": 32,
+        "sparsity": 0.0,
+        "abs_mean": 0.9421728849411011,
+        "abs_std": 0.11756104230880737,
+        "abs_min": 0.6548740267753601,
+        "abs_max": 1.165886402130127,
+        "percentiles": {
+          "p1": 0.6984569120407105,
+          "p5": 0.7965658992528916,
+          "p25": 0.8869381099939346,
+          "p50": 0.9130620062351227,
+          "p75": 1.0176834762096405,
+          "p95": 1.1615220606327057,
+          "p99": 1.1657481908798217
+        },
+        "dynamic_range_db": 5.009969421242334,
+        "mean": 0.9421728849411011,
+        "std": 0.11756104230880737,
+        "min": 0.6548740267753601,
+        "max": 1.165886402130127,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.1369019838153371,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (13.7%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2738039676306742,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (27.4%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.2.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.2.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.1408461034297943,
+        "abs_std": 0.0,
+        "abs_min": 0.1408461034297943,
+        "abs_max": 0.1408461034297943,
+        "percentiles": {
+          "p1": 0.1408461034297943,
+          "p5": 0.1408461034297943,
+          "p25": 0.1408461034297943,
+          "p50": 0.1408461034297943,
+          "p75": 0.1408461034297943,
+          "p95": 0.1408461034297943,
+          "p99": 0.1408461034297943
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.1408461034297943,
+        "std": 0.0,
+        "min": 0.1408461034297943,
+        "max": 0.1408461034297943,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.8874934908107492,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (88.7%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.2.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.2.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.2237556427717209,
+        "abs_std": 0.0,
+        "abs_min": 0.2237556427717209,
+        "abs_max": 0.2237556427717209,
+        "percentiles": {
+          "p1": 0.2237556427717209,
+          "p5": 0.2237556427717209,
+          "p25": 0.2237556427717209,
+          "p50": 0.2237556427717209,
+          "p75": 0.2237556427717209,
+          "p95": 0.2237556427717209,
+          "p99": 0.2237556427717209
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.2237556427717209,
+        "std": 0.0,
+        "min": 0.2237556427717209,
+        "max": 0.2237556427717209,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.5586451293544673,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (55.9%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.3.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.3.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          32,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 320,
+        "non_zero_elements": 320,
+        "sparsity": 0.0,
+        "abs_mean": 0.17096953094005585,
+        "abs_std": 0.10398919135332108,
+        "abs_min": 4.985485429642722e-05,
+        "abs_max": 0.48521125316619873,
+        "percentiles": {
+          "p1": 0.001592266942607239,
+          "p5": 0.01600121343508363,
+          "p25": 0.0845996793359518,
+          "p50": 0.1694348081946373,
+          "p75": 0.24583516269922256,
+          "p95": 0.34991766512393957,
+          "p99": 0.406921703517437
+        },
+        "dynamic_range_db": 79.76446826512709,
+        "mean": 0.005499390419572592,
+        "std": 0.2000352293252945,
+        "min": -0.4083097279071808,
+        "max": 0.48521125316619873,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7377468734547563,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 4.99e-05. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (73.8%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 4.99e-05. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.3.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.3.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          32,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 320,
+        "non_zero_elements": 320,
+        "sparsity": 0.0,
+        "abs_mean": 0.1616183966398239,
+        "abs_std": 0.10787030309438705,
+        "abs_min": 0.00025143614038825035,
+        "abs_max": 0.4647809863090515,
+        "percentiles": {
+          "p1": 0.0029415083955973385,
+          "p5": 0.014929665299132467,
+          "p25": 0.07085413858294487,
+          "p50": 0.1425808146595955,
+          "p75": 0.23641879856586456,
+          "p95": 0.359426099061966,
+          "p99": 0.4303619867563248
+        },
+        "dynamic_range_db": 65.33641303400393,
+        "mean": 0.018197093158960342,
+        "std": 0.19345639646053314,
+        "min": -0.4647809863090515,
+        "max": 0.45409658551216125,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.8766957903728577,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 2.51e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (87.7%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.3.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.3.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          64,
+          32,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 2048,
+        "non_zero_elements": 2048,
+        "sparsity": 0.0,
+        "abs_mean": 0.10924690216779709,
+        "abs_std": 0.07773260772228241,
+        "abs_min": 0.00010628633026499301,
+        "abs_max": 0.4323889911174774,
+        "percentiles": {
+          "p1": 0.001885400451719761,
+          "p5": 0.00905698291026056,
+          "p25": 0.04547877609729767,
+          "p50": 0.09572181850671768,
+          "p75": 0.1597105748951435,
+          "p95": 0.25570259690284713,
+          "p99": 0.32321499079465865
+        },
+        "dynamic_range_db": 72.1879443108971,
+        "mean": 0.002788450103253126,
+        "std": 0.13405023515224457,
+        "min": -0.36719197034835815,
+        "max": 0.4323889911174774,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.06e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.3.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.3.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          64,
+          32,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 2048,
+        "non_zero_elements": 2048,
+        "sparsity": 0.0,
+        "abs_mean": 0.10580162703990936,
+        "abs_std": 0.07662957906723022,
+        "abs_min": 7.631896733073518e-05,
+        "abs_max": 0.4352850019931793,
+        "percentiles": {
+          "p1": 0.002246886137872934,
+          "p5": 0.009056169539690018,
+          "p25": 0.04239278193563223,
+          "p50": 0.0920785516500473,
+          "p75": 0.1549968495965004,
+          "p95": 0.24925032705068575,
+          "p99": 0.31558342307806014
+        },
+        "dynamic_range_db": 75.12282436449819,
+        "mean": -0.003088577650487423,
+        "std": 0.1306006759405136,
+        "min": -0.4352850019931793,
+        "max": 0.38885027170181274,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 7.63e-05. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.3.1.bn_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.3.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 64,
+        "non_zero_elements": 64,
+        "sparsity": 0.0,
+        "abs_mean": 0.9460182189941406,
+        "abs_std": 0.09713799506425858,
+        "abs_min": 0.7018170356750488,
+        "abs_max": 1.176602840423584,
+        "percentiles": {
+          "p1": 0.7485445070266724,
+          "p5": 0.7938886910676957,
+          "p25": 0.8913300484418869,
+          "p50": 0.9384641945362091,
+          "p75": 0.9924624860286713,
+          "p95": 1.1135320663452148,
+          "p99": 1.1709716284275056
+        },
+        "dynamic_range_db": 4.4881197309971155,
+        "mean": 0.9460182189941406,
+        "std": 0.09713799506425858,
+        "min": 0.7018170356750488,
+        "max": 1.176602840423584,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.13319634433338742,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (13.3%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.26639268866677485,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (26.6%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.3.1.bn_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.3.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 64,
+        "non_zero_elements": 64,
+        "sparsity": 0.0,
+        "abs_mean": 0.9436705112457275,
+        "abs_std": 0.09391826391220093,
+        "abs_min": 0.6762818694114685,
+        "abs_max": 1.209863305091858,
+        "percentiles": {
+          "p1": 0.7267277461290359,
+          "p5": 0.8164765536785126,
+          "p25": 0.8942921310663223,
+          "p50": 0.9357559084892273,
+          "p75": 0.9943723082542419,
+          "p95": 1.1073493421077727,
+          "p99": 1.1900905644893645
+        },
+        "dynamic_range_db": 5.052171207559843,
+        "mean": 0.9436705112457275,
+        "std": 0.09391826391220093,
+        "min": 0.6762818694114685,
+        "max": 1.209863305091858,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.13358184422453906,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (13.4%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2671636884490781,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (26.7%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.3.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.3.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.01560048758983612,
+        "abs_std": 0.0,
+        "abs_min": 0.01560048758983612,
+        "abs_max": 0.01560048758983612,
+        "percentiles": {
+          "p1": 0.01560048758983612,
+          "p5": 0.01560048758983612,
+          "p25": 0.01560048758983612,
+          "p50": 0.01560048758983612,
+          "p75": 0.01560048758983612,
+          "p95": 0.01560048758983612,
+          "p99": 0.01560048758983612
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.01560048758983612,
+        "std": 0.0,
+        "min": 0.01560048758983612,
+        "max": 0.01560048758983612,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.3.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.3.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.08545242249965668,
+        "abs_std": 0.0,
+        "abs_min": 0.08545242249965668,
+        "abs_max": 0.08545242249965668,
+        "percentiles": {
+          "p1": 0.08545242249965668,
+          "p5": 0.08545242249965668,
+          "p25": 0.08545242249965668,
+          "p50": 0.08545242249965668,
+          "p75": 0.08545242249965668,
+          "p95": 0.08545242249965668,
+          "p99": 0.08545242249965668
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.08545242249965668,
+        "std": 0.0,
+        "min": 0.08545242249965668,
+        "max": 0.08545242249965668,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.4.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.4.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          64,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 640,
+        "non_zero_elements": 640,
+        "sparsity": 0.0,
+        "abs_mean": 0.1744987964630127,
+        "abs_std": 0.10793758183717728,
+        "abs_min": 0.0017284847563132644,
+        "abs_max": 0.49402981996536255,
+        "percentiles": {
+          "p1": 0.004972322732210159,
+          "p5": 0.019513558223843576,
+          "p25": 0.08457431942224503,
+          "p50": 0.16476810723543167,
+          "p75": 0.2551209256052971,
+          "p95": 0.35601262152194973,
+          "p99": 0.4315798702836037
+        },
+        "dynamic_range_db": 49.12175220417416,
+        "mean": -0.0075370236299932,
+        "std": 0.20504522323608398,
+        "min": -0.49402981996536255,
+        "max": 0.4931528866291046,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7586419611010743,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.73e-03. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (75.9%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.4.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.4.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          64,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 640,
+        "non_zero_elements": 640,
+        "sparsity": 0.0,
+        "abs_mean": 0.1723976880311966,
+        "abs_std": 0.10894670337438583,
+        "abs_min": 0.00014778331387788057,
+        "abs_max": 0.48810505867004395,
+        "percentiles": {
+          "p1": 0.005375997498631478,
+          "p5": 0.015269730193540455,
+          "p25": 0.07975067384541035,
+          "p50": 0.16327382624149323,
+          "p75": 0.2593480572104454,
+          "p95": 0.36240497529506666,
+          "p99": 0.4068059539794922
+        },
+        "dynamic_range_db": 70.37775815511584,
+        "mean": -0.017980501055717468,
+        "std": 0.2031429260969162,
+        "min": -0.48810505867004395,
+        "max": 0.46314024925231934,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7655850473860789,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.48e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (76.6%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.4.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.4.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          128,
+          64,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 8192,
+        "non_zero_elements": 8192,
+        "sparsity": 0.0,
+        "abs_mean": 0.08926498144865036,
+        "abs_std": 0.0654594674706459,
+        "abs_min": 6.130259862402454e-05,
+        "abs_max": 0.44456785917282104,
+        "percentiles": {
+          "p1": 0.0016768223932012915,
+          "p5": 0.007500759442336857,
+          "p25": 0.03697113413363695,
+          "p50": 0.07722540572285652,
+          "p75": 0.12922034785151482,
+          "p95": 0.21334809809923172,
+          "p99": 0.2768296429514886
+        },
+        "dynamic_range_db": 77.2091835340502,
+        "mean": -0.002451058477163315,
+        "std": 0.11066693812608719,
+        "min": -0.38681745529174805,
+        "max": 0.44456785917282104,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 6.13e-05. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.4.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.4.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          128,
+          64,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 8192,
+        "non_zero_elements": 8192,
+        "sparsity": 0.0,
+        "abs_mean": 0.08974325656890869,
+        "abs_std": 0.06607896089553833,
+        "abs_min": 9.89898126135813e-06,
+        "abs_max": 0.4112344980239868,
+        "percentiles": {
+          "p1": 0.001263244446599856,
+          "p5": 0.006726730940863491,
+          "p25": 0.03659791499376297,
+          "p50": 0.07673279196023941,
+          "p75": 0.13036320358514786,
+          "p95": 0.21576380655169483,
+          "p99": 0.2783859530091286
+        },
+        "dynamic_range_db": 92.36998075755103,
+        "mean": -0.0029556071385741234,
+        "std": 0.11140711605548859,
+        "min": -0.3982374966144562,
+        "max": 0.4112344980239868,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 9.90e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 9.90e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.4.1.bn_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.4.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 128,
+        "non_zero_elements": 128,
+        "sparsity": 0.0,
+        "abs_mean": 0.9758020043373108,
+        "abs_std": 0.08898961544036865,
+        "abs_min": 0.7302690148353577,
+        "abs_max": 1.2115066051483154,
+        "percentiles": {
+          "p1": 0.7990358024835587,
+          "p5": 0.8463108211755752,
+          "p25": 0.9133504182100296,
+          "p50": 0.9750541746616364,
+          "p75": 1.029094934463501,
+          "p95": 1.1355863392353058,
+          "p99": 1.1653170812129974
+        },
+        "dynamic_range_db": 4.39685824504243,
+        "mean": 0.9758020043373108,
+        "std": 0.08898961544036865,
+        "min": 0.7302690148353577,
+        "max": 1.2115066051483154,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.1281980050425173,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (12.8%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2563960100850346,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (25.6%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.4.1.bn_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.4.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 128,
+        "non_zero_elements": 128,
+        "sparsity": 0.0,
+        "abs_mean": 0.9706261157989502,
+        "abs_std": 0.08807425200939178,
+        "abs_min": 0.6337347030639648,
+        "abs_max": 1.1898307800292969,
+        "percentiles": {
+          "p1": 0.7551863658428192,
+          "p5": 0.8391935557126999,
+          "p25": 0.9166059046983719,
+          "p50": 0.9740021824836731,
+          "p75": 1.0269473195075989,
+          "p95": 1.099088019132614,
+          "p99": 1.1848928713798523
+        },
+        "dynamic_range_db": 5.471554200690955,
+        "mean": 0.9706261157989502,
+        "std": 0.08807425200939178,
+        "min": 0.6337347030639648,
+        "max": 1.1898307800292969,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.12833646807777593,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (12.8%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.25667293615555187,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (25.7%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.4.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.4.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.03605803847312927,
+        "abs_std": 0.0,
+        "abs_min": 0.03605803847312927,
+        "abs_max": 0.03605803847312927,
+        "percentiles": {
+          "p1": 0.03605803847312927,
+          "p5": 0.03605803847312927,
+          "p25": 0.03605803847312927,
+          "p50": 0.03605803847312927,
+          "p75": 0.03605803847312927,
+          "p95": 0.03605803847312927,
+          "p99": 0.03605803847312927
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.03605803847312927,
+        "std": 0.0,
+        "min": 0.03605803847312927,
+        "max": 0.03605803847312927,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.4.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.4.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.075806625187397,
+        "abs_std": 0.0,
+        "abs_min": 0.075806625187397,
+        "abs_max": 0.075806625187397,
+        "percentiles": {
+          "p1": 0.075806625187397,
+          "p5": 0.075806625187397,
+          "p25": 0.075806625187397,
+          "p50": 0.075806625187397,
+          "p75": 0.075806625187397,
+          "p95": 0.075806625187397,
+          "p99": 0.075806625187397
+        },
+        "dynamic_range_db": 0.0,
+        "mean": -0.075806625187397,
+        "std": 0.0,
+        "min": -0.075806625187397,
+        "max": -0.075806625187397,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.5.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.5.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          128,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1280,
+        "non_zero_elements": 1280,
+        "sparsity": 0.0,
+        "abs_mean": 0.16951380670070648,
+        "abs_std": 0.10942812263965607,
+        "abs_min": 0.00025690707843750715,
+        "abs_max": 0.5307034254074097,
+        "percentiles": {
+          "p1": 0.003059415835887194,
+          "p5": 0.016743437200784687,
+          "p25": 0.08154809288680553,
+          "p50": 0.15631300956010818,
+          "p75": 0.24525996670126915,
+          "p95": 0.3691332221031189,
+          "p99": 0.4340733513236046
+        },
+        "dynamic_range_db": 66.30151640877625,
+        "mean": -0.002229501726105809,
+        "std": 0.20175351202487946,
+        "min": -0.5307034254074097,
+        "max": 0.48359227180480957,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7996775210954712,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 2.57e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (80.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.5.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.5.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          128,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1280,
+        "non_zero_elements": 1280,
+        "sparsity": 0.0,
+        "abs_mean": 0.17162099480628967,
+        "abs_std": 0.10918912291526794,
+        "abs_min": 0.00014163214655127376,
+        "abs_max": 0.5050832629203796,
+        "percentiles": {
+          "p1": 0.002606982011348009,
+          "p5": 0.011264760326594115,
+          "p25": 0.07966199330985546,
+          "p50": 0.15915174037218094,
+          "p75": 0.2559354454278946,
+          "p95": 0.35207618027925486,
+          "p99": 0.42213906407356283
+        },
+        "dynamic_range_db": 71.044022802567,
+        "mean": 0.005424278322607279,
+        "std": 0.2033386528491974,
+        "min": -0.4795485734939575,
+        "max": 0.5050832629203796,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7854139685037933,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.42e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (78.5%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.5.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.5.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          128,
+          128,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16384,
+        "non_zero_elements": 16384,
+        "sparsity": 0.0,
+        "abs_mean": 0.07798556983470917,
+        "abs_std": 0.05814657360315323,
+        "abs_min": 2.7523451535671484e-06,
+        "abs_max": 0.3952192962169647,
+        "percentiles": {
+          "p1": 0.0013185744627844543,
+          "p5": 0.006030799867585302,
+          "p25": 0.031379190273582935,
+          "p50": 0.06662295386195183,
+          "p75": 0.11270403861999512,
+          "p95": 0.1889170296490192,
+          "p99": 0.24679829135537149
+        },
+        "dynamic_range_db": 103.14270490913523,
+        "mean": 0.0035966248251497746,
+        "std": 0.09721027314662933,
+        "min": -0.363612562417984,
+        "max": 0.3952192962169647,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 2.75e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 2.75e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.5.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.5.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          128,
+          128,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16384,
+        "non_zero_elements": 16384,
+        "sparsity": 0.0,
+        "abs_mean": 0.07857952266931534,
+        "abs_std": 0.05854266509413719,
+        "abs_min": 4.183802047919016e-06,
+        "abs_max": 0.4430249035358429,
+        "percentiles": {
+          "p1": 0.0012604707456193866,
+          "p5": 0.006192225124686957,
+          "p25": 0.03203006740659475,
+          "p50": 0.06686389073729515,
+          "p75": 0.11345044896006584,
+          "p95": 0.19057507589459413,
+          "p99": 0.24785390585660935
+        },
+        "dynamic_range_db": 100.49714023031876,
+        "mean": -0.0007571442984044552,
+        "std": 0.09798679500818253,
+        "min": -0.38881245255470276,
+        "max": 0.4430249035358429,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 4.18e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 4.18e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.5.1.bn_r.weight": {
+      "stats": {
+        "name": "model.encoder.model.5.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 128,
+        "non_zero_elements": 128,
+        "sparsity": 0.0,
+        "abs_mean": 0.9676128029823303,
+        "abs_std": 0.08734416961669922,
+        "abs_min": 0.65389484167099,
+        "abs_max": 1.212691068649292,
+        "percentiles": {
+          "p1": 0.7678217732906342,
+          "p5": 0.8229131549596786,
+          "p25": 0.9211829751729965,
+          "p50": 0.9699642062187195,
+          "p75": 1.0137404799461365,
+          "p95": 1.124434733390808,
+          "p99": 1.1799298906326294
+        },
+        "dynamic_range_db": 5.364845353082601,
+        "mean": 0.9676128029823303,
+        "std": 0.08734416961669922,
+        "min": 0.65389484167099,
+        "max": 1.212691068649292,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.12887073481535613,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (12.9%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.25774146963071226,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (25.8%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.5.1.bn_i.weight": {
+      "stats": {
+        "name": "model.encoder.model.5.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 128,
+        "non_zero_elements": 128,
+        "sparsity": 0.0,
+        "abs_mean": 0.9798566102981567,
+        "abs_std": 0.09368858486413956,
+        "abs_min": 0.7283977270126343,
+        "abs_max": 1.2542288303375244,
+        "percentiles": {
+          "p1": 0.7407122874259948,
+          "p5": 0.8373382657766342,
+          "p25": 0.931461974978447,
+          "p50": 0.974168211221695,
+          "p75": 1.0330394208431244,
+          "p95": 1.1322591364383696,
+          "p99": 1.2008001589775086
+        },
+        "dynamic_range_db": 4.720163951412771,
+        "mean": 0.9798566102981567,
+        "std": 0.09368858486413956,
+        "min": 0.7283977270126343,
+        "max": 1.2542288303375244,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.12831459552887556,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (12.8%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2566291910577511,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (25.7%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.5.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.5.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.28769466280937195,
+        "abs_std": 0.0,
+        "abs_min": 0.28769466280937195,
+        "abs_max": 0.28769466280937195,
+        "percentiles": {
+          "p1": 0.28769466280937195,
+          "p5": 0.28769466280937195,
+          "p25": 0.28769466280937195,
+          "p50": 0.28769466280937195,
+          "p75": 0.28769466280937195,
+          "p95": 0.28769466280937195,
+          "p99": 0.28769466280937195
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.28769466280937195,
+        "std": 0.0,
+        "min": 0.28769466280937195,
+        "max": 0.28769466280937195,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.43448842178495917,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (43.4%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.8689768435699183,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (86.9%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.encoder.model.5.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.encoder.model.5.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.05155748501420021,
+        "abs_std": 0.0,
+        "abs_min": 0.05155748501420021,
+        "abs_max": 0.05155748501420021,
+        "percentiles": {
+          "p1": 0.05155748501420021,
+          "p5": 0.05155748501420021,
+          "p25": 0.05155748501420021,
+          "p50": 0.05155748501420021,
+          "p75": 0.05155748501420021,
+          "p95": 0.05155748501420021,
+          "p99": 0.05155748501420021
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.05155748501420021,
+        "std": 0.0,
+        "min": 0.05155748501420021,
+        "max": 0.05155748501420021,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.0.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.0.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          128,
+          256,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 32768,
+        "non_zero_elements": 32768,
+        "sparsity": 0.0,
+        "abs_mean": 0.10784298181533813,
+        "abs_std": 0.09713226556777954,
+        "abs_min": 1.924139723996632e-06,
+        "abs_max": 0.8329010009765625,
+        "percentiles": {
+          "p1": 0.0015194611425977203,
+          "p5": 0.0072834061225876216,
+          "p25": 0.037721699103713036,
+          "p50": 0.08154862001538277,
+          "p75": 0.14741947501897812,
+          "p95": 0.3027842670679092,
+          "p99": 0.4505289015173911
+        },
+        "dynamic_range_db": 112.72713556585607,
+        "mean": 0.00011715799337252975,
+        "std": 0.14513707160949707,
+        "min": -0.8329010009765625,
+        "max": 0.7729155421257019,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "False",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 40,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.92e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  Dynamic range (112.7 dB) too large for E4M3 (4-bit exponent, 3-bit mantissa) (107.2 dB). Consider block-wise quantization or mixed precision.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 1.92e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.0.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.0.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          128,
+          256,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 32768,
+        "non_zero_elements": 32768,
+        "sparsity": 0.0,
+        "abs_mean": 0.10739275068044662,
+        "abs_std": 0.09615263342857361,
+        "abs_min": 4.359741524240235e-06,
+        "abs_max": 0.8855651021003723,
+        "percentiles": {
+          "p1": 0.0014053682971280068,
+          "p5": 0.007434302940964699,
+          "p25": 0.03789405897259712,
+          "p50": 0.08153234794735909,
+          "p75": 0.14809229969978333,
+          "p95": 0.29822559505701063,
+          "p99": 0.4440787917375561
+        },
+        "dynamic_range_db": 106.1551950342641,
+        "mean": -0.002110589062795043,
+        "std": 0.14413215219974518,
+        "min": -0.8855651021003723,
+        "max": 0.7294070720672607,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 4.36e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 4.36e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.0.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.0.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          128,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1280,
+        "non_zero_elements": 1280,
+        "sparsity": 0.0,
+        "abs_mean": 0.16377146542072296,
+        "abs_std": 0.11064545065164566,
+        "abs_min": 0.0002047066082013771,
+        "abs_max": 0.5192970633506775,
+        "percentiles": {
+          "p1": 0.00360183727927506,
+          "p5": 0.014406902575865391,
+          "p25": 0.06640868447721004,
+          "p50": 0.15118849277496338,
+          "p75": 0.24327322095632553,
+          "p95": 0.35740503668785095,
+          "p99": 0.43782333940267565
+        },
+        "dynamic_range_db": 68.08568008308812,
+        "mean": -0.01068116631358862,
+        "std": 0.19735607504844666,
+        "min": -0.5192970633506775,
+        "max": 0.5067272186279297,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.8267824998166781,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 2.05e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (82.7%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.0.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.0.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          128,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1280,
+        "non_zero_elements": 1280,
+        "sparsity": 0.0,
+        "abs_mean": 0.17293281853199005,
+        "abs_std": 0.11619894951581955,
+        "abs_min": 0.0004248501791153103,
+        "abs_max": 0.6256597638130188,
+        "percentiles": {
+          "p1": 0.0034295587940141557,
+          "p5": 0.015529449377208949,
+          "p25": 0.0734951738268137,
+          "p50": 0.1583138108253479,
+          "p75": 0.25279810279607773,
+          "p95": 0.3794589161872863,
+          "p99": 0.4838452610373497
+        },
+        "dynamic_range_db": 63.36204841412104,
+        "mean": 0.013457576744258404,
+        "std": 0.2079106718301773,
+        "min": -0.5974302291870117,
+        "max": 0.6256597638130188,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7895710383593775,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 4.25e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (79.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.0.1.bn_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.0.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 128,
+        "non_zero_elements": 128,
+        "sparsity": 0.0,
+        "abs_mean": 1.0625412464141846,
+        "abs_std": 0.20024308562278748,
+        "abs_min": 0.4697342813014984,
+        "abs_max": 1.5187366008758545,
+        "percentiles": {
+          "p1": 0.612707884311676,
+          "p5": 0.7429644107818604,
+          "p25": 0.9492593258619308,
+          "p50": 1.0504895448684692,
+          "p75": 1.214556097984314,
+          "p95": 1.379426234960556,
+          "p99": 1.496834715604782
+        },
+        "dynamic_range_db": 10.192604062766788,
+        "mean": 1.0625412464141846,
+        "std": 0.20024308562278748,
+        "min": 0.4697342813014984,
+        "max": 1.5187366008758545,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.11899214096000463,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (11.9%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.23798428192000926,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (23.8%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.0.1.bn_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.0.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          128
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 128,
+        "non_zero_elements": 128,
+        "sparsity": 0.0,
+        "abs_mean": 1.0736379623413086,
+        "abs_std": 0.23461993038654327,
+        "abs_min": 0.3208479583263397,
+        "abs_max": 1.623120665550232,
+        "percentiles": {
+          "p1": 0.4216970208287239,
+          "p5": 0.6536420166492463,
+          "p25": 0.9459038376808167,
+          "p50": 1.0779799818992615,
+          "p75": 1.2454822361469269,
+          "p95": 1.409469538927078,
+          "p99": 1.5033007407188417
+        },
+        "dynamic_range_db": 14.081030543126044,
+        "mean": 1.0736379623413086,
+        "std": 0.23461993038654327,
+        "min": 0.3208479583263397,
+        "max": 1.623120665550232,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.11595762639280754,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (11.6%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2319152527856151,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (23.2%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.0.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.0.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.10450244694948196,
+        "abs_std": 0.0,
+        "abs_min": 0.10450244694948196,
+        "abs_max": 0.10450244694948196,
+        "percentiles": {
+          "p1": 0.10450244694948196,
+          "p5": 0.10450244694948196,
+          "p25": 0.10450244694948196,
+          "p50": 0.10450244694948196,
+          "p75": 0.10450244694948196,
+          "p95": 0.10450244694948196,
+          "p99": 0.10450244694948196
+        },
+        "dynamic_range_db": 0.0,
+        "mean": -0.10450244694948196,
+        "std": 0.0,
+        "min": -0.10450244694948196,
+        "max": -0.10450244694948196,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.0.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.0.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.35507601499557495,
+        "abs_std": 0.0,
+        "abs_min": 0.35507601499557495,
+        "abs_max": 0.35507601499557495,
+        "percentiles": {
+          "p1": 0.35507601499557495,
+          "p5": 0.35507601499557495,
+          "p25": 0.35507601499557495,
+          "p50": 0.35507601499557495,
+          "p75": 0.35507601499557495,
+          "p95": 0.35507601499557495,
+          "p99": 0.35507601499557495
+        },
+        "dynamic_range_db": 0.0,
+        "mean": -0.35507601499557495,
+        "std": 0.0,
+        "min": -0.35507601499557495,
+        "max": -0.35507601499557495,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.35203729545505286,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (35.2%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7040745909101057,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (70.4%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.1.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.1.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          64,
+          256,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16384,
+        "non_zero_elements": 16384,
+        "sparsity": 0.0,
+        "abs_mean": 0.07122232019901276,
+        "abs_std": 0.056983232498168945,
+        "abs_min": 2.0955019408575026e-07,
+        "abs_max": 0.5226489305496216,
+        "percentiles": {
+          "p1": 0.0010264005849603566,
+          "p5": 0.005387744936160747,
+          "p25": 0.02729042060673237,
+          "p50": 0.05826997943222523,
+          "p75": 0.1012500748038292,
+          "p95": 0.17979076802730556,
+          "p99": 0.24983923539519312
+        },
+        "dynamic_range_db": 127.93843997319931,
+        "mean": -0.0004404818173497915,
+        "std": 0.09121137112379074,
+        "min": -0.5047416687011719,
+        "max": 0.5226489305496216,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "False",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 40,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 2.10e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  Dynamic range (127.9 dB) too large for E4M3 (4-bit exponent, 3-bit mantissa) (107.2 dB). Consider block-wise quantization or mixed precision.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 2.10e-07. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.1.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.1.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          64,
+          256,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16384,
+        "non_zero_elements": 16384,
+        "sparsity": 0.0,
+        "abs_mean": 0.07122859358787537,
+        "abs_std": 0.05693702772259712,
+        "abs_min": 1.1668870456560398e-06,
+        "abs_max": 0.4610809087753296,
+        "percentiles": {
+          "p1": 0.0011393120943102987,
+          "p5": 0.005568371759727599,
+          "p25": 0.027287629898637533,
+          "p50": 0.05793566256761551,
+          "p75": 0.10119609721004963,
+          "p95": 0.18219606205821032,
+          "p99": 0.2526224011182785
+        },
+        "dynamic_range_db": 111.934966439498,
+        "mean": 0.00016996642807498574,
+        "std": 0.09118831902742386,
+        "min": -0.4610809087753296,
+        "max": 0.3746331036090851,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "False",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 40,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.17e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  Dynamic range (111.9 dB) too large for E4M3 (4-bit exponent, 3-bit mantissa) (107.2 dB). Consider block-wise quantization or mixed precision.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 1.17e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.1.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.1.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          64,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 640,
+        "non_zero_elements": 640,
+        "sparsity": 0.0,
+        "abs_mean": 0.1668073683977127,
+        "abs_std": 0.10903128236532211,
+        "abs_min": 0.00013187546574044973,
+        "abs_max": 0.5242388844490051,
+        "percentiles": {
+          "p1": 0.0016096178337465976,
+          "p5": 0.014313146937638521,
+          "p25": 0.07689669355750084,
+          "p50": 0.15876176953315735,
+          "p75": 0.24566040560603142,
+          "p95": 0.3550454005599022,
+          "p99": 0.4359465110301972
+        },
+        "dynamic_range_db": 71.9873044873207,
+        "mean": -0.005258406512439251,
+        "std": 0.19921061396598816,
+        "min": -0.513873815536499,
+        "max": 0.5242388844490051,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7873432021296146,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.32e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (78.7%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.1.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.1.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          64,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 640,
+        "non_zero_elements": 640,
+        "sparsity": 0.0,
+        "abs_mean": 0.16787007451057434,
+        "abs_std": 0.11010724306106567,
+        "abs_min": 0.0010652103228494525,
+        "abs_max": 0.4761331081390381,
+        "percentiles": {
+          "p1": 0.002706065739039332,
+          "p5": 0.014463588548824194,
+          "p25": 0.07232965715229511,
+          "p50": 0.158412866294384,
+          "p75": 0.2476259022951126,
+          "p95": 0.3633223682641983,
+          "p99": 0.43644826352596294
+        },
+        "dynamic_range_db": 53.005860298044695,
+        "mean": -0.003866337239742279,
+        "std": 0.20072124898433685,
+        "min": -0.44655841588974,
+        "max": 0.4761331081390381,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7890773200688652,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.07e-03. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (78.9%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.1.1.bn_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.1.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 64,
+        "non_zero_elements": 64,
+        "sparsity": 0.0,
+        "abs_mean": 1.111248254776001,
+        "abs_std": 0.1997736096382141,
+        "abs_min": 0.6486769914627075,
+        "abs_max": 1.5164618492126465,
+        "percentiles": {
+          "p1": 0.6840251803398132,
+          "p5": 0.762630170583725,
+          "p25": 0.9629898071289062,
+          "p50": 1.1552147269248962,
+          "p75": 1.235332429409027,
+          "p95": 1.416130232810974,
+          "p99": 1.4910667586326598
+        },
+        "dynamic_range_db": 7.3760599020924165,
+        "mean": 1.111248254776001,
+        "std": 0.1997736096382141,
+        "min": 0.6486769914627075,
+        "max": 1.5164618492126465,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.10820499175312764,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (10.8%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2164099835062553,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (21.6%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.1.1.bn_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.1.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          64
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 64,
+        "non_zero_elements": 64,
+        "sparsity": 0.0,
+        "abs_mean": 1.1671549081802368,
+        "abs_std": 0.19223971664905548,
+        "abs_min": 0.7519404292106628,
+        "abs_max": 1.5651259422302246,
+        "percentiles": {
+          "p1": 0.7976014918088913,
+          "p5": 0.8929533630609512,
+          "p25": 1.0428650975227356,
+          "p50": 1.139181673526764,
+          "p75": 1.3047368824481964,
+          "p95": 1.5050595998764038,
+          "p99": 1.5309917747974395
+        },
+        "dynamic_range_db": 6.367317081123103,
+        "mean": 1.1671549081802368,
+        "std": 0.19223971664905548,
+        "min": 0.7519404292106628,
+        "max": 1.5651259422302246,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.1097278888037372,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (11.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2194557776074744,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (21.9%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.1.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.1.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.04866930469870567,
+        "abs_std": 0.0,
+        "abs_min": 0.04866930469870567,
+        "abs_max": 0.04866930469870567,
+        "percentiles": {
+          "p1": 0.04866930469870567,
+          "p5": 0.04866930469870567,
+          "p25": 0.04866930469870567,
+          "p50": 0.04866930469870567,
+          "p75": 0.04866930469870567,
+          "p95": 0.04866930469870567,
+          "p99": 0.04866930469870567
+        },
+        "dynamic_range_db": 0.0,
+        "mean": -0.04866930469870567,
+        "std": 0.0,
+        "min": -0.04866930469870567,
+        "max": -0.04866930469870567,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.1.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.1.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.054417505860328674,
+        "abs_std": 0.0,
+        "abs_min": 0.054417505860328674,
+        "abs_max": 0.054417505860328674,
+        "percentiles": {
+          "p1": 0.054417505860328674,
+          "p5": 0.054417505860328674,
+          "p25": 0.054417505860328674,
+          "p50": 0.054417505860328674,
+          "p75": 0.054417505860328674,
+          "p95": 0.054417505860328674,
+          "p99": 0.054417505860328674
+        },
+        "dynamic_range_db": 0.0,
+        "mean": -0.054417505860328674,
+        "std": 0.0,
+        "min": -0.054417505860328674,
+        "max": -0.054417505860328674,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.2.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.2.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          32,
+          128,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 4096,
+        "non_zero_elements": 4096,
+        "sparsity": 0.0,
+        "abs_mean": 0.07265094667673111,
+        "abs_std": 0.06557833403348923,
+        "abs_min": 1.4823370293015614e-05,
+        "abs_max": 0.6619631052017212,
+        "percentiles": {
+          "p1": 0.0011214190744794905,
+          "p5": 0.005475577665492892,
+          "p25": 0.02477907808497548,
+          "p50": 0.054478809237480164,
+          "p75": 0.10038128681480885,
+          "p95": 0.20285668224096298,
+          "p99": 0.3033175021409989
+        },
+        "dynamic_range_db": 92.99773653901423,
+        "mean": 8.50812066346407e-05,
+        "std": 0.09787067770957947,
+        "min": -0.39024627208709717,
+        "max": 0.6619631052017212,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.48e-05. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 1.48e-05. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.2.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.2.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          32,
+          128,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 4096,
+        "non_zero_elements": 4096,
+        "sparsity": 0.0,
+        "abs_mean": 0.07283090054988861,
+        "abs_std": 0.06326962262392044,
+        "abs_min": 4.83692747366149e-06,
+        "abs_max": 0.5034506320953369,
+        "percentiles": {
+          "p1": 0.0009731276019010693,
+          "p5": 0.0048274153377860785,
+          "p25": 0.02668253518640995,
+          "p50": 0.05564070679247379,
+          "p75": 0.09991184994578362,
+          "p95": 0.2005896419286728,
+          "p99": 0.28151028901338593
+        },
+        "dynamic_range_db": 100.34774629930673,
+        "mean": 0.0009277689969167113,
+        "std": 0.09647032618522644,
+        "min": -0.5034506320953369,
+        "max": 0.49417975544929504,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 4.84e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 4.84e-06. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.2.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.2.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          32,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 320,
+        "non_zero_elements": 320,
+        "sparsity": 0.0,
+        "abs_mean": 0.16183626651763916,
+        "abs_std": 0.10558830946683884,
+        "abs_min": 0.0005152124213054776,
+        "abs_max": 0.48908689618110657,
+        "percentiles": {
+          "p1": 0.0030400793813169,
+          "p5": 0.013160296436399222,
+          "p25": 0.07457051426172256,
+          "p50": 0.15342764556407928,
+          "p75": 0.23186103999614716,
+          "p95": 0.3514590218663216,
+          "p99": 0.3926293215155602
+        },
+        "dynamic_range_db": 59.547994045084394,
+        "mean": 0.0009326435392722487,
+        "std": 0.19323301315307617,
+        "min": -0.4377993047237396,
+        "max": 0.48908689618110657,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.8147162758082837,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 5.15e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (81.5%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.2.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.2.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          32,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 320,
+        "non_zero_elements": 320,
+        "sparsity": 0.0,
+        "abs_mean": 0.17411692440509796,
+        "abs_std": 0.12324747443199158,
+        "abs_min": 0.00035009646671824157,
+        "abs_max": 0.6239499449729919,
+        "percentiles": {
+          "p1": 0.002888203263282776,
+          "p5": 0.008221562346443535,
+          "p25": 0.07437085174024105,
+          "p50": 0.1621437519788742,
+          "p75": 0.2538692429661751,
+          "p95": 0.40839448720216753,
+          "p99": 0.4838945308327675
+        },
+        "dynamic_range_db": 65.01924045993584,
+        "mean": -0.020505079999566078,
+        "std": 0.21233507990837097,
+        "min": -0.5459811091423035,
+        "max": 0.6239499449729919,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7709208555645506,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 3.50e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (77.1%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.2.1.bn_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.2.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 32,
+        "non_zero_elements": 32,
+        "sparsity": 0.0,
+        "abs_mean": 1.1702708005905151,
+        "abs_std": 0.2456643432378769,
+        "abs_min": 0.5394838452339172,
+        "abs_max": 1.7047784328460693,
+        "percentiles": {
+          "p1": 0.5563795053958893,
+          "p5": 0.7655178725719451,
+          "p25": 1.0412978827953339,
+          "p50": 1.1833181381225586,
+          "p75": 1.3083945512771606,
+          "p95": 1.5652473449707032,
+          "p99": 1.6757565462589266
+        },
+        "dynamic_range_db": 9.99378996306011,
+        "mean": 1.1702708005905151,
+        "std": 0.2456643432378769,
+        "min": 0.5394838452339172,
+        "max": 1.7047784328460693,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.10563515928043139,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (10.6%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.21127031856086279,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (21.1%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.2.1.bn_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.2.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          32
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 32,
+        "non_zero_elements": 32,
+        "sparsity": 0.0,
+        "abs_mean": 1.0742106437683105,
+        "abs_std": 0.16948816180229187,
+        "abs_min": 0.5960482954978943,
+        "abs_max": 1.5050084590911865,
+        "percentiles": {
+          "p1": 0.6694626009464264,
+          "p5": 0.8364266902208328,
+          "p25": 1.0021093636751175,
+          "p50": 1.1021663546562195,
+          "p75": 1.1543873250484467,
+          "p95": 1.3264203429222106,
+          "p99": 1.4582451999187471
+        },
+        "dynamic_range_db": 8.04514981137513,
+        "mean": 1.0742106437683105,
+        "std": 0.16948816180229187,
+        "min": 0.5960482954978943,
+        "max": 1.5050084590911865,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.11341300655016745,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (11.3%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2268260131003349,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (22.7%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.2.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.2.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.04354512318968773,
+        "abs_std": 0.0,
+        "abs_min": 0.04354512318968773,
+        "abs_max": 0.04354512318968773,
+        "percentiles": {
+          "p1": 0.04354512318968773,
+          "p5": 0.04354512318968773,
+          "p25": 0.04354512318968773,
+          "p50": 0.04354512318968773,
+          "p75": 0.04354512318968773,
+          "p95": 0.04354512318968773,
+          "p99": 0.04354512318968773
+        },
+        "dynamic_range_db": 0.0,
+        "mean": -0.04354512318968773,
+        "std": 0.0,
+        "min": -0.04354512318968773,
+        "max": -0.04354512318968773,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.2.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.2.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.10665169358253479,
+        "abs_std": 0.0,
+        "abs_min": 0.10665169358253479,
+        "abs_max": 0.10665169358253479,
+        "percentiles": {
+          "p1": 0.10665169358253479,
+          "p5": 0.10665169358253479,
+          "p25": 0.10665169358253479,
+          "p50": 0.10665169358253479,
+          "p75": 0.10665169358253479,
+          "p95": 0.10665169358253479,
+          "p99": 0.10665169358253479
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.10665169358253479,
+        "std": 0.0,
+        "min": 0.10665169358253479,
+        "max": 0.10665169358253479,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.3.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.3.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          16,
+          64,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1024,
+        "non_zero_elements": 1024,
+        "sparsity": 0.0,
+        "abs_mean": 0.07700058817863464,
+        "abs_std": 0.07614907622337341,
+        "abs_min": 0.00010548478167038411,
+        "abs_max": 0.50877445936203,
+        "percentiles": {
+          "p1": 0.001408120932755992,
+          "p5": 0.0051926835905760525,
+          "p25": 0.02231563674286008,
+          "p50": 0.051101017743349075,
+          "p75": 0.1043955534696579,
+          "p95": 0.23037867769598958,
+          "p99": 0.34298127263784406
+        },
+        "dynamic_range_db": 73.66670986290403,
+        "mean": -0.004011725541204214,
+        "std": 0.10822051018476486,
+        "min": -0.50877445936203,
+        "max": 0.40305086970329285,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.05e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.3.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.3.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          16,
+          64,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1024,
+        "non_zero_elements": 1024,
+        "sparsity": 0.0,
+        "abs_mean": 0.08084364235401154,
+        "abs_std": 0.07526939362287521,
+        "abs_min": 3.4206364944111556e-05,
+        "abs_max": 0.4964180588722229,
+        "percentiles": {
+          "p1": 0.0009174979070667177,
+          "p5": 0.004099048860371113,
+          "p25": 0.026108210906386375,
+          "p50": 0.057812524959445,
+          "p75": 0.11036592721939087,
+          "p95": 0.23863343894481645,
+          "p99": 0.33483918637037263
+        },
+        "dynamic_range_db": 83.2348129435622,
+        "mean": -0.0032378598116338253,
+        "std": 0.11041147261857986,
+        "min": -0.4964180588722229,
+        "max": 0.41258853673934937,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 3.42e-05. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E5M2 (5-bit exponent, 2-bit mantissa) min (6.10e-05). Min value: 3.42e-05. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.3.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.3.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          16,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 160,
+        "non_zero_elements": 160,
+        "sparsity": 0.0,
+        "abs_mean": 0.1821034848690033,
+        "abs_std": 0.12265565991401672,
+        "abs_min": 0.003607470076531172,
+        "abs_max": 0.660929262638092,
+        "percentiles": {
+          "p1": 0.00614539610221982,
+          "p5": 0.02390347486361861,
+          "p25": 0.07842728681862354,
+          "p50": 0.16362683475017548,
+          "p75": 0.2488599754869938,
+          "p95": 0.42148305773735023,
+          "p99": 0.5084441953897476
+        },
+        "dynamic_range_db": 45.25904486627225,
+        "mean": 0.005926361307501793,
+        "std": 0.21947886049747467,
+        "min": -0.5088644027709961,
+        "max": 0.660929262638092,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.7639333743199842,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (76.4%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.3.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.3.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          16,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 160,
+        "non_zero_elements": 160,
+        "sparsity": 0.0,
+        "abs_mean": 0.14961355924606323,
+        "abs_std": 0.1135283038020134,
+        "abs_min": 0.0008904992719180882,
+        "abs_max": 0.5157488584518433,
+        "percentiles": {
+          "p1": 0.002276449820492417,
+          "p5": 0.01168129788711667,
+          "p25": 0.05696782562881708,
+          "p50": 0.1292518526315689,
+          "p75": 0.22033410519361496,
+          "p95": 0.3833128094673156,
+          "p99": 0.439239501953125
+        },
+        "dynamic_range_db": 55.25609413344142,
+        "mean": 0.018470365554094315,
+        "std": 0.18690034747123718,
+        "min": -0.4236663281917572,
+        "max": 0.5157488584518433,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.9671041262078558,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 8.90e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (96.7%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.3.1.bn_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.3.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16,
+        "non_zero_elements": 16,
+        "sparsity": 0.0,
+        "abs_mean": 1.1442844867706299,
+        "abs_std": 0.2073877602815628,
+        "abs_min": 0.7928661704063416,
+        "abs_max": 1.6046136617660522,
+        "percentiles": {
+          "p1": 0.8000105917453766,
+          "p5": 0.8285882771015167,
+          "p25": 1.0477209985256195,
+          "p50": 1.1286052465438843,
+          "p75": 1.2447299659252167,
+          "p95": 1.52658811211586,
+          "p99": 1.5890085518360137
+        },
+        "dynamic_range_db": 6.123411949773887,
+        "mean": 1.1442844867706299,
+        "std": 0.2073877602815628,
+        "min": 0.7928661704063416,
+        "max": 1.6046136617660522,
+        "has_outliers": true,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.11075617482976104,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (11.1%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.22151234965952207,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (22.2%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.3.1.bn_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.3.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          16
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16,
+        "non_zero_elements": 16,
+        "sparsity": 0.0,
+        "abs_mean": 1.1098203659057617,
+        "abs_std": 0.26458731293678284,
+        "abs_min": 0.4271773397922516,
+        "abs_max": 1.5314743518829346,
+        "percentiles": {
+          "p1": 0.47925962060689925,
+          "p5": 0.68758874386549,
+          "p25": 0.9387691617012024,
+          "p50": 1.142427384853363,
+          "p75": 1.3170211911201477,
+          "p95": 1.396728754043579,
+          "p99": 1.5045252323150635
+        },
+        "dynamic_range_db": 11.090030420845016,
+        "mean": 1.1098203659057617,
+        "std": 0.26458731293678284,
+        "min": 0.4271773397922516,
+        "max": 1.5314743518829346,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.10941614465592003,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (10.9%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.21883228931184007,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (21.9%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.3.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.3.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.026853010058403015,
+        "abs_std": 0.0,
+        "abs_min": 0.026853010058403015,
+        "abs_max": 0.026853010058403015,
+        "percentiles": {
+          "p1": 0.026853010058403015,
+          "p5": 0.026853010058403015,
+          "p25": 0.026853010058403015,
+          "p50": 0.026853010058403015,
+          "p75": 0.026853010058403015,
+          "p95": 0.026853010058403015,
+          "p99": 0.026853010058403015
+        },
+        "dynamic_range_db": 0.0,
+        "mean": -0.026853010058403015,
+        "std": 0.0,
+        "min": -0.026853010058403015,
+        "max": -0.026853010058403015,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.3.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.3.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.2185303419828415,
+        "abs_std": 0.0,
+        "abs_min": 0.2185303419828415,
+        "abs_max": 0.2185303419828415,
+        "percentiles": {
+          "p1": 0.2185303419828415,
+          "p5": 0.2185303419828415,
+          "p25": 0.2185303419828415,
+          "p50": 0.2185303419828415,
+          "p75": 0.2185303419828415,
+          "p95": 0.2185303419828415,
+          "p99": 0.2185303419828415
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.2185303419828415,
+        "std": 0.0,
+        "min": 0.2185303419828415,
+        "max": 0.2185303419828415,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.5720029487246888,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (57.2%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.4.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.4.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          8,
+          32,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 256,
+        "non_zero_elements": 256,
+        "sparsity": 0.0,
+        "abs_mean": 0.0960102528333664,
+        "abs_std": 0.09768617153167725,
+        "abs_min": 0.0007104864926077425,
+        "abs_max": 0.434032678604126,
+        "percentiles": {
+          "p1": 0.001085237815277651,
+          "p5": 0.004000159620773047,
+          "p25": 0.01682048011571169,
+          "p50": 0.05794134736061096,
+          "p75": 0.15046969056129456,
+          "p95": 0.29348674416542053,
+          "p99": 0.37653723359107955
+        },
+        "dynamic_range_db": 55.71933206586573,
+        "mean": 0.01006622426211834,
+        "std": 0.13659878075122833,
+        "min": -0.3857819139957428,
+        "max": 0.434032678604126,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 7.10e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.4.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.4.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          8,
+          32,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 256,
+        "non_zero_elements": 256,
+        "sparsity": 0.0,
+        "abs_mean": 0.09854462742805481,
+        "abs_std": 0.10603094846010208,
+        "abs_min": 0.000777126697357744,
+        "abs_max": 0.5154320597648621,
+        "percentiles": {
+          "p1": 0.0012916217092424631,
+          "p5": 0.004119587829336524,
+          "p25": 0.01871982403099537,
+          "p50": 0.056481437757611275,
+          "p75": 0.13457774370908737,
+          "p95": 0.32411207258701324,
+          "p99": 0.3990296706557271
+        },
+        "dynamic_range_db": 56.43359198280347,
+        "mean": 0.01712706871330738,
+        "std": 0.14373679459095,
+        "min": -0.48836550116539,
+        "max": 0.5154320597648621,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 7.77e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.4.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.4.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          8,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 80,
+        "non_zero_elements": 80,
+        "sparsity": 0.0,
+        "abs_mean": 0.15975618362426758,
+        "abs_std": 0.11719293147325516,
+        "abs_min": 0.002357006771489978,
+        "abs_max": 0.5125214457511902,
+        "percentiles": {
+          "p1": 0.0024887700262479482,
+          "p5": 0.008851070934906603,
+          "p25": 0.06053315848112106,
+          "p50": 0.1365872286260128,
+          "p75": 0.24195625633001328,
+          "p95": 0.35777612030506134,
+          "p99": 0.5046633613109588
+        },
+        "dynamic_range_db": 46.747024246819926,
+        "mean": -0.007582677993923426,
+        "std": 0.1979866623878479,
+        "min": -0.35729604959487915,
+        "max": 0.5125214457511902,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.9151660902518229,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (91.5%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.4.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.4.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          8,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 80,
+        "non_zero_elements": 80,
+        "sparsity": 0.0,
+        "abs_mean": 0.18577691912651062,
+        "abs_std": 0.13903926312923431,
+        "abs_min": 0.0005586154293268919,
+        "abs_max": 0.6214929223060608,
+        "percentiles": {
+          "p1": 0.0006683700729627162,
+          "p5": 0.011229918431490661,
+          "p25": 0.06300855614244938,
+          "p50": 0.1797570139169693,
+          "p75": 0.27959851175546646,
+          "p95": 0.42938180416822425,
+          "p99": 0.5762089931964871
+        },
+        "dynamic_range_db": 60.9264652027347,
+        "mean": -0.01729670725762844,
+        "std": 0.23139964044094086,
+        "min": -0.6214929223060608,
+        "max": 0.4745674729347229,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.6953831579430784,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 5.59e-04. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (69.5%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.4.1.bn_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.4.1.bn_r.weight",
+        "type": "real",
+        "shape": [
+          8
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 8,
+        "non_zero_elements": 8,
+        "sparsity": 0.0,
+        "abs_mean": 0.7538807392120361,
+        "abs_std": 0.4315710961818695,
+        "abs_min": 0.19742484390735626,
+        "abs_max": 1.4174110889434814,
+        "percentiles": {
+          "p1": 0.21210827723145484,
+          "p5": 0.2708420105278492,
+          "p25": 0.4077804982662201,
+          "p50": 0.581406980752945,
+          "p75": 1.1981932520866394,
+          "p95": 1.362652575969696,
+          "p99": 1.4064593863487242
+        },
+        "dynamic_range_db": 17.121880455514596,
+        "mean": 0.7538807392120361,
+        "std": 0.4315710961818695,
+        "min": 0.19742484390735626,
+        "max": 1.4174110889434814,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.21499569860361856,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (21.5%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.4299913972072371,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (43.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.4.1.bn_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.4.1.bn_i.weight",
+        "type": "real",
+        "shape": [
+          8
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 8,
+        "non_zero_elements": 8,
+        "sparsity": 0.0,
+        "abs_mean": 0.9410423636436462,
+        "abs_std": 0.33018940687179565,
+        "abs_min": 0.4510357975959778,
+        "abs_max": 1.466684103012085,
+        "percentiles": {
+          "p1": 0.46095010995864866,
+          "p5": 0.5006073594093323,
+          "p25": 0.6423681080341339,
+          "p50": 0.9887206554412842,
+          "p75": 1.1342992782592773,
+          "p95": 1.4096617281436918,
+          "p99": 1.4552796280384064
+        },
+        "dynamic_range_db": 10.242511453696896,
+        "mean": 0.9410423636436462,
+        "std": 0.33018940687179565,
+        "min": 0.4510357975959778,
+        "max": 1.466684103012085,
+        "has_outliers": false,
+        "distribution_type": "approximately_normal"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.12642600244273264,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (12.6%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 0.2528520048854653,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (25.3%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.4.2.r_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.4.2.r_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.08065858483314514,
+        "abs_std": 0.0,
+        "abs_min": 0.08065858483314514,
+        "abs_max": 0.08065858483314514,
+        "percentiles": {
+          "p1": 0.08065858483314514,
+          "p5": 0.08065858483314514,
+          "p25": 0.08065858483314514,
+          "p50": 0.08065858483314514,
+          "p75": 0.08065858483314514,
+          "p95": 0.08065858483314514,
+          "p99": 0.08065858483314514
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.08065858483314514,
+        "std": 0.0,
+        "min": 0.08065858483314514,
+        "max": 0.08065858483314514,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.4.2.i_prelu.weight": {
+      "stats": {
+        "name": "model.decoder.model.4.2.i_prelu.weight",
+        "type": "real",
+        "shape": [
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 1,
+        "non_zero_elements": 1,
+        "sparsity": 0.0,
+        "abs_mean": 0.05636654049158096,
+        "abs_std": 0.0,
+        "abs_min": 0.05636654049158096,
+        "abs_max": 0.05636654049158096,
+        "percentiles": {
+          "p1": 0.05636654049158096,
+          "p5": 0.05636654049158096,
+          "p25": 0.05636654049158096,
+          "p50": 0.05636654049158096,
+          "p75": 0.05636654049158096,
+          "p95": 0.05636654049158096,
+          "p99": 0.05636654049158096
+        },
+        "dynamic_range_db": 0.0,
+        "mean": 0.05636654049158096,
+        "std": 0.0,
+        "min": 0.05636654049158096,
+        "max": 0.05636654049158096,
+        "has_outliers": false,
+        "distribution_type": "degenerate"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.5.0.pointwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.5.0.pointwise_r.weight",
+        "type": "real",
+        "shape": [
+          1,
+          16,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16,
+        "non_zero_elements": 16,
+        "sparsity": 0.0,
+        "abs_mean": 0.08478690683841705,
+        "abs_std": 0.06446584314107895,
+        "abs_min": 0.001990579767152667,
+        "abs_max": 0.23663054406642914,
+        "percentiles": {
+          "p1": 0.0021741793840192257,
+          "p5": 0.002908577851485461,
+          "p25": 0.04065887629985809,
+          "p50": 0.06514931470155716,
+          "p75": 0.1135728769004345,
+          "p95": 0.20699671655893326,
+          "p99": 0.23070377856492996
+        },
+        "dynamic_range_db": 41.50182433620351,
+        "mean": -0.017595581710338593,
+        "std": 0.10504789650440216,
+        "min": -0.23663054406642914,
+        "max": 0.19711877405643463,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.5.0.pointwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.5.0.pointwise_i.weight",
+        "type": "real",
+        "shape": [
+          1,
+          16,
+          1,
+          1
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 16,
+        "non_zero_elements": 16,
+        "sparsity": 0.0,
+        "abs_mean": 0.07496877759695053,
+        "abs_std": 0.0745488703250885,
+        "abs_min": 0.0020638112910091877,
+        "abs_max": 0.28177696466445923,
+        "percentiles": {
+          "p1": 0.002180512738414109,
+          "p5": 0.002647318528033793,
+          "p25": 0.030448272824287415,
+          "p50": 0.04804093576967716,
+          "p75": 0.09470834769308567,
+          "p95": 0.2236158438026905,
+          "p99": 0.27014474049210546
+        },
+        "dynamic_range_db": 42.70471004834298,
+        "mean": 0.04306812584400177,
+        "std": 0.09655562788248062,
+        "min": -0.09873951226472855,
+        "max": 0.28177696466445923,
+        "has_outliers": true,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.5.0.depthwise_r.weight": {
+      "stats": {
+        "name": "model.decoder.model.5.0.depthwise_r.weight",
+        "type": "real",
+        "shape": [
+          1,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 10,
+        "non_zero_elements": 10,
+        "sparsity": 0.0,
+        "abs_mean": 0.0581233911216259,
+        "abs_std": 0.047535303980112076,
+        "abs_min": 0.007008689921349287,
+        "abs_max": 0.13659757375717163,
+        "percentiles": {
+          "p1": 0.007034694021567703,
+          "p5": 0.0071387104224413635,
+          "p25": 0.012778264936059713,
+          "p50": 0.04542124830186367,
+          "p75": 0.0934821218252182,
+          "p95": 0.13193576037883759,
+          "p99": 0.1356652110815048
+        },
+        "dynamic_range_db": 25.796122782912022,
+        "mean": -0.054483674466609955,
+        "std": 0.05166684836149216,
+        "min": -0.13659757375717163,
+        "max": 0.01090095192193985,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    },
+    "model.decoder.model.5.0.depthwise_i.weight": {
+      "stats": {
+        "name": "model.decoder.model.5.0.depthwise_i.weight",
+        "type": "real",
+        "shape": [
+          1,
+          1,
+          5,
+          2
+        ],
+        "dtype": "torch.float32",
+        "total_elements": 10,
+        "non_zero_elements": 10,
+        "sparsity": 0.0,
+        "abs_mean": 0.08159621059894562,
+        "abs_std": 0.07719673961400986,
+        "abs_min": 0.001252103946171701,
+        "abs_max": 0.24608343839645386,
+        "percentiles": {
+          "p1": 0.0021514429291710256,
+          "p5": 0.005748798861168325,
+          "p25": 0.016933824867010117,
+          "p50": 0.06069807894527912,
+          "p75": 0.12963969819247723,
+          "p95": 0.20938068702816953,
+          "p99": 0.23874288812279704
+        },
+        "dynamic_range_db": 45.86884004099922,
+        "mean": -0.08134578168392181,
+        "std": 0.07746057212352753,
+        "min": -0.24608343839645386,
+        "max": 0.001252103946171701,
+        "has_outliers": false,
+        "distribution_type": "right_skewed"
+      },
+      "fp8_e4m3": {
+        "format": "e4m3",
+        "max_value_fits": true,
+        "min_value_fits": false,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 60,
+        "recommendations": [
+          "\u26a0\ufe0f  Values below E4M3 (4-bit exponent, 3-bit mantissa) min (1.95e-03). Min value: 1.25e-03. May lose small weights to zero.",
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      },
+      "fp8_e5m2": {
+        "format": "e5m2",
+        "max_value_fits": true,
+        "min_value_fits": true,
+        "dynamic_range_fits": "True",
+        "precision_loss_estimate": 1.0,
+        "compatibility_score": 90,
+        "recommendations": [
+          "\u26a0\ufe0f  High precision loss (100.0%). Monitor model accuracy after quantization."
+        ]
+      }
+    }
+  },
+  "summary_stats": {
+    "total_parameters": 2796302,
+    "complex_layers": 2,
+    "real_layers": 96,
+    "error_layers": 0,
+    "overall_dynamic_range_db": 144.19031871210709,
+    "overall_sparsity": 0.0,
+    "global_min": 1.0523301341436309e-07,
+    "global_max": 1.7047784328460693,
+    "global_median": 0.07258610427379608
+  }
+}

@@ -1,0 +1,9 @@
+device: cpu
+model: BCCTN (Binaural Complex Convolutional Transformer Network)
+audio_duration: 2.0
+sampling_rate: 16000
+average_time: 0.1909982419013977
+std_dev: 0.16100113362310153
+min_time: 0.09401774406433105
+max_time: 0.9535961151123047
+realtime_factor: 10.471300573711535

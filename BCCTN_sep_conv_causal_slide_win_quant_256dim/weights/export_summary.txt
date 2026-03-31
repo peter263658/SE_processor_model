@@ -1,0 +1,10 @@
+Checkpoint Export Summary
+==================================================
+
+Total layers exported: 100
+Total parameters: 2,543,309
+Complex layers: 4
+Generated .dat files: 223
+Output directory: /raid/R12K41024/BCCTN_sep_conv_causal_slide_win/weights
+
+Total exported data size: 25.46 MB

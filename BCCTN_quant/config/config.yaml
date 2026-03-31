@@ -1,0 +1,151 @@
+dataset:
+  noisy_test_dataset_dir: /raid/R12K41024/BCCTN/Dataset/noisy_testset/snr_0dB
+  noisy_training_dataset_dir: /raid/R12K41024/BCCTN/Dataset/noisy_trainset
+  noisy_validation_dataset_dir: /raid/R12K41024/BCCTN/Dataset/noisy_valset
+  target_test_dataset_dir: /raid/R12K41024/BCCTN/Dataset/clean_testset
+  target_training_dataset_dir: /raid/R12K41024/BCCTN/Dataset/clean_trainset
+  target_validation_dataset_dir: /raid/R12K41024/BCCTN/Dataset/clean_valset
+defaults:
+- model
+- training
+- dataset: speech_dataset
+model:
+  attention: true
+  binaural: true
+  use_depthwise: true
+  # Loss function weights as described in the paper (section 3.1)
+  ild_weight: 1        # Weight for ILD loss (γ)
+  ipd_weight: 10       # Weight for IPD loss (κ)
+  snr_loss_weight: 1   # Weight for SNR loss (α)
+  stoi_weight: 10      # Weight for STOI loss (β)
+  # Model architecture parameters
+  use_clstm: true
+  use_cbn: true
+  masking_mode: 'E'
+  rnn_layers: 2
+  rnn_units: 128
+  # win_len: 400         # 25ms at 16kHz
+  # win_inc: 100         # 6.25ms at 16kHz
+  # fft_len: 512
+
+
+  # win_len: 256         # 25ms at 16kHz
+  # win_inc: 80         # 6.25ms at 16kHz
+  # fft_len: 256
+
+  win_len: 128         # 25ms at 16kHz
+  win_inc: 80         # 6.25ms at 16kHz
+  fft_len: 128
+
+  win_type: 'hann'
+  kernel_size: 5
+  # Kernel numbers for encoder-decoder layers as per paper
+  # kernel_num: [16, 32, 64, 128, 256, 256]
+  kernel_num: [16, 32, 64, 128, 256, 256]
+  bidirectional: false
+  embed_dim: 512       # Embedding dimension for transformer
+  num_heads: 32     # Number of attention heads as mentioned in paper
+  attn_win: 32   # Window size for attention mechanism
+training:
+  accelerator: auto
+  batch_size: 32
+  learning_rate: 0.001  # Initial learning rate as per paper
+  learning_rate_decay_steps: [3, 8]
+  learning_rate_decay_values: 0.5
+  n_epochs: 150         # Number of epochs as per paper
+  n_workers: 4
+  pin_memory: true
+  strategy: auto
+  train_checkpoint_path: null
+  test_checkpoint_path: "/raid/R12K41024/BCCTN_quant/model.ckpt"
+  logger: true
+  early_stopping:
+    enabled: true
+    key_to_monitor: validation_loss
+    min_delta: 0.01
+    patience_in_epochs: 3  # Early stopping after 3 epochs of no improvement
+    
+# Quantization-specific configuration
+quantization:
+  # Enable quantization-only mode (no pruning)
+  enable_quantization: true
+  enable_pruning_qat: false  # Disable pruning
+  
+  # Mixed precision settings
+  conv_precision: "int8"      # "int8", "fp16", "fp32"
+  attention_precision: "fp16" # "fp16", "fp8", "fp32"
+  
+  # Calibration settings for INT8
+  calibration:
+    method: "histogram"       # "histogram", "max", "entropy"
+    num_batches: 10          # Number of batches for calibration
+    
+  # Training phases
+  phases:
+    enable_multi_phase: true
+    skip_normal_training: false  # Set to true if using pre-trained model
+    calibration_epochs: 2        # Epochs for calibration phase
+    finetune_epochs: 10          # Epochs for QAT fine-tuning
+    
+  # Export settings
+  export_quantized_model: true
+  export_path: "./quantized_models/"
+
+# Test configurations for quantization experiments
+quantization_test:
+  enable: true
+  
+  # Test different precision combinations
+  test_configurations:
+    - conv: "fp32"
+      attention: "fp32"
+      name: "baseline"
+      
+    - conv: "int8"
+      attention: "fp16"
+      name: "int8_fp16"  # Recommended for production
+      
+    - conv: "int8"
+      attention: "fp32"
+      name: "int8_fp32"
+      
+    - conv: "fp16"
+      attention: "fp16"
+      name: "fp16_all"
+      
+    - conv: "int8"
+      attention: "fp8"
+      name: "int8_fp8"   # Only if H100/H800 GPU
+  
+  # Evaluation settings
+  num_test_samples: 100
+  batch_size: 8
+  
+  # Metrics to track
+  metrics:
+    - "mbstoi"
+    - "pesq"
+    - "segsnr"
+    - "ild_error"
+    - "ipd_error"
+    - "latency"
+    - "model_size"
+    - "throughput"
+
+# Performance optimization targets
+optimization_targets:
+  # Primary target: model compression
+  target_compression_ratio: 0.4  # 60% size reduction
+  
+  # Performance constraints
+  max_quality_drop:
+    mbstoi: 0.02    # Max 2% MBSTOI drop
+    segsnr: 1.0     # Max 1 dB SegSNR drop
+    
+  # Speed targets
+  min_speedup: 1.5x       # Minimum inference speedup
+  max_latency_ms: 50      # Maximum acceptable latency
+  
+  # Deployment constraints
+  max_model_size_mb: 20   # Maximum model size for deployment
+  target_precision: "int8" # Target precision for deployment

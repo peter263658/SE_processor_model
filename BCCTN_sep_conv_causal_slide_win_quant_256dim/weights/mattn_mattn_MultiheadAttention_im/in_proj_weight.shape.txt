@@ -1,0 +1,3 @@
+Shape: [1536, 512]
+Dtype: float32
+Data file: in_proj_weight.dat

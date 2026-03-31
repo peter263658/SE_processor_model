@@ -1,0 +1,3 @@
+Shape: [8, 32, 1, 1]
+Dtype: float32
+Data file: weight.dat

@@ -1,0 +1,4 @@
+Shape: [512, 256]
+Dtype: complex64
+Real file: weight.real.dat
+Imag file: weight.imag.dat

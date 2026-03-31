@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.env
+
+# Model checkpoints & weights (通常很大)
+*.pth
+*.pt
+*.ckpt
+*.h5
+*.pkl
+
+# Dataset (建議不要放進去)
+data/
+datasets/
+Dataset/
+
+# Large archives & external tools
+*.tar.gz
+ollama/
+
+# Training outputs, checkpoints & logs
+outputs/
+checkpoints/
+logs/
+lightning_logs/
+wandb/
+mlruns/
+results/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/

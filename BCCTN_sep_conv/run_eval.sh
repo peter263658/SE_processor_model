@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# Set paths
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN/DCNN/Checkpoints/Trained_model.ckpt"
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN/outputs/2025-05-10/19-39-07/logs/lightning_logs/version_0/checkpoints/epoch=98-step=95832.ckpt" # current best
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN/outputs/2025-05-10/19-39-07/logs/lightning_logs/version_0/checkpoints/last.ckpt"
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN/outputs/2025-05-11/16-34-17/logs/lightning_logs/version_0/checkpoints/epoch=94-step=91960.ckpt"
+# MODEL_CHECKPOINT="/raid/R12K41024/LBCCN/outputs/2025-05-19/03-42-47/logs/lightning_logs/version_0/checkpoints/epoch=97-step=94864.ckpt" 
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN/outputs/2025-05-12/15-30-55/logs/lightning_logs/version_0/checkpoints/last.ckpt"
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN/outputs/2025-05-16/04-19-55/logs/lightning_logs/version_0/checkpoints/epoch=98-step=95832.ckpt"
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN/outputs/2025-05-31/03-57-53/logs/lightning_logs/version_0/checkpoints/epoch=96-step=93896.ckpt" # num_head = 32
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN/outputs/2025-05-31/23-59-43/logs/lightning_logs/version_0/checkpoints/epoch=98-step=95832.ckpt"  # num_head = 16
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN/outputs/2025-06-02/00-25-51/logs/lightning_logs/version_0/checkpoints/epoch=107-step=104544.ckpt"  # en/decoder = 5 num_head = 32
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN_sep_conv/outputs/2025-06-02/17-24-32/logs/lightning_logs/version_0/checkpoints/epoch=128-step=124872.ckpt" # okay kernel_size=(self.kernel_size, 2),
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN_sep_conv/outputs/2025-06-11/00-51-06/logs/lightning_logs/version_0/checkpoints/epoch=115-step=112288.ckpt"   # okay kernel_size=(self.kernel_size, 1),
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN_sep_conv/outputs/2025-06-11/22-36-54/logs/lightning_logs/version_0/checkpoints/epoch=125-step=121968.ckpt"   # fft = 128
+# MODEL_CHECKPOINT="/raid/R12K41024/BCCTN_sep_conv/outputs/2025-06-15/16-48-01/logs/lightning_logs/version_0/checkpoints/epoch=54-step=53240.ckpt"  # fft = 128, update stft and mode c 
+MODEL_CHECKPOINT="/raid/R12K41024/BCCTN_sep_conv/outputs/2025-06-16/00-35-21/logs/lightning_logs/version_0/checkpoints/epoch=134-step=130680.ckpt"
+
+VCTK_NOISY_DIR="/raid/R12K41024/BCCTN/Dataset/noisy_testset"
+VCTK_CLEAN_DIR="/raid/R12K41024/BCCTN/Dataset/clean_testset"
+# VCTK_NOISY_DIR="/raid/R12K41024/LBCCN/Dataset/noisy_testset"
+# VCTK_CLEAN_DIR="/raid/R12K41024/LBCCN/Dataset/clean_testset"
+TIMIT_NOISY_DIR="/raid/R12K41024/BCCTN/Dataset/noisy_testset_timit"
+TIMIT_CLEAN_DIR="/raid/R12K41024/BCCTN/Dataset/clean_testset_timit"
+OUTPUT_DIR="./results_May21"  # Define output directory
+
+# Create results directory
+mkdir -p "$OUTPUT_DIR"
+
+# Step 1: Run paper-style evaluation with fixed SNR levels on VCTK dataset (matched condition)
+echo "Running paper-style evaluation on VCTK dataset (matched condition)..."
+CUDA_VISIBLE_DEVICES=1 python eval.py \
+    --model_checkpoint "$MODEL_CHECKPOINT" \
+    --vctk_test_dir "$VCTK_NOISY_DIR" \
+    --vctk_clean_dir "$VCTK_CLEAN_DIR" \
+    --timit_test_dir "$TIMIT_NOISY_DIR" \
+    --timit_clean_dir "$TIMIT_CLEAN_DIR" \
+    --output_dir "${OUTPUT_DIR}/vctk_paper_style" \
+    --paper_style_eval \
+    --batch_size 8 \
+    --limit_pairs 750
+
+
+# CUDA_VISIBLE_DEVICES=5 python eval.py \
+#     --model_checkpoint "$MODEL_CHECKPOINT" \
+#     --vctk_test_dir "$VCTK_NOISY_DIR" \
+#     --vctk_clean_dir "$VCTK_CLEAN_DIR" \
+#     --output_dir "${OUTPUT_DIR}/vctk_paper_style" \
+#     --paper_style_eval \
+#     --batch_size 8 \
+#     --limit_pairs 750
+
+# # Step 3: Generate comparison table between our results and paper results
+# echo "Generating comparison table..."
+# CUDA_VISIBLE_DEVICES=5 python compare_results.py \
+#     --vctk_results "${OUTPUT_DIR}/vctk_paper_style/vctk_paper_style_results.csv" \
+#     --timit_results "${OUTPUT_DIR}/timit_paper_style/timit_paper_style_results.csv" \
+#     --output_file "${OUTPUT_DIR}/comparison_with_paper.csv"
+
+# echo "Evaluation complete! Results are saved in ${OUTPUT_DIR}"

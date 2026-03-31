@@ -1,0 +1,84 @@
+================================================================================
+BCCTN MODEL WEIGHT ANALYSIS FOR FP8 QUANTIZATION
+================================================================================
+Model Path: /raid/R12K41024/BCCTN_sep_conv/outputs/2025-06-02/17-24-32/logs/lightning_logs/version_0/checkpoints/epoch=128-step=124872.ckpt
+Analysis Time: 2025-06-13 00:44:35
+
+SUMMARY STATISTICS:
+----------------------------------------
+Total Parameters: 2,796,302
+Total Layers Analyzed: 98
+  - Real-valued layers: 96
+  - Complex-valued layers: 2
+  - Error layers (skipped): 0
+Overall Sparsity: 0.00%
+Global Dynamic Range: 144.2 dB
+Global Value Range: [1.05e-07, 1.70e+00]
+
+FP8 COMPATIBILITY SUMMARY:
+----------------------------------------
+E4M3 Format (Forward pass (activations and weights)):
+  - Compatible layers: 57/98 (58.2%)
+  - Average compatibility score: 76.0/100
+
+E5M2 Format (Gradients and optimizer states):
+  - Compatible layers: 83/98 (84.7%)
+  - Average compatibility score: 85.4/100
+
+COMPLEX LAYER ANALYSIS:
+----------------------------------------
+Found 2 complex-valued layers:
+  - model.mattn.input_proj.weight: [512, 512], Range: [9.43e-05, 4.44e-01]
+  - model.mattn.output_proj.weight: [512, 512], Range: [2.58e-04, 6.05e-01]
+
+PROBLEMATIC LAYERS (Score < 50):
+----------------------------------------
+Layer: model.mattn.mattn.MultiheadAttention_re.in_proj_weight
+  Score: 40.0/100
+  Range: [2.58e-07, 6.98e-01]
+  Dynamic Range: 128.6 dB
+  Shape: [1536, 512], Type: real
+
+Layer: model.mattn.mattn.MultiheadAttention_re.out_proj.weight
+  Score: 40.0/100
+  Range: [1.05e-07, 5.30e-01]
+  Dynamic Range: 134.0 dB
+  Shape: [512, 512], Type: real
+
+Layer: model.mattn.mattn.MultiheadAttention_im.in_proj_weight
+  Score: 40.0/100
+  Range: [1.28e-07, 6.48e-01]
+  Dynamic Range: 134.1 dB
+  Shape: [1536, 512], Type: real
+
+Layer: model.mattn.mattn.MultiheadAttention_im.out_proj.weight
+  Score: 40.0/100
+  Range: [1.46e-07, 5.67e-01]
+  Dynamic Range: 131.8 dB
+  Shape: [512, 512], Type: real
+
+Layer: model.decoder.model.0.0.pointwise_r.weight
+  Score: 40.0/100
+  Range: [1.92e-06, 8.33e-01]
+  Dynamic Range: 112.7 dB
+  Shape: [128, 256, 1, 1], Type: real
+
+Layer: model.decoder.model.1.0.pointwise_r.weight
+  Score: 40.0/100
+  Range: [2.10e-07, 5.23e-01]
+  Dynamic Range: 127.9 dB
+  Shape: [64, 256, 1, 1], Type: real
+
+Layer: model.decoder.model.1.0.pointwise_i.weight
+  Score: 40.0/100
+  Range: [1.17e-06, 4.61e-01]
+  Dynamic Range: 111.9 dB
+  Shape: [64, 256, 1, 1], Type: real
+
+OVERALL RECOMMENDATIONS:
+----------------------------------------
+✅ Model shows excellent FP8 compatibility!
+   Both E4M3 and E5M2 formats are suitable.
+⚠️  Large dynamic range detected - consider block quantization.
+ℹ️  Complex layers detected - may need special handling.
+   Options: magnitude-only, separate mag/phase, or complex-aware quantization.

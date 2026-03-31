@@ -1,0 +1,3 @@
+Shape: [5, 1, 28]
+Dtype: float32
+Data file: kernel.dat
