@@ -1,0 +1,53 @@
+Layer,Type,Shape,Total Sparsity,Out Channel Sparsity (mean),In Channel Sparsity (mean),Row Sparsity (mean),Col Sparsity (mean)
+model.encoder.model.1.0.depthwise_r,Depthwise,"[8, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.1.0.depthwise_i,Depthwise,"[8, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.2.0.depthwise_r,Depthwise,"[16, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.2.0.depthwise_i,Depthwise,"[16, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.3.0.depthwise_r,Depthwise,"[32, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.3.0.depthwise_i,Depthwise,"[32, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.4.0.depthwise_r,Depthwise,"[64, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.4.0.depthwise_i,Depthwise,"[64, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.5.0.depthwise_r,Depthwise,"[128, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.5.0.depthwise_i,Depthwise,"[128, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.0.0.depthwise_r,Depthwise,"[128, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.0.0.depthwise_i,Depthwise,"[128, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.1.0.depthwise_r,Depthwise,"[64, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.1.0.depthwise_i,Depthwise,"[64, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.2.0.depthwise_r,Depthwise,"[32, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.2.0.depthwise_i,Depthwise,"[32, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.3.0.depthwise_r,Depthwise,"[16, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.3.0.depthwise_i,Depthwise,"[16, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.4.0.depthwise_r,Depthwise,"[8, 1, 5, 1]",0.0,0.0,0.0,,
+model.decoder.model.4.0.depthwise_i,Depthwise,"[8, 1, 5, 1]",0.0,0.0,0.0,,
+model.encoder.model.0.0.pointwise_r,Pointwise,"[8, 1, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.0.0.pointwise_i,Pointwise,"[8, 1, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.1.0.pointwise_r,Pointwise,"[16, 8, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.1.0.pointwise_i,Pointwise,"[16, 8, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.2.0.pointwise_r,Pointwise,"[32, 16, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.2.0.pointwise_i,Pointwise,"[32, 16, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.3.0.pointwise_r,Pointwise,"[64, 32, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.3.0.pointwise_i,Pointwise,"[64, 32, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.4.0.pointwise_r,Pointwise,"[128, 64, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.4.0.pointwise_i,Pointwise,"[128, 64, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.5.0.pointwise_r,Pointwise,"[128, 128, 1, 1]",0.0,0.0,0.0,,
+model.encoder.model.5.0.pointwise_i,Pointwise,"[128, 128, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.0.0.pointwise_r,Pointwise,"[128, 256, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.0.0.pointwise_i,Pointwise,"[128, 256, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.1.0.pointwise_r,Pointwise,"[64, 256, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.1.0.pointwise_i,Pointwise,"[64, 256, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.2.0.pointwise_r,Pointwise,"[32, 128, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.2.0.pointwise_i,Pointwise,"[32, 128, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.3.0.pointwise_r,Pointwise,"[16, 64, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.3.0.pointwise_i,Pointwise,"[16, 64, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.4.0.pointwise_r,Pointwise,"[8, 32, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.4.0.pointwise_i,Pointwise,"[8, 32, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.5.0.pointwise_r,Pointwise,"[1, 16, 1, 1]",0.0,0.0,0.0,,
+model.decoder.model.5.0.pointwise_i,Pointwise,"[1, 16, 1, 1]",0.0,0.0,0.0,,
+model.mattn.mattn.MultiheadAttention_re_q_proj,Attention,"[512, 512]",7.62939453125e-06,,,7.62939453125e-06,7.62939453125e-06
+model.mattn.mattn.MultiheadAttention_re_k_proj,Attention,"[512, 512]",3.814697265625e-06,,,3.814697265625e-06,3.814697265625e-06
+model.mattn.mattn.MultiheadAttention_re_v_proj,Attention,"[512, 512]",1.52587890625e-05,,,1.52587890625e-05,1.52587890625e-05
+model.mattn.mattn.MultiheadAttention_re_out_proj,Attention,"[512, 512]",0.0,,,0.0,0.0
+model.mattn.mattn.MultiheadAttention_im_q_proj,Attention,"[512, 512]",7.62939453125e-06,,,7.62939453125e-06,7.62939453125e-06
+model.mattn.mattn.MultiheadAttention_im_k_proj,Attention,"[512, 512]",3.814697265625e-06,,,3.814697265625e-06,3.814697265625e-06
+model.mattn.mattn.MultiheadAttention_im_v_proj,Attention,"[512, 512]",2.288818359375e-05,,,2.288818359375e-05,2.288818359375e-05
+model.mattn.mattn.MultiheadAttention_im_out_proj,Attention,"[512, 512]",1.9073486328125e-05,,,1.9073486328125e-05,1.9073486328125e-05

@@ -20,6 +20,7 @@ Dataset/
 # Large archives & external tools
 *.tar.gz
 ollama/
+weights/
 
 # Training outputs, checkpoints & logs
 outputs/

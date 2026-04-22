@@ -1,0 +1,13 @@
+var_min,var_max,var_std,var_kurtosis,layer
+7.283680101043776e-10,0.0013651394771457862,1.179965009774168e-06,0.05206527639186383,model.mattn.input_proj.parametrizations.weight.original.real
+9.269306574071919e-10,0.0011877176715635114,9.896798411788051e-07,0.11230687817363393,model.mattn.input_proj.parametrizations.weight.original.imag
+1.9308025351939385e-10,0.003238991284664413,1.7291328927452124e-06,0.13652297018666718,model.mattn.mattn.MultiheadAttention_re.out_proj.parametrizations.weight.original
+3.419046990415835e-10,0.001760497236529963,1.2801117773157158e-05,0.069440907674323,model.mattn.mattn.MultiheadAttention_re.parametrizations.in_proj_weight.original.Q
+4.751616010388002e-10,0.0017317602962395187,1.3265048605398156e-05,0.11538066317421135,model.mattn.mattn.MultiheadAttention_re.parametrizations.in_proj_weight.original.K
+8.292066521670965e-10,0.000804918872161986,6.8591038446502715e-06,0.040728066746986785,model.mattn.mattn.MultiheadAttention_re.parametrizations.in_proj_weight.original.V
+9.365032103598317e-10,0.003146074613180879,1.8417093549530708e-06,0.15054974929131656,model.mattn.mattn.MultiheadAttention_im.out_proj.parametrizations.weight.original
+8.8275186986054e-10,0.0007681423781478144,1.933296667935147e-05,0.08795276634380231,model.mattn.mattn.MultiheadAttention_im.parametrizations.in_proj_weight.original.Q
+1.6929320490500606e-10,0.0021271193718198967,1.7750324476392628e-05,0.052328545547036184,model.mattn.mattn.MultiheadAttention_im.parametrizations.in_proj_weight.original.K
+6.103123260464474e-10,0.005132798348945367,5.300139560658653e-05,0.23793600183174574,model.mattn.mattn.MultiheadAttention_im.parametrizations.in_proj_weight.original.V
+1.4158600944224073e-09,0.003271637067961667,4.605265213101599e-06,0.14340532501154707,model.mattn.output_proj.parametrizations.weight.original.real
+4.815448215559516e-10,0.0042584575406873545,8.50277288724129e-06,0.25918787622652883,model.mattn.output_proj.parametrizations.weight.original.imag

@@ -1,0 +1,702 @@
+{
+    "model.mattn.input_proj.parametrizations.weight.original.real": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 0.9804687824989471,
+        "cross_variance": 0.0013651394771457862
+    },
+    "model.mattn.input_proj.parametrizations.weight.original.imag": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 0.9899367767700542,
+        "cross_variance": 0.0011877176715635114
+    },
+    "model.mattn.mattn.MultiheadAttention_re.out_proj.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 1.070344918294639,
+        "cross_variance": 0.003238991284664413
+    },
+    "model.mattn.mattn.MultiheadAttention_re.parametrizations.in_proj_weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 1.1513255991639033,
+        "cross_variance": 0.001760497236529963
+    },
+    "model.mattn.mattn.MultiheadAttention_im.out_proj.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 1.7665285030256133,
+        "cross_variance": 0.003146074613180879
+    },
+    "model.mattn.mattn.MultiheadAttention_im.parametrizations.in_proj_weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 1.838005180949077,
+        "cross_variance": 0.005132798348945367
+    },
+    "model.mattn.output_proj.parametrizations.weight.original.real": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 1.6070765826316347,
+        "cross_variance": 0.003271637067961667
+    },
+    "model.mattn.output_proj.parametrizations.weight.original.imag": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 1.6962079596995485,
+        "cross_variance": 0.0042584575406873545
+    },
+    "model.encoder.model.0.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -1.5711879332462146,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.0.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -1.6577933855485765,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.0.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.0711332086592864,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.0.0.pointwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.3660543038253481,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.0.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -1.4990593573529527,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.0.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.9648353654303206,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.0.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.0.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.1.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.518034380207228,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.1.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.7848725850768239,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.1.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.22972153257053085,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.1.0.pointwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.835847520815916,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.1.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.15844365591082754,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.1.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 2.1205423449304712,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.1.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.1.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.2.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.10773170305583957,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.2.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.24277537304431496,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.2.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.2629345265840226,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.2.0.pointwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.15027391477170626,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.2.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.24017492399444373,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.2.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.18044808303666704,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.2.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.2.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.3.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.2586881686539839,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.3.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.09082529383718585,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.3.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.7536063412051246,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.3.0.pointwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.8476503803027624,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.3.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.11872424814727323,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.3.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.2742652637061038,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.3.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.3.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.4.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.0744992906307207,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.4.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.36121137871189957,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.4.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.8927343210504541,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.4.0.pointwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 1.0216600829632707,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.4.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.1448775840102754,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.4.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.1309807914246468,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.4.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.4.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.5.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.779434268362643,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.5.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.7781448165980471,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.5.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 1.0877876630023753,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.5.0.pointwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 1.2273866151325379,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.5.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.0343338497166088,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.5.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.17223349810758748,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.5.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.encoder.model.5.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.0.0.pointwise_r.parametrizations.weight.original": {
+        "format": "FP",
+        "scale_granularity": "N/A",
+        "group_size": "N/A",
+        "kurtosis": 6.380074215452204,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.0.0.pointwise_i.parametrizations.weight.original": {
+        "format": "FP",
+        "scale_granularity": "N/A",
+        "group_size": "N/A",
+        "kurtosis": 7.327523908956703,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.0.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -1.1004057392367768,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.0.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.9586942920682495,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.0.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.7499735628269528,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.0.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.41118378378092046,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.0.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.0.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.1.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 3.458180549040277,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.1.0.pointwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 4.166499618053256,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.1.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.21210926472757086,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.1.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.8489153397146474,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.1.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.5831138704894241,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.1.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.38745757602119735,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.1.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.1.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.2.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 2.79070376769475,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.2.0.pointwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": 3.833173931346213,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.2.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.1418052154093874,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.2.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.08028932346054285,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.2.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.17584796313869466,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.2.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.02555875011783959,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.2.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.2.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.3.0.pointwise_r.parametrizations.weight.original": {
+        "format": "FP",
+        "scale_granularity": "N/A",
+        "group_size": "N/A",
+        "kurtosis": 8.458991344706085,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.3.0.pointwise_i.parametrizations.weight.original": {
+        "format": "FP",
+        "scale_granularity": "N/A",
+        "group_size": "N/A",
+        "kurtosis": 12.323244957406336,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.3.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.2308291283048307,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.3.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.9193648285477898,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.3.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.5577688301361952,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.3.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 2.0825113186768247,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.3.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.3.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.4.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 1.9257197437492168,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.4.0.pointwise_i.parametrizations.weight.original": {
+        "format": "FP",
+        "scale_granularity": "N/A",
+        "group_size": "N/A",
+        "kurtosis": 9.36202476913346,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.4.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.8493416708118575,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.4.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": 0.5629996574699541,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.4.1.bn_r.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.3151371132919554,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.4.1.bn_i.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.21770266355490708,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.4.2.r_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.4.2.i_prelu.weight": {
+        "format": "INT4",
+        "scale_granularity": "per-channel/per-group",
+        "group_size": 64,
+        "kurtosis": NaN,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.5.0.pointwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.8201140897401946,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.5.0.pointwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.2775534801467119,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.5.0.depthwise_r.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.805298179914478,
+        "cross_variance": 0.0
+    },
+    "model.decoder.model.5.0.depthwise_i.parametrizations.weight.original": {
+        "format": "INT4",
+        "scale_granularity": "per-tensor",
+        "group_size": "N/A",
+        "kurtosis": -0.8581114885700063,
+        "cross_variance": 0.0
+    }
+}

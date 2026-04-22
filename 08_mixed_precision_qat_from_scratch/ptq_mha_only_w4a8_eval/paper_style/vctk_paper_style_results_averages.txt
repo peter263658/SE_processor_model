@@ -1,0 +1,10 @@
+===== VCTK PAPER STYLE AVERAGES =====
+Average MBSTOI Noisy: 0.7861
+Average MBSTOI Enhanced: 0.8397
+Average SegSNR Noisy: -0.83
+Average SegSNR Enhanced: 2.01
+Average SegSNR Improvement: 2.84
+Average ILD Error Noisy: 3.7141 dB
+Average ILD Error Enhanced: 3.2451 dB
+Average IPD Error Noisy: 15.43 deg
+Average IPD Error Enhanced: 15.51 deg
