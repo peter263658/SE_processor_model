@@ -74,8 +74,59 @@ def test_topk_shape():
     print(f"[top-k] output shape ok: {out.shape}")
 
 
+def test_approx_softmax_modes_shape_and_finite():
+    torch.manual_seed(0)
+    embed_dim, num_heads, T, B = 256, 16, 32, 2
+    mha = nn.MultiheadAttention(embed_dim, num_heads, batch_first=True).eval()
+    x = torch.randn(B, T, embed_dim)
+    mask = build_causal_sliding_mask(T, window=7, device=x.device)
+
+    for mode in ("shift", "shift_topk_exact", "shift_topk_pow2", "taylor2", "relu2"):
+        out = _mha_attention_forward(
+            mha,
+            x,
+            mask,
+            top_k=4,
+            activation_quantizer=None,
+            softmax_mode=mode,
+        )
+        assert out.shape == x.shape
+        assert torch.isfinite(out).all(), f"{mode} produced non-finite outputs"
+        print(f"[{mode}] output shape/finite ok: {out.shape}")
+
+
+def test_shift_topk_exact_matches_shift_post_topk():
+    torch.manual_seed(1)
+    embed_dim, num_heads, T, B = 256, 16, 32, 2
+    mha = nn.MultiheadAttention(embed_dim, num_heads, batch_first=True).eval()
+    x = torch.randn(B, T, embed_dim)
+    mask = build_causal_sliding_mask(T, window=7, device=x.device)
+
+    post_topk = _mha_attention_forward(
+        mha,
+        x,
+        mask,
+        top_k=4,
+        activation_quantizer=None,
+        softmax_mode="shift",
+    )
+    fused_topk = _mha_attention_forward(
+        mha,
+        x,
+        mask,
+        top_k=4,
+        activation_quantizer=None,
+        softmax_mode="shift_topk_exact",
+    )
+    diff = (post_topk - fused_topk).abs().max().item()
+    print(f"[shift_topk_exact] max |post-topk − fused| = {diff:.2e}")
+    assert diff < 1e-5, f"fused exact shift top-k diverges: diff={diff}"
+
+
 if __name__ == "__main__":
     test_real_forward_matches_native()
     test_complex_forward_matches_native()
     test_topk_shape()
+    test_approx_softmax_modes_shape_and_finite()
+    test_shift_topk_exact_matches_shift_post_topk()
     print("All sanity checks passed.")

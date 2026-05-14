@@ -36,6 +36,13 @@ model:
   # MHA_re ≡ MHA_im → ComplexMHA(x) = (1+i)·[M(x.real) + i·M(x.imag)]
   # Halves MHA params (526K→263K) and per-step softmax passes (4→2).
   tied_mha: true
+  # RTL-style attention probability path. Override with:
+  #   model.attention_softmax.mode=shift
+  #   model.attention_softmax.mode=shift_topk_pow2
+  #   model.attention_softmax.mode=taylor2
+  #   model.attention_softmax.mode=relu2
+  attention_softmax:
+    mode: softmax
 training:
   accelerator: auto
   batch_size: 32

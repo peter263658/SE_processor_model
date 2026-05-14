@@ -1,0 +1,43 @@
+#!/bin/bash
+# Eval the latest 09 strict checkpoint with shift-based RTL softmax simulation.
+#
+# Usage:
+#   bash softmax_rtl_shift_based/run_eval_shift_strict.sh [checkpoint] [output_dir] [gpu_id]
+#
+# Optional:
+#   MODE=shift_topk_pow2 bash softmax_rtl_shift_based/run_eval_shift_strict.sh
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+cd "$REPO_DIR"
+
+DEFAULT_CKPT="${REPO_DIR}/outputs/finetune_strict/2026-05-10_02-40-16/logs/lightning_logs/version_0/checkpoints/epoch=45-step=44528.ckpt"
+MODE="${MODE:-shift}"
+CHECKPOINT="${1:-$DEFAULT_CKPT}"
+OUTPUT_DIR="${2:-${REPO_DIR}/softmax_rtl_shift_based/results/${MODE}_strict}"
+GPU_ID="${3:-5}"
+LIMIT_PAIRS="${LIMIT_PAIRS:-750}"
+BATCH_SIZE="${BATCH_SIZE:-8}"
+
+mkdir -p "$OUTPUT_DIR"
+
+echo "Eval 09 strict + ${MODE} RTL softmax"
+echo "  Checkpoint  : $CHECKPOINT"
+echo "  Output dir  : $OUTPUT_DIR"
+echo "  GPU         : $GPU_ID"
+echo "  Limit pairs : $LIMIT_PAIRS"
+
+CUDA_VISIBLE_DEVICES=$GPU_ID conda run --no-capture-output -n bcctn python eval.py \
+    --model_checkpoint "$CHECKPOINT" \
+    --vctk_test_dir /raid/R12K41024/BCCTN/Dataset/noisy_testset \
+    --vctk_clean_dir /raid/R12K41024/BCCTN/Dataset/clean_testset \
+    --output_dir "$OUTPUT_DIR" \
+    --paper_style_eval \
+    --batch_size "$BATCH_SIZE" \
+    --limit_pairs "$LIMIT_PAIRS" \
+    --hydra_overrides \
+        training.qat_scope=full \
+        training.top_k_attention=4 \
+        model.attention_softmax.mode="$MODE"

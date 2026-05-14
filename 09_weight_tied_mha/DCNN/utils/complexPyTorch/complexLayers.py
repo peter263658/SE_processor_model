@@ -675,8 +675,222 @@ class ComplexLSTM(Module):
 
 #         return imaginary
 
+def _canonical_softmax_mode(mode):
+    if mode is None:
+        return "softmax"
+    mode = str(mode).lower().replace("-", "_")
+    aliases = {
+        "default": "softmax",
+        "exact": "softmax",
+        "torch": "softmax",
+        "shift_based": "shift",
+        "shift_pow2": "shift",
+        "shift_topk": "shift_topk_pow2",
+        "shift_top4": "shift_topk_pow2",
+        "topk_shift": "shift_topk_pow2",
+        "fused_shift": "shift_topk_pow2",
+        "shift_topk_fused": "shift_topk_pow2",
+        "shift_topk_floor": "shift_topk_pow2_floor",
+        "topk_shift_floor": "shift_topk_pow2_floor",
+        "shift_topk_ceil": "shift_topk_pow2_ceil",
+        "topk_shift_ceil": "shift_topk_pow2_ceil",
+        "shift_topk_clamp8": "shift_topk_pow2_clamp8",
+        "topk_shift_clamp8": "shift_topk_pow2_clamp8",
+        "clamp8": "shift_topk_pow2_clamp8",
+        "shift_topk_mantissa_free": "shift_topk_pow2_nomantissa",
+        "shift_topk_no_mantissa": "shift_topk_pow2_nomantissa",
+        "shift_topk_mfree": "shift_topk_pow2_nomantissa",
+        "mantissa_free": "shift_topk_pow2_nomantissa",
+        "no_mantissa": "shift_topk_pow2_nomantissa",
+        "taylor": "taylor2",
+        "poly2": "taylor2",
+        "relu_sq": "relu2",
+        "relu_square": "relu2",
+        "square_relu": "relu2",
+    }
+    return aliases.get(mode, mode)
+
+
+def _normalize_attention_weights(weights, valid_mask):
+    weights = weights.masked_fill(~valid_mask, 0.0)
+    denom = weights.sum(dim=-1, keepdim=True)
+    valid_count = valid_mask.sum(dim=-1, keepdim=True).clamp_min(1)
+    uniform = valid_mask.to(weights.dtype) / valid_count.to(weights.dtype)
+    eps = 1e-6 if weights.dtype == torch.float16 else 1e-12
+    return torch.where(denom > eps, weights / denom.clamp_min(eps), uniform)
+
+
+def _shift_based_softmax(attn, valid_mask):
+    """Adder/shifter-friendly exp approximation for hardware experiments.
+
+    Approximate exp(x) as 2^(1.5x). The fractional 2^f term is linearly
+    approximated as 1 + f, and the denominator is rounded to the nearest
+    power-of-two to mimic a shift reciprocal.
+    """
+    min_value = torch.finfo(attn.dtype).min
+    safe_attn = attn.masked_fill(~valid_mask, min_value)
+    row_max = safe_attn.max(dim=-1, keepdim=True).values
+    row_max = row_max.masked_fill(~torch.isfinite(row_max), 0.0)
+
+    x = (safe_attn - row_max).masked_fill(~valid_mask, 0.0)
+    scaled = (x * 1.5).clamp(min=-16.0, max=0.0)
+    integer = torch.floor(scaled)
+    frac = scaled - integer
+    mantissa = 1.0 + frac
+    weights = torch.ldexp(mantissa, integer.to(torch.int32))
+    weights = weights.masked_fill(~valid_mask, 0.0)
+
+    denom = weights.sum(dim=-1, keepdim=True)
+    valid_count = valid_mask.sum(dim=-1, keepdim=True).clamp_min(1)
+    uniform = valid_mask.to(weights.dtype) / valid_count.to(weights.dtype)
+
+    denom_f32 = denom.to(torch.float32).clamp_min(1e-12)
+    denom_pow2 = torch.pow(
+        torch.full_like(denom_f32, 2.0),
+        torch.round(torch.log2(denom_f32)),
+    ).to(weights.dtype)
+    approx = weights / denom_pow2.clamp_min(1e-6 if weights.dtype == torch.float16 else 1e-12)
+    return torch.where(denom > 0, approx, uniform)
+
+
+def _round_power_of_two(denom, dtype, rounding="nearest"):
+    denom_f32 = denom.to(torch.float32).clamp_min(1e-12)
+    exponent = torch.log2(denom_f32)
+    if rounding == "floor":
+        exponent = torch.floor(exponent)
+    elif rounding == "ceil":
+        exponent = torch.ceil(exponent)
+    elif rounding == "nearest":
+        exponent = torch.round(exponent)
+    else:
+        raise ValueError(f"Unsupported power-of-two rounding mode: {rounding}")
+    denom_pow2 = torch.pow(
+        torch.full_like(denom_f32, 2.0),
+        exponent,
+    )
+    return denom_pow2.to(dtype)
+
+
+def _shift_topk_config(softmax_mode):
+    softmax_mode = _canonical_softmax_mode(softmax_mode)
+    configs = {
+        "shift_topk_exact": {
+            "pow2_denom": False,
+            "denom_rounding": "nearest",
+            "clamp_min": -16.0,
+            "use_mantissa": True,
+        },
+        "shift_topk_pow2": {
+            "pow2_denom": True,
+            "denom_rounding": "nearest",
+            "clamp_min": -16.0,
+            "use_mantissa": True,
+        },
+        "shift_topk_pow2_floor": {
+            "pow2_denom": True,
+            "denom_rounding": "floor",
+            "clamp_min": -16.0,
+            "use_mantissa": True,
+        },
+        "shift_topk_pow2_ceil": {
+            "pow2_denom": True,
+            "denom_rounding": "ceil",
+            "clamp_min": -16.0,
+            "use_mantissa": True,
+        },
+        "shift_topk_pow2_clamp8": {
+            "pow2_denom": True,
+            "denom_rounding": "nearest",
+            "clamp_min": -8.0,
+            "use_mantissa": True,
+        },
+        "shift_topk_pow2_nomantissa": {
+            "pow2_denom": True,
+            "denom_rounding": "nearest",
+            "clamp_min": -16.0,
+            "use_mantissa": False,
+        },
+    }
+    return configs.get(softmax_mode)
+
+
+def _shift_topk_softmax(attn, valid_mask, top_k, pow2_denom=True,
+                        denom_rounding="nearest", clamp_min=-16.0,
+                        use_mantissa=True):
+    """Fuse top-k selection into the shift approximation.
+
+    Existing strict eval already keeps only top-k probabilities after softmax.
+    Since the shift transform is monotonic in the score, selecting top-k scores
+    first keeps the same support while computing weights for only k entries.
+    """
+    if top_k is None or top_k <= 0:
+        return _shift_based_softmax(attn, valid_mask)
+
+    k = min(int(top_k), attn.size(-1))
+    masked_attn = attn.masked_fill(~valid_mask, float("-inf"))
+    topk_scores, topk_idx = torch.topk(masked_attn, k=k, dim=-1)
+    topk_valid = torch.isfinite(topk_scores)
+
+    row_max = topk_scores[..., :1].masked_fill(~topk_valid[..., :1], 0.0)
+    x = (topk_scores - row_max).masked_fill(~topk_valid, 0.0)
+    scaled = (x * 1.5).clamp(min=clamp_min, max=0.0)
+    integer = torch.floor(scaled)
+    frac = scaled - integer
+    mantissa = (1.0 + frac) if use_mantissa else torch.ones_like(frac)
+    weights = torch.ldexp(mantissa, integer.to(torch.int32))
+    weights = weights.masked_fill(~topk_valid, 0.0)
+
+    denom = weights.sum(dim=-1, keepdim=True)
+    valid_count = valid_mask.sum(dim=-1, keepdim=True).clamp_min(1)
+    uniform = valid_mask.to(weights.dtype) / valid_count.to(weights.dtype)
+
+    if pow2_denom:
+        denom_norm = _round_power_of_two(denom, weights.dtype, denom_rounding)
+    else:
+        denom_norm = denom
+
+    eps = 1e-6 if weights.dtype == torch.float16 else 1e-12
+    topk_probs = weights / denom_norm.clamp_min(eps)
+    probs = torch.zeros_like(attn).scatter(-1, topk_idx, topk_probs)
+    return torch.where(denom > 0, probs, uniform)
+
+
+def _approx_attention_probs(attn, softmax_mode):
+    softmax_mode = _canonical_softmax_mode(softmax_mode)
+    if softmax_mode == "softmax":
+        return F.softmax(attn, dim=-1)
+
+    valid_mask = torch.isfinite(attn)
+    safe_attn = attn.masked_fill(~valid_mask, 0.0)
+
+    if softmax_mode == "shift":
+        return _shift_based_softmax(attn, valid_mask)
+    if softmax_mode == "shift_exact":
+        min_value = torch.finfo(attn.dtype).min
+        centered = attn.masked_fill(~valid_mask, min_value)
+        centered = centered - centered.max(dim=-1, keepdim=True).values
+        scaled = (centered * 1.5).clamp(min=-16.0, max=0.0)
+        integer = torch.floor(scaled)
+        frac = scaled - integer
+        weights = torch.ldexp(1.0 + frac, integer.to(torch.int32))
+        return _normalize_attention_weights(weights, valid_mask)
+    if softmax_mode == "taylor2":
+        weights = (1.0 + safe_attn + 0.5 * safe_attn * safe_attn).clamp_min(0.0)
+        return _normalize_attention_weights(weights, valid_mask)
+    if softmax_mode == "relu2":
+        weights = F.relu(safe_attn).square()
+        return _normalize_attention_weights(weights, valid_mask)
+
+    raise ValueError(
+        f"Unsupported attention softmax mode: {softmax_mode}. "
+        "Expected one of: softmax, shift, shift_exact, shift_topk_exact, "
+        "shift_topk_pow2, shift_topk_pow2_floor, shift_topk_pow2_ceil, "
+        "shift_topk_pow2_clamp8, shift_topk_pow2_nomantissa, taylor2, relu2."
+    )
+
+
 def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
-                           fp16_accumulator=False):
+                           fp16_accumulator=False, softmax_mode="softmax"):
     """Manually recreate nn.MultiheadAttention forward with optional top-k masking
     after softmax. Uses `mha.in_proj_weight`, `mha.in_proj_bias`, `mha.out_proj`
     directly so any parametrization (e.g. INT4 fake quant) applies transparently.
@@ -691,6 +905,7 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
         fp16_accumulator: if True, run QK^T, softmax, and Score×V in fp16 to
             match the hardware datapath (per 07 handoff §2.1). Output is cast
             back to the original activation dtype before out_proj.
+        softmax_mode: "softmax", "shift", "taylor2", or "relu2".
     """
     B, T, E = x.shape
     H = mha.num_heads
@@ -730,9 +945,22 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
         else:
             attn = attn + mask
 
-    attn = F.softmax(attn, dim=-1)
+    softmax_mode = _canonical_softmax_mode(softmax_mode)
+    top_k_applied = False
+    shift_topk_cfg = _shift_topk_config(softmax_mode)
+    if shift_topk_cfg is not None:
+        valid_mask = torch.isfinite(attn)
+        attn = _shift_topk_softmax(
+            attn,
+            valid_mask,
+            top_k=top_k,
+            **shift_topk_cfg,
+        )
+        top_k_applied = top_k is not None and top_k > 0
+    else:
+        attn = _approx_attention_probs(attn, softmax_mode)
 
-    if top_k is not None and top_k < T:
+    if top_k is not None and top_k < T and not top_k_applied:
         # Top-k hard masking. scatter_ has a well-defined gradient, STE-like
         # behavior emerges naturally: gradients flow through the kept entries.
         topk_val, topk_idx = torch.topk(attn, k=top_k, dim=-1)
@@ -753,12 +981,14 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
 
 
 class ComplexMultiheadAttention(Module):
-    def __init__(self, embed_dim=512, num_heads=8, batch_first=True, tied=False):
+    def __init__(self, embed_dim=512, num_heads=8, batch_first=True, tied=False,
+                 softmax_mode="softmax"):
         super().__init__()
         self.embed_dim = embed_dim
         self.num_heads = num_heads
         self.tied = tied
-        print(f"ComplexMultiheadAttention: embed_dim={embed_dim}, num_heads={num_heads}, batch_first={batch_first}, tied={tied}")
+        self.softmax_mode = _canonical_softmax_mode(softmax_mode)
+        print(f"ComplexMultiheadAttention: embed_dim={embed_dim}, num_heads={num_heads}, batch_first={batch_first}, tied={tied}, softmax_mode={self.softmax_mode}")
 
         self.MultiheadAttention_re = MultiheadAttention(self.embed_dim, self.num_heads, batch_first=batch_first)
         if not tied:
@@ -766,7 +996,7 @@ class ComplexMultiheadAttention(Module):
 
         # Mixed-precision QAT hooks (set externally by enable_mixed_precision_qat)
         self.top_k = None
-        self.use_custom_forward = False
+        self.use_custom_forward = self.softmax_mode != "softmax"
         self.activation_quantizer = None
         self.fp16_accumulator = False
 
@@ -778,16 +1008,20 @@ class ComplexMultiheadAttention(Module):
         if self.use_custom_forward:
             real      = _mha_attention_forward(self.MultiheadAttention_re, x.real, attn_mask,
                                                self.top_k, self.activation_quantizer,
-                                               self.fp16_accumulator) \
+                                               self.fp16_accumulator,
+                                               self.softmax_mode) \
                       - _mha_attention_forward(self.MultiheadAttention_im, x.imag, attn_mask,
                                                self.top_k, self.activation_quantizer,
-                                               self.fp16_accumulator)
+                                               self.fp16_accumulator,
+                                               self.softmax_mode)
             imaginary = _mha_attention_forward(self.MultiheadAttention_re, x.imag, attn_mask,
                                                self.top_k, self.activation_quantizer,
-                                               self.fp16_accumulator) \
+                                               self.fp16_accumulator,
+                                               self.softmax_mode) \
                       + _mha_attention_forward(self.MultiheadAttention_im, x.real, attn_mask,
                                                self.top_k, self.activation_quantizer,
-                                               self.fp16_accumulator)
+                                               self.fp16_accumulator,
+                                               self.softmax_mode)
             return torch.complex(real, imaginary)
 
         real      = self._forward_real(x, attn_mask)
@@ -803,10 +1037,12 @@ class ComplexMultiheadAttention(Module):
         if self.use_custom_forward:
             a = _mha_attention_forward(self.MultiheadAttention_re, x.real, attn_mask,
                                        self.top_k, self.activation_quantizer,
-                                       self.fp16_accumulator)
+                                       self.fp16_accumulator,
+                                       self.softmax_mode)
             b = _mha_attention_forward(self.MultiheadAttention_re, x.imag, attn_mask,
                                        self.top_k, self.activation_quantizer,
-                                       self.fp16_accumulator)
+                                       self.fp16_accumulator,
+                                       self.softmax_mode)
         else:
             a, _ = self.MultiheadAttention_re(x.real, x.real, x.real, attn_mask=attn_mask)
             b, _ = self.MultiheadAttention_re(x.imag, x.imag, x.imag, attn_mask=attn_mask)

@@ -296,13 +296,13 @@ def _set_topk_on_complex_mha(model: nn.Module, top_k: Optional[int], fp8_dtype,
     def _act_q(t):
         return _fp8_quantize_tensor(t, fp8_dtype)
 
-    # Enable the custom forward whenever top-k OR fp16 accumulator is requested,
-    # since both require bypassing nn.MultiheadAttention's internal path.
-    enable_custom = (top_k is not None) or fp16_accumulator
-
     n = 0
     for m in model.modules():
         if isinstance(m, ComplexMultiheadAttention):
+            softmax_mode = getattr(m, "softmax_mode", "softmax")
+            # Enable the custom forward whenever top-k, fp16 accumulator, or an
+            # approximate softmax is requested, since all bypass native MHA.
+            enable_custom = (top_k is not None) or fp16_accumulator or softmax_mode != "softmax"
             m.top_k = top_k
             m.use_custom_forward = enable_custom
             m.activation_quantizer = _act_q if enable_custom else None

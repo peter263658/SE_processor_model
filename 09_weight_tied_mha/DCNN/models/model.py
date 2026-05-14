@@ -70,6 +70,7 @@ class DCNN(nn.Module):
         # breakpoint()
         # print(f"flatten_size: {flatten_size}")
         self.tied_mha = kwargs.get("tied_mha", False)
+        self.attention_softmax = kwargs.get("attention_softmax", {})
         self.mattn = MultiAttnBlock(
             input_size=flatten_size,  # 512 or 1024
             hidden_size=self.rnn_units,
@@ -78,6 +79,7 @@ class DCNN(nn.Module):
             batch_first=True,
             window_size=self.attn_win,  # None or int
             tied_mha=self.tied_mha,
+            attention_softmax=self.attention_softmax,
         )
 
         # self.encoder = Encoder(self.kernel_num, kernel_size)
@@ -226,17 +228,24 @@ class Decoder(nn.Module):
 
 
 class MultiAttnBlock(nn.Module):
-    def __init__(self, input_size, hidden_size, embed_dim=512, num_heads=32, batch_first=True, window_size=None, tied_mha=False):
+    def __init__(self, input_size, hidden_size, embed_dim=512, num_heads=32,
+                 batch_first=True, window_size=None, tied_mha=False,
+                 attention_softmax=None):
         super().__init__()
         # Project to embed_dim first (exactly as in paper)
         self.input_proj = nn.Linear(input_size, embed_dim, dtype=torch.complex64)
 
         self.window_size = window_size
+        if isinstance(attention_softmax, dict):
+            self.softmax_mode = attention_softmax.get("mode", "softmax")
+        else:
+            self.softmax_mode = attention_softmax or "softmax"
 
-        print(f"MultiAttnBlock: input_size={input_size}, hidden_size={hidden_size}, embed_dim={embed_dim}, num_heads={num_heads}, window_size={window_size}, tied_mha={tied_mha}")
+        print(f"MultiAttnBlock: input_size={input_size}, hidden_size={hidden_size}, embed_dim={embed_dim}, num_heads={num_heads}, window_size={window_size}, tied_mha={tied_mha}, softmax_mode={self.softmax_mode}")
         # Use the right number of heads as in paper
         self.mattn = torch_complex.ComplexMultiheadAttention(
-            embed_dim=embed_dim, num_heads=num_heads, batch_first=batch_first, tied=tied_mha)
+            embed_dim=embed_dim, num_heads=num_heads, batch_first=batch_first,
+            tied=tied_mha, softmax_mode=self.softmax_mode)
         # Project back to original dimension
         self.output_proj = nn.Linear(embed_dim, input_size, dtype=torch.complex64)
 

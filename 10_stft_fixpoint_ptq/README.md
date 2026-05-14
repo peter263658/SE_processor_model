@@ -26,6 +26,18 @@ Sweep precision with Hydra overrides:
     model.stft_fixed_point.istft_input_frac_bits=12
 ```
 
+Run floating-format STFT/iSTFT PTQ:
+
+```bash
+# Full VCTK paper-style eval, 750 pairs per SNR by default
+./run_eval_stft_float_precision.sh fp32
+./run_eval_stft_float_precision.sh fp16xfp16
+./run_eval_stft_float_precision.sh fp8xfp8
+
+# Faster smoke run
+LIMIT_PAIRS=10 ./run_eval_stft_float_precision.sh fp8xfp8
+```
+
 The MBSTOI baseline to compare against is the strict W4A8 result in
 `09_weight_tied_mha/results/finetune_strict`, where VCTK average MBSTOI is
 `0.8383`.
