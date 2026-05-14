@@ -1,0 +1,44 @@
+{
+  "source_ckpt": "/raid/R12K41024/09_weight_tied_mha/outputs/finetune_strict/2026-05-10_02-40-16/logs/lightning_logs/version_0/checkpoints/epoch=45-step=44528.ckpt",
+  "config": "/raid/R12K41024/09_weight_tied_mha/outputs/finetune_strict/2026-05-10_02-40-16/.hydra/config.yaml",
+  "input_wav": "/raid/R12K41024/BCCTN/Dataset/noisy_testset/snr_0dB/p225_p225_009_az-40_snr+0.0.wav",
+  "sample_rate": 16000,
+  "input": {
+    "shape": [
+      1,
+      2,
+      32000
+    ],
+    "dtype": "torch.float32",
+    "is_complex": false,
+    "files": {
+      "value": "input_waveform.fp32.bin"
+    }
+  },
+  "output": {
+    "shape": [
+      1,
+      2,
+      31968
+    ],
+    "dtype": "torch.float32",
+    "is_complex": false,
+    "files": {
+      "value": "output_waveform.fp32.bin"
+    }
+  },
+  "model": {
+    "win_len": 128,
+    "win_inc": 80,
+    "fft_len": 128,
+    "win_type": "hamming",
+    "masking_mode": "C",
+    "tied_mha": true
+  },
+  "training": {
+    "qat_scope": "full",
+    "top_k_attention": 4,
+    "int4_group_size": 32
+  },
+  "layer_io": {}
+}

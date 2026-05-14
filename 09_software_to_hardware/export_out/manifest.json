@@ -1,0 +1,1207 @@
+{
+  "source_ckpt": "/raid/R12K41024/09_weight_tied_mha/outputs/finetune_strict/2026-05-10_02-40-16/logs/lightning_logs/version_0/checkpoints/epoch=45-step=44528.ckpt",
+  "config": "/raid/R12K41024/09_weight_tied_mha/outputs/finetune_strict/2026-05-10_02-40-16/.hydra/config.yaml",
+  "model": {
+    "embed_dim": 256,
+    "num_heads": 16,
+    "head_dim": 16,
+    "int4_group_size": 32,
+    "softmax_topk_k": 4,
+    "qat_scope": "full",
+    "tied_mha": true
+  },
+  "fusions_applied": [
+    "BN (real) + complex conv real-output bias \u2192 (bn_scale_r, bn_bias_r)",
+    "BN (imag) + complex conv imag-output bias \u2192 (bn_scale_i, bn_bias_i)",
+    "1/sqrt(head_dim) \u2192 Q scale[0:num_heads] + Q bias[0:embed_dim]",
+    "nibble pack INT4 (2 values / byte, low nibble first)"
+  ],
+  "blocks": [
+    {
+      "kind": "encoder",
+      "stage_idx": 0,
+      "dotted": "encoder.model.0.0",
+      "num_out_channels": 8,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 1,
+      "dotted": "encoder.model.1.0",
+      "num_out_channels": 16,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 2,
+      "dotted": "encoder.model.2.0",
+      "num_out_channels": 32,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 3,
+      "dotted": "encoder.model.3.0",
+      "num_out_channels": 64,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 4,
+      "dotted": "encoder.model.4.0",
+      "num_out_channels": 128,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 5,
+      "dotted": "encoder.model.5.0",
+      "num_out_channels": 128,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 0,
+      "dotted": "decoder.model.0.0",
+      "num_out_channels": 128,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": true,
+      "bn_attaches_to": "depthwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 1,
+      "dotted": "decoder.model.1.0",
+      "num_out_channels": 64,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "depthwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 2,
+      "dotted": "decoder.model.2.0",
+      "num_out_channels": 32,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "depthwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 3,
+      "dotted": "decoder.model.3.0",
+      "num_out_channels": 16,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": true,
+      "bn_attaches_to": "depthwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 4,
+      "dotted": "decoder.model.4.0",
+      "num_out_channels": 8,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": true,
+      "bn_attaches_to": "depthwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "PReLU(result, alpha_{r,i})"
+      ],
+      "bn_eps": 1e-05,
+      "prelu_num_parameters": 1
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 5,
+      "dotted": "decoder.model.5.0",
+      "num_out_channels": 1,
+      "has_bn": false,
+      "has_prelu": false,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "depthwise",
+      "post_mac_order": [
+        "bn_scale_{r,i} * mac_out_{r,i}",
+        "+ bn_bias_{r,i}",
+        "(no activation)"
+      ],
+      "bn_eps": null,
+      "prelu_num_parameters": 0
+    }
+  ],
+  "layers": [
+    {
+      "dotted": "encoder.model.0.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [],
+      "scale_dtype": "fp16",
+      "num_elements": 5,
+      "packed_bytes": 3
+    },
+    {
+      "dotted": "encoder.model.0.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [],
+      "scale_dtype": "fp16",
+      "num_elements": 5,
+      "packed_bytes": 3
+    },
+    {
+      "dotted": "encoder.model.0.0.pointwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        8,
+        1,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        8
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 8,
+      "packed_bytes": 4,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 8,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.0.0.pointwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        8,
+        1,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        8
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 8,
+      "packed_bytes": 4,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 8,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.1.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        8
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 40,
+      "packed_bytes": 20
+    },
+    {
+      "dotted": "encoder.model.1.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        8
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 40,
+      "packed_bytes": 20
+    },
+    {
+      "dotted": "encoder.model.1.0.pointwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        16
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 128,
+      "packed_bytes": 64,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 16,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.1.0.pointwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        16
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 128,
+      "packed_bytes": 64,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 16,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.2.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        16
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 80,
+      "packed_bytes": 40
+    },
+    {
+      "dotted": "encoder.model.2.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        16
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 80,
+      "packed_bytes": 40
+    },
+    {
+      "dotted": "encoder.model.2.0.pointwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        32
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 512,
+      "packed_bytes": 256,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 32,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.2.0.pointwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        32
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 512,
+      "packed_bytes": 256,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 32,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.3.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        32
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 160,
+      "packed_bytes": 80
+    },
+    {
+      "dotted": "encoder.model.3.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        32
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 160,
+      "packed_bytes": 80
+    },
+    {
+      "dotted": "encoder.model.3.0.pointwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        64
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 2048,
+      "packed_bytes": 1024,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 64,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.3.0.pointwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        64
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 2048,
+      "packed_bytes": 1024,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 64,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.4.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        64
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 320,
+      "packed_bytes": 160
+    },
+    {
+      "dotted": "encoder.model.4.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        64
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 320,
+      "packed_bytes": 160
+    },
+    {
+      "dotted": "encoder.model.4.0.pointwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        128
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 8192,
+      "packed_bytes": 4096,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 128,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.4.0.pointwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        128
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 8192,
+      "packed_bytes": 4096,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 128,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.5.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        128
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 640,
+      "packed_bytes": 320
+    },
+    {
+      "dotted": "encoder.model.5.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        128
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 640,
+      "packed_bytes": 320
+    },
+    {
+      "dotted": "encoder.model.5.0.pointwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        128,
+        128,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        128
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 16384,
+      "packed_bytes": 8192,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 128,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "encoder.model.5.0.pointwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        128,
+        128,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        128
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 16384,
+      "packed_bytes": 8192,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel",
+      "bias_length": 128,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.0.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        128
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 640,
+      "packed_bytes": 320,
+      "bias_length": 128,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.0.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        128
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 640,
+      "packed_bytes": 320,
+      "bias_length": 128,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_r",
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "weight_shape": [
+        128,
+        256,
+        1,
+        1
+      ],
+      "weight_dtype": "fp8_e4m3",
+      "num_elements": 32768
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_i",
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "weight_shape": [
+        128,
+        256,
+        1,
+        1
+      ],
+      "weight_dtype": "fp8_e4m3",
+      "num_elements": 32768
+    },
+    {
+      "dotted": "decoder.model.1.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        64
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 320,
+      "packed_bytes": 160,
+      "bias_length": 64,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.1.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        64
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 320,
+      "packed_bytes": 160,
+      "bias_length": 64,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        64,
+        256,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        64
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 16384,
+      "packed_bytes": 8192,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        64,
+        256,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        64
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 16384,
+      "packed_bytes": 8192,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "dotted": "decoder.model.2.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        32
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 160,
+      "packed_bytes": 80,
+      "bias_length": 32,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.2.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        32
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 160,
+      "packed_bytes": 80,
+      "bias_length": 32,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        32,
+        128,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        32
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 4096,
+      "packed_bytes": 2048,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        32,
+        128,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        32
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 4096,
+      "packed_bytes": 2048,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "dotted": "decoder.model.3.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        16
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 80,
+      "packed_bytes": 40,
+      "bias_length": 16,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.3.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        16
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 80,
+      "packed_bytes": 40,
+      "bias_length": 16,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_r",
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "weight_shape": [
+        16,
+        64,
+        1,
+        1
+      ],
+      "weight_dtype": "fp8_e4m3",
+      "num_elements": 1024
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_i",
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "weight_shape": [
+        16,
+        64,
+        1,
+        1
+      ],
+      "weight_dtype": "fp8_e4m3",
+      "num_elements": 1024
+    },
+    {
+      "dotted": "decoder.model.4.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        8
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 40,
+      "packed_bytes": 20,
+      "bias_length": 8,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.4.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [
+        8
+      ],
+      "scale_dtype": "fp16",
+      "num_elements": 40,
+      "packed_bytes": 20,
+      "bias_length": 8,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_r",
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "weight_shape": [
+        8,
+        32,
+        1,
+        1
+      ],
+      "weight_dtype": "fp8_e4m3",
+      "num_elements": 256
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_i",
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "weight_shape": [
+        8,
+        32,
+        1,
+        1
+      ],
+      "weight_dtype": "fp8_e4m3",
+      "num_elements": 256
+    },
+    {
+      "dotted": "decoder.model.5.0.depthwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [],
+      "scale_dtype": "fp16",
+      "num_elements": 5,
+      "packed_bytes": 3,
+      "bias_length": 1,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.5.0.depthwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [],
+      "scale_dtype": "fp16",
+      "num_elements": 5,
+      "packed_bytes": 3,
+      "bias_length": 1,
+      "bias_dtype": "fp16"
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_r",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        1,
+        16,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [],
+      "scale_dtype": "fp16",
+      "num_elements": 16,
+      "packed_bytes": 8,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_i",
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "weight_shape": [
+        1,
+        16,
+        1,
+        1
+      ],
+      "weight_dtype": "int4_packed",
+      "scale_shape": [],
+      "scale_dtype": "fp16",
+      "num_elements": 16,
+      "packed_bytes": 8,
+      "group_size": 32,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "dotted": "mattn.input_proj",
+      "weight_dtype_logical": "complex64",
+      "weight_shape": [
+        256,
+        256
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_head",
+      "num_heads": 16,
+      "halves": [
+        "fc_r",
+        "fc_i"
+      ],
+      "fc_r_scale_shape": [
+        16
+      ],
+      "fc_i_scale_shape": [
+        16
+      ]
+    },
+    {
+      "dotted": "mattn.output_proj",
+      "weight_dtype_logical": "complex64",
+      "weight_shape": [
+        256,
+        256
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_head",
+      "num_heads": 16,
+      "halves": [
+        "fc_r",
+        "fc_i"
+      ],
+      "fc_r_scale_shape": [
+        16
+      ],
+      "fc_i_scale_shape": [
+        16
+      ]
+    },
+    {
+      "dotted": "mattn.mattn.MultiheadAttention_re",
+      "in_proj": {
+        "dotted": "mattn.mattn.MultiheadAttention_re/in_proj_weight",
+        "weight_shape": [
+          768,
+          256
+        ],
+        "weight_format": "int4",
+        "scale_granularity": "per_head_qkv_fused",
+        "num_heads": 16,
+        "scale_groups": 48,
+        "q_rows_prescaled_by_inv_sqrt_D": true,
+        "inv_sqrt_D": 0.25,
+        "bias_length": 768
+      },
+      "out_proj_dotted": "mattn.mattn.MultiheadAttention_re/out_proj"
+    }
+  ],
+  "stft": {
+    "win_len": 128,
+    "win_inc": 80,
+    "fft_len": 128,
+    "win_type": "hamming",
+    "window_periodic": false,
+    "center": false,
+    "normalized": true,
+    "num_freq_bins_before_dc_drop": 65,
+    "num_freq_bins_after_dc_drop": 64,
+    "dc_bin_removed_before_model": true,
+    "masking_mode": "C",
+    "notes": "STFT matches torch.stft with hamming_window(periodic=False), center=False, normalized=True."
+  }
+}

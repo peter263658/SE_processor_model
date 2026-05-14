@@ -75,14 +75,26 @@ def _scale_per_channel(w: torch.Tensor, qmax: int) -> torch.Tensor:
 
 
 def _scale_per_group_last_dim(w: torch.Tensor, group_size: int, qmax: int) -> Tuple[torch.Tensor, Tuple[int, ...]]:
-    """Split last dim into groups of `group_size`. Returns (scale, reshape_shape).
+    """Per-group scale along the input-channels axis.
 
-    Weight shape (..., C_in) → grouped shape (..., C_in // gsz, gsz).
-    Scale shape matches grouped-shape with the last dim reduced.
+    For Conv2d weight (out, in, kH, kW) the in-channels axis is dim=1.
+    For Linear weight (out, in) the in-channels axis is dim=-1 (= dim=1).
+    PW conv has kW=1, so grouping the trailing axis is a no-op — group along
+    in_ch to actually exploit per-group scales.
     """
+    if w.dim() == 4:
+        out_ch, in_ch, kH, kW = w.shape
+        if in_ch < group_size or in_ch % group_size != 0:
+            return _scale_per_channel(w, qmax), w.shape
+        n_groups = in_ch // group_size
+        new_shape = (out_ch, n_groups, group_size, kH, kW)
+        grouped = w.reshape(new_shape)
+        amax = grouped.abs().amax(dim=(2, 3, 4), keepdim=True)  # (out, n_groups, 1, 1, 1)
+        scale = (amax / qmax).clamp_(min=1e-12)
+        return scale, new_shape
+
     last = w.shape[-1]
     if last % group_size != 0:
-        # Fall back to per-channel when last dim doesn't divide (e.g. odd sizes)
         return _scale_per_channel(w, qmax), w.shape
     new_shape = w.shape[:-1] + (last // group_size, group_size)
     grouped = w.reshape(new_shape)

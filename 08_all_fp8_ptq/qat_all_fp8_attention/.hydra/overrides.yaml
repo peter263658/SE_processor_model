@@ -1,0 +1,7 @@
+- training.qat_scope=full
+- training.int4_group_size=256
+- training.learning_rate=1e-4
+- training.n_epochs=30
+- training.train_checkpoint_path='/raid/R12K41024/08_all_fp8_ptq/epoch=134-step=130680.ckpt'
+- +training.fp8_attention=true
+- +training.fp8_scale=true

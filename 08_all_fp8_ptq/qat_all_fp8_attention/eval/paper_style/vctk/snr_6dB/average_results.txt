@@ -1,0 +1,25 @@
+===== NOISY SIGNAL METRICS =====
+Average SegSNR Noisy (L): -0.5431
+Average SegSNR Noisy (R): -0.5139
+Average SegSNR Noisy: -0.5285
+Average MBSTOI Noisy: 0.8474
+Average PESQ Noisy: 1.2028
+Average ILD Error Noisy (dB): 3.2572
+Average IPD Error Noisy (rad): 0.2095
+Average IPD Error Noisy (deg): 12.0034
+
+===== ENHANCED SIGNAL METRICS =====
+Average SegSNR (L): 1.4265
+Average SegSNR (R): 1.4058
+Average SegSNR: 1.4161
+Average SegSNR Improvement: 1.9446
+Average MBSTOI: 0.8693
+Average PESQ: 1.5378
+Average ILD Error (dB): 3.0986
+Average IPD Error (rad): 0.2360
+Average IPD Error (deg): 13.5203
+
+===== PROCESSING STATS =====
+Files Processed: 750
+Total Files: 750
+Processing Rate: 100.0%

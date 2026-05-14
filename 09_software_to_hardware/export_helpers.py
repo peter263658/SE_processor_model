@@ -248,7 +248,7 @@ def fp8_e4m3_bytes(w: torch.Tensor) -> np.ndarray:
 # Model & block discovery
 # ──────────────────────────────────────────────────────────────
 
-DECODER_OUTLIER_STAGES = {0, 3, 4}  # per handoff §2.1
+DECODER_OUTLIER_STAGES = {0, 3, 4}  # strict tied-MHA handoff keeps these decoder PW layers in FP8
 
 
 @dataclass

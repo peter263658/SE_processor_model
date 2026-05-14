@@ -1,4 +1,0 @@
-Shape: [512]
-Dtype: complex64
-Real file: bias.real.dat
-Imag file: bias.imag.dat

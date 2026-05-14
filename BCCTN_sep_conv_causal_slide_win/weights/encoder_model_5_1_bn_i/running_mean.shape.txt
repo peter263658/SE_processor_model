@@ -1,3 +1,0 @@
-Shape: [128]
-Dtype: float32
-Data file: running_mean.dat

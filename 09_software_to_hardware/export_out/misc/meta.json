@@ -1,0 +1,14 @@
+{
+  "win_len": 128,
+  "win_inc": 80,
+  "fft_len": 128,
+  "win_type": "hamming",
+  "window_periodic": false,
+  "center": false,
+  "normalized": true,
+  "num_freq_bins_before_dc_drop": 65,
+  "num_freq_bins_after_dc_drop": 64,
+  "dc_bin_removed_before_model": true,
+  "masking_mode": "C",
+  "notes": "STFT matches torch.stft with hamming_window(periodic=False), center=False, normalized=True."
+}

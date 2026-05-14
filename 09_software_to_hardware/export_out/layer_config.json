@@ -1,0 +1,1973 @@
+{
+  "model": {
+    "name": "BinauralAttentionDCNN",
+    "embed_dim": 256,
+    "num_heads": 16,
+    "head_dim": 16,
+    "int4_group_size": 32,
+    "activation_format": "fp8_e4m3",
+    "accumulator": "fp16",
+    "qk_scale_fused_into_q": true,
+    "softmax_topk_k": 4,
+    "topk_renorm_after_softmax": true,
+    "tied_mha": true,
+    "fp16_accumulator": false
+  },
+  "blocks": [
+    {
+      "kind": "encoder",
+      "stage_idx": 0,
+      "dotted": "encoder.model.0.0",
+      "num_out_channels": 8,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/encoder/stage_0/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/encoder/stage_0/bn_bias_r.fp16.bin",
+        "length": 8,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/encoder/stage_0/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/encoder/stage_0/bn_bias_i.fp16.bin",
+        "length": 8,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/encoder/stage_0/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/encoder/stage_0/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 1,
+      "dotted": "encoder.model.1.0",
+      "num_out_channels": 16,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/encoder/stage_1/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/encoder/stage_1/bn_bias_r.fp16.bin",
+        "length": 16,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/encoder/stage_1/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/encoder/stage_1/bn_bias_i.fp16.bin",
+        "length": 16,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/encoder/stage_1/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/encoder/stage_1/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 2,
+      "dotted": "encoder.model.2.0",
+      "num_out_channels": 32,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/encoder/stage_2/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/encoder/stage_2/bn_bias_r.fp16.bin",
+        "length": 32,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/encoder/stage_2/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/encoder/stage_2/bn_bias_i.fp16.bin",
+        "length": 32,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/encoder/stage_2/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/encoder/stage_2/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 3,
+      "dotted": "encoder.model.3.0",
+      "num_out_channels": 64,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/encoder/stage_3/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/encoder/stage_3/bn_bias_r.fp16.bin",
+        "length": 64,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/encoder/stage_3/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/encoder/stage_3/bn_bias_i.fp16.bin",
+        "length": 64,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/encoder/stage_3/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/encoder/stage_3/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 4,
+      "dotted": "encoder.model.4.0",
+      "num_out_channels": 128,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/encoder/stage_4/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/encoder/stage_4/bn_bias_r.fp16.bin",
+        "length": 128,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/encoder/stage_4/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/encoder/stage_4/bn_bias_i.fp16.bin",
+        "length": 128,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/encoder/stage_4/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/encoder/stage_4/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "encoder",
+      "stage_idx": 5,
+      "dotted": "encoder.model.5.0",
+      "num_out_channels": 128,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "pointwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/encoder/stage_5/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/encoder/stage_5/bn_bias_r.fp16.bin",
+        "length": 128,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/encoder/stage_5/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/encoder/stage_5/bn_bias_i.fp16.bin",
+        "length": 128,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/encoder/stage_5/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/encoder/stage_5/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 0,
+      "dotted": "decoder.model.0.0",
+      "num_out_channels": 128,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": true,
+      "bn_attaches_to": "depthwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/decoder/stage_0/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/decoder/stage_0/bn_bias_r.fp16.bin",
+        "length": 128,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/decoder/stage_0/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/decoder/stage_0/bn_bias_i.fp16.bin",
+        "length": 128,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/decoder/stage_0/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/decoder/stage_0/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 1,
+      "dotted": "decoder.model.1.0",
+      "num_out_channels": 64,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "depthwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/decoder/stage_1/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/decoder/stage_1/bn_bias_r.fp16.bin",
+        "length": 64,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/decoder/stage_1/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/decoder/stage_1/bn_bias_i.fp16.bin",
+        "length": 64,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/decoder/stage_1/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/decoder/stage_1/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 2,
+      "dotted": "decoder.model.2.0",
+      "num_out_channels": 32,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "depthwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/decoder/stage_2/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/decoder/stage_2/bn_bias_r.fp16.bin",
+        "length": 32,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/decoder/stage_2/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/decoder/stage_2/bn_bias_i.fp16.bin",
+        "length": 32,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/decoder/stage_2/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/decoder/stage_2/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 3,
+      "dotted": "decoder.model.3.0",
+      "num_out_channels": 16,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": true,
+      "bn_attaches_to": "depthwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/decoder/stage_3/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/decoder/stage_3/bn_bias_r.fp16.bin",
+        "length": 16,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/decoder/stage_3/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/decoder/stage_3/bn_bias_i.fp16.bin",
+        "length": 16,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/decoder/stage_3/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/decoder/stage_3/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 4,
+      "dotted": "decoder.model.4.0",
+      "num_out_channels": 8,
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": true,
+      "bn_attaches_to": "depthwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/decoder/stage_4/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/decoder/stage_4/bn_bias_r.fp16.bin",
+        "length": 8,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/decoder/stage_4/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/decoder/stage_4/bn_bias_i.fp16.bin",
+        "length": 8,
+        "dtype": "fp16"
+      },
+      "prelu": {
+        "alpha_r_file": "blocks/decoder/stage_4/prelu_alpha_r.fp32.bin",
+        "alpha_i_file": "blocks/decoder/stage_4/prelu_alpha_i.fp32.bin",
+        "num_parameters": 1,
+        "dtype": "fp32"
+      }
+    },
+    {
+      "kind": "decoder",
+      "stage_idx": 5,
+      "dotted": "decoder.model.5.0",
+      "num_out_channels": 1,
+      "has_bn": false,
+      "has_prelu": false,
+      "is_outlier_fp8": false,
+      "bn_attaches_to": "depthwise",
+      "post_mac_fma_real": {
+        "scale_name": "blocks/decoder/stage_5/bn_scale_r.fp16.bin",
+        "bias_name": "blocks/decoder/stage_5/bn_bias_r.fp16.bin",
+        "length": 1,
+        "dtype": "fp16"
+      },
+      "post_mac_fma_imag": {
+        "scale_name": "blocks/decoder/stage_5/bn_scale_i.fp16.bin",
+        "bias_name": "blocks/decoder/stage_5/bn_bias_i.fp16.bin",
+        "length": 1,
+        "dtype": "fp16"
+      },
+      "prelu": null
+    }
+  ],
+  "layers": [
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.0.0.depthwise_r",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 1,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.0.0.depthwise_i",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 1,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.0.0.pointwise_r",
+      "weight_shape": [
+        8,
+        1,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.0.0.pointwise_i",
+      "weight_shape": [
+        8,
+        1,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.1.0.depthwise_r",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 8,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.1.0.depthwise_i",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 8,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.1.0.pointwise_r",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.1.0.pointwise_i",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.2.0.depthwise_r",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 16,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.2.0.depthwise_i",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 16,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.2.0.pointwise_r",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.2.0.pointwise_i",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.3.0.depthwise_r",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 32,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.3.0.depthwise_i",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 32,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.3.0.pointwise_r",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.3.0.pointwise_i",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.4.0.depthwise_r",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 64,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.4.0.depthwise_i",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 64,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.4.0.pointwise_r",
+      "weight_shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.4.0.pointwise_i",
+      "weight_shape": [
+        128,
+        64,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.5.0.depthwise_r",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 128,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.5.0.depthwise_i",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 128,
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.5.0.pointwise_r",
+      "weight_shape": [
+        128,
+        128,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "encoder.model.5.0.pointwise_i",
+      "weight_shape": [
+        128,
+        128,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": true,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.0.0.depthwise_r",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 128,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.0.0.depthwise_i",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 128,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.0.0.pointwise_r",
+      "weight_shape": [
+        128,
+        256,
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.0.0.pointwise_i",
+      "weight_shape": [
+        128,
+        256,
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.1.0.depthwise_r",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 64,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.1.0.depthwise_i",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 64,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.1.0.pointwise_r",
+      "weight_shape": [
+        64,
+        256,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": false,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.1.0.pointwise_i",
+      "weight_shape": [
+        64,
+        256,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": false,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.2.0.depthwise_r",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 32,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.2.0.depthwise_i",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 32,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.2.0.pointwise_r",
+      "weight_shape": [
+        32,
+        128,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": false,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.2.0.pointwise_i",
+      "weight_shape": [
+        32,
+        128,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": false,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.3.0.depthwise_r",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 16,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.3.0.depthwise_i",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 16,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.3.0.pointwise_r",
+      "weight_shape": [
+        16,
+        64,
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.3.0.pointwise_i",
+      "weight_shape": [
+        16,
+        64,
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.4.0.depthwise_r",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 8,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.4.0.depthwise_i",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 8,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.4.0.pointwise_r",
+      "weight_shape": [
+        8,
+        32,
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.4.0.pointwise_i",
+      "weight_shape": [
+        8,
+        32,
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3",
+      "scale_granularity": "per_tensor",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "has_conv_bias": false
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.5.0.depthwise_r",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 1,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConvTranspose2d",
+      "dotted_name": "decoder.model.5.0.depthwise_i",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_channel",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": true,
+      "is_pointwise": false,
+      "is_transposed": true,
+      "is_complex_half": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "stride": [
+        2,
+        1
+      ],
+      "padding": [
+        2,
+        0
+      ],
+      "groups": 1,
+      "has_conv_bias": true
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.5.0.pointwise_r",
+      "weight_shape": [
+        1,
+        16,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": false,
+      "effective_scale_granularity": "per_channel"
+    },
+    {
+      "module_type": "ParametrizedConv2d",
+      "dotted_name": "decoder.model.5.0.pointwise_i",
+      "weight_shape": [
+        1,
+        16,
+        1,
+        1
+      ],
+      "weight_format": "int4",
+      "scale_granularity": "per_group",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "is_depthwise": false,
+      "is_pointwise": true,
+      "is_transposed": false,
+      "is_complex_half": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "stride": [
+        1,
+        1
+      ],
+      "padding": [
+        0,
+        0
+      ],
+      "group_size": 32,
+      "has_conv_bias": false,
+      "effective_scale_granularity": "per_channel"
+    }
+  ],
+  "attention": {
+    "tied_mha": true,
+    "input_proj": {
+      "module_type": "ParametrizedLinear",
+      "dotted_name": "mattn.input_proj",
+      "weight_shape": [
+        256,
+        256
+      ],
+      "weight_dtype": "complex64",
+      "weight_format": "int4",
+      "scale_granularity": "per_head",
+      "num_heads": 16,
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "has_bias": true
+    },
+    "output_proj": {
+      "module_type": "ParametrizedLinear",
+      "dotted_name": "mattn.output_proj",
+      "weight_shape": [
+        256,
+        256
+      ],
+      "weight_dtype": "complex64",
+      "weight_format": "int4",
+      "scale_granularity": "per_head",
+      "num_heads": 16,
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "has_bias": true
+    },
+    "mha_shared": {
+      "module_type": "MultiheadAttention",
+      "dotted_name": "mattn.mattn.MultiheadAttention_re",
+      "in_proj_weight_shape": [
+        768,
+        256
+      ],
+      "in_proj_bias_length": 768,
+      "in_proj_groups_Q_K_V": 48,
+      "in_proj_scale_granularity": "per_head_qkv_fused",
+      "q_rows_prescaled_by_inv_sqrt_D": true,
+      "out_proj_weight_shape": [
+        256,
+        256
+      ],
+      "out_proj_scale_granularity": "per_head",
+      "num_heads": 16,
+      "head_dim": 16,
+      "weight_format": "int4",
+      "act_format": "fp8_e4m3",
+      "accumulator": "fp16",
+      "qk_scale_inv_sqrt_D": 0.25,
+      "softmax_followed_by_topk": true,
+      "topk_k": 4,
+      "fp16_accumulator": false
+    },
+    "mha_imag_half": null,
+    "complex_flow": "2-pass tied: a=M(x.real), b=M(x.imag), output=(a-b)+j(a+b)",
+    "window_size": 31
+  },
+  "stft": {
+    "win_len": null,
+    "win_inc": null,
+    "fft_len": null,
+    "win_type": "hamming",
+    "window_periodic": false,
+    "center": false,
+    "normalized": true,
+    "dc_bin_removed_before_model": true,
+    "window_file": "misc/stft_window.fp16.bin",
+    "masking_mode": "C"
+  }
+}

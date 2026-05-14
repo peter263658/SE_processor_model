@@ -1,3 +1,0 @@
-Shape: [16]
-Dtype: float32
-Data file: bias.dat

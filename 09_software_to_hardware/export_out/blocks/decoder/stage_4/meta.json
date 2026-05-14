@@ -1,0 +1,17 @@
+{
+  "kind": "decoder",
+  "stage_idx": 4,
+  "dotted": "decoder.model.4.0",
+  "num_out_channels": 8,
+  "has_bn": true,
+  "has_prelu": true,
+  "is_outlier_fp8": true,
+  "bn_attaches_to": "depthwise",
+  "post_mac_order": [
+    "bn_scale_{r,i} * mac_out_{r,i}",
+    "+ bn_bias_{r,i}",
+    "PReLU(result, alpha_{r,i})"
+  ],
+  "bn_eps": 1e-05,
+  "prelu_num_parameters": 1
+}

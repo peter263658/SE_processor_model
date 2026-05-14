@@ -1,0 +1,493 @@
+/raid/R12K41024/08_mixed_precision_qat_from_scratch/eval.py:658: UserWarning: 
+The version_base parameter is not specified.
+Please specify a compatability version level, or None.
+Will assume defaults for version 1.1
+  initialize(config_path="config")
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/torch_stoi/stoi.py:76: UserWarning: "sinc_interpolation" resampling method name is being deprecated and replaced by "sinc_interp_hann" in the next release. The default behavior remains unchanged.
+  self.resample = torchaudio.transforms.Resample(
+/raid/R12K41024/08_mixed_precision_qat_from_scratch/eval.py:658: UserWarning: 
+The version_base parameter is not specified.
+Please specify a compatability version level, or None.
+Will assume defaults for version 1.1
+  initialize(config_path="config")
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+Running paper-style evaluation with SNR points from -6 to 15 dB
+
+===== EVALUATING VCTK DATASET =====
+
+===== Evaluating VCTK at SNR = -6 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_-6dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== Evaluating VCTK at SNR = -3 dB =====
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 5 noisy files
+Found 5 matching clean/noisy pairs (azimuth-aligned)
+Processing files:   0%|          | 0/5 [00:00<?, ?it/s]Processing files:  20%|██        | 1/5 [00:02<00:08,  2.05s/it]Processing files:  40%|████      | 2/5 [00:04<00:07,  2.50s/it]Processing files:  60%|██████    | 3/5 [00:07<00:05,  2.55s/it]Processing files:  80%|████████  | 4/5 [00:09<00:02,  2.47s/it]Processing files: 100%|██████████| 5/5 [00:12<00:00,  2.51s/it]Processing files: 100%|██████████| 5/5 [00:12<00:00,  2.48s/it]
+/raid/R12K41024/08_mixed_precision_qat_from_scratch/eval.py:658: UserWarning: 
+The version_base parameter is not specified.
+Please specify a compatability version level, or None.
+Will assume defaults for version 1.1
+  initialize(config_path="config")
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/torch_stoi/stoi.py:76: UserWarning: "sinc_interpolation" resampling method name is being deprecated and replaced by "sinc_interp_hann" in the next release. The default behavior remains unchanged.
+  self.resample = torchaudio.transforms.Resample(
+Average SegSNR Noisy (L): -5.7031
+Average SegSNR Noisy (R): -5.0775
+Average SegSNR Noisy: -5.3903
+Average MBSTOI Noisy: 0.5597
+Average PESQ Noisy: 1.0652
+Average ILD Error Noisy (dB): 5.6632
+Average IPD Error Noisy (rad): 0.3973
+Average IPD Error Noisy (deg): 22.7623
+Average SegSNR (L): -2.3749
+Average SegSNR (R): -2.1598
+Average SegSNR: -2.2674
+Average SegSNR Improvement: 3.1229
+Average MBSTOI: 0.6925
+Average PESQ: 1.2468
+Average ILD Error (dB): 5.0742
+Average IPD Error (rad): 0.3717
+Average IPD Error (deg): 21.2991
+Files Processed: 5
+Total Files: 5
+Processing Rate: 100.0%
+
+===== Evaluating VCTK at SNR = 0 dB =====
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 5 noisy files
+Found 5 matching clean/noisy pairs (azimuth-aligned)
+Processing files:   0%|          | 0/5 [00:00<?, ?it/s]Processing files:  20%|██        | 1/5 [00:01<00:05,  1.27s/it]Processing files:  40%|████      | 2/5 [00:03<00:05,  1.97s/it]Processing files:  60%|██████    | 3/5 [00:06<00:04,  2.15s/it]Processing files:  80%|████████  | 4/5 [00:08<00:02,  2.17s/it]Processing files: 100%|██████████| 5/5 [00:10<00:00,  2.27s/it]Processing files: 100%|██████████| 5/5 [00:10<00:00,  2.15s/it]
+/raid/R12K41024/08_mixed_precision_qat_from_scratch/eval.py:658: UserWarning: 
+The version_base parameter is not specified.
+Please specify a compatability version level, or None.
+Will assume defaults for version 1.1
+  initialize(config_path="config")
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/torch_stoi/stoi.py:76: UserWarning: "sinc_interpolation" resampling method name is being deprecated and replaced by "sinc_interp_hann" in the next release. The default behavior remains unchanged.
+  self.resample = torchaudio.transforms.Resample(
+Average SegSNR Noisy (L): -3.7894
+Average SegSNR Noisy (R): -3.4372
+Average SegSNR Noisy: -3.6133
+Average MBSTOI Noisy: 0.6308
+Average PESQ Noisy: 1.1415
+Average ILD Error Noisy (dB): 4.8333
+Average IPD Error Noisy (rad): 0.2975
+Average IPD Error Noisy (deg): 17.0461
+Average SegSNR (L): -0.7001
+Average SegSNR (R): -0.6018
+Average SegSNR: -0.6510
+Average SegSNR Improvement: 2.9623
+Average MBSTOI: 0.7361
+Average PESQ: 1.4905
+Average ILD Error (dB): 4.3238
+Average IPD Error (rad): 0.2887
+Average IPD Error (deg): 16.5397
+Files Processed: 5
+Total Files: 5
+Processing Rate: 100.0%
+
+===== Evaluating VCTK at SNR = 3 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_3dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== Evaluating VCTK at SNR = 6 dB =====
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 5 noisy files
+Found 5 matching clean/noisy pairs (azimuth-aligned)
+Processing files:   0%|          | 0/5 [00:00<?, ?it/s]Processing files:  20%|██        | 1/5 [00:01<00:05,  1.30s/it]Processing files:  40%|████      | 2/5 [00:03<00:06,  2.00s/it]Processing files:  60%|██████    | 3/5 [00:06<00:04,  2.21s/it]Processing files:  80%|████████  | 4/5 [00:08<00:02,  2.24s/it]Processing files: 100%|██████████| 5/5 [00:11<00:00,  2.35s/it]Processing files: 100%|██████████| 5/5 [00:11<00:00,  2.22s/it]
+/raid/R12K41024/08_mixed_precision_qat_from_scratch/eval.py:658: UserWarning: 
+The version_base parameter is not specified.
+Please specify a compatability version level, or None.
+Will assume defaults for version 1.1
+  initialize(config_path="config")
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/torch_stoi/stoi.py:76: UserWarning: "sinc_interpolation" resampling method name is being deprecated and replaced by "sinc_interp_hann" in the next release. The default behavior remains unchanged.
+  self.resample = torchaudio.transforms.Resample(
+Average SegSNR Noisy (L): -0.7095
+Average SegSNR Noisy (R): -0.4207
+Average SegSNR Noisy: -0.5651
+Average MBSTOI Noisy: 0.7692
+Average PESQ Noisy: 1.2463
+Average ILD Error Noisy (dB): 3.6874
+Average IPD Error Noisy (rad): 0.1890
+Average IPD Error Noisy (deg): 10.8293
+Average SegSNR (L): 1.9896
+Average SegSNR (R): 2.2100
+Average SegSNR: 2.0998
+Average SegSNR Improvement: 2.6649
+Average MBSTOI: 0.8135
+Average PESQ: 1.7611
+Average ILD Error (dB): 3.5964
+Average IPD Error (rad): 0.1868
+Average IPD Error (deg): 10.7027
+Files Processed: 5
+Total Files: 5
+Processing Rate: 100.0%
+
+===== Evaluating VCTK at SNR = 9 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_9dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== Evaluating VCTK at SNR = 12 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_12dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== Evaluating VCTK at SNR = 15 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_15dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== EVALUATING TIMIT DATASET (UNMATCHED CONDITION) =====
+
+===== Evaluating TIMIT at SNR = -6 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_-6dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== Evaluating TIMIT at SNR = -3 dB =====
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 5 noisy files
+Found 5 matching clean/noisy pairs (azimuth-aligned)
+Processing files:   0%|          | 0/5 [00:00<?, ?it/s]Processing files:  20%|██        | 1/5 [00:01<00:05,  1.26s/it]Processing files:  40%|████      | 2/5 [00:03<00:05,  1.98s/it]Processing files:  60%|██████    | 3/5 [00:06<00:04,  2.18s/it]Processing files:  80%|████████  | 4/5 [00:08<00:02,  2.19s/it]Processing files: 100%|██████████| 5/5 [00:10<00:00,  2.29s/it]Processing files: 100%|██████████| 5/5 [00:10<00:00,  2.17s/it]
+/raid/R12K41024/08_mixed_precision_qat_from_scratch/eval.py:658: UserWarning: 
+The version_base parameter is not specified.
+Please specify a compatability version level, or None.
+Will assume defaults for version 1.1
+  initialize(config_path="config")
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/torch_stoi/stoi.py:76: UserWarning: "sinc_interpolation" resampling method name is being deprecated and replaced by "sinc_interp_hann" in the next release. The default behavior remains unchanged.
+  self.resample = torchaudio.transforms.Resample(
+Average SegSNR Noisy (L): -5.7031
+Average SegSNR Noisy (R): -5.0775
+Average SegSNR Noisy: -5.3903
+Average MBSTOI Noisy: 0.5597
+Average PESQ Noisy: 1.0652
+Average ILD Error Noisy (dB): 5.6632
+Average IPD Error Noisy (rad): 0.3973
+Average IPD Error Noisy (deg): 22.7623
+Average SegSNR (L): -2.3749
+Average SegSNR (R): -2.1598
+Average SegSNR: -2.2674
+Average SegSNR Improvement: 3.1229
+Average MBSTOI: 0.6925
+Average PESQ: 1.2468
+Average ILD Error (dB): 5.0742
+Average IPD Error (rad): 0.3717
+Average IPD Error (deg): 21.2991
+Files Processed: 5
+Total Files: 5
+Processing Rate: 100.0%
+
+===== Evaluating TIMIT at SNR = 0 dB =====
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 5 noisy files
+Found 5 matching clean/noisy pairs (azimuth-aligned)
+Processing files:   0%|          | 0/5 [00:00<?, ?it/s]Processing files:  20%|██        | 1/5 [00:01<00:04,  1.25s/it]Processing files:  40%|████      | 2/5 [00:03<00:05,  1.98s/it]Processing files:  60%|██████    | 3/5 [00:06<00:04,  2.24s/it]Processing files:  80%|████████  | 4/5 [00:08<00:02,  2.29s/it]Processing files: 100%|██████████| 5/5 [00:11<00:00,  2.38s/it]Processing files: 100%|██████████| 5/5 [00:11<00:00,  2.24s/it]
+/raid/R12K41024/08_mixed_precision_qat_from_scratch/eval.py:658: UserWarning: 
+The version_base parameter is not specified.
+Please specify a compatability version level, or None.
+Will assume defaults for version 1.1
+  initialize(config_path="config")
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/torch_stoi/stoi.py:76: UserWarning: "sinc_interpolation" resampling method name is being deprecated and replaced by "sinc_interp_hann" in the next release. The default behavior remains unchanged.
+  self.resample = torchaudio.transforms.Resample(
+Average SegSNR Noisy (L): -3.7894
+Average SegSNR Noisy (R): -3.4372
+Average SegSNR Noisy: -3.6133
+Average MBSTOI Noisy: 0.6308
+Average PESQ Noisy: 1.1415
+Average ILD Error Noisy (dB): 4.8333
+Average IPD Error Noisy (rad): 0.2975
+Average IPD Error Noisy (deg): 17.0461
+Average SegSNR (L): -0.7001
+Average SegSNR (R): -0.6018
+Average SegSNR: -0.6510
+Average SegSNR Improvement: 2.9623
+Average MBSTOI: 0.7361
+Average PESQ: 1.4905
+Average ILD Error (dB): 4.3238
+Average IPD Error (rad): 0.2887
+Average IPD Error (deg): 16.5397
+Files Processed: 5
+Total Files: 5
+Processing Rate: 100.0%
+
+===== Evaluating TIMIT at SNR = 3 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_3dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== Evaluating TIMIT at SNR = 6 dB =====
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 5 noisy files
+Found 5 matching clean/noisy pairs (azimuth-aligned)
+Processing files:   0%|          | 0/5 [00:00<?, ?it/s]Processing files:  20%|██        | 1/5 [00:01<00:05,  1.31s/it]Processing files:  40%|████      | 2/5 [00:03<00:05,  1.97s/it]Processing files:  60%|██████    | 3/5 [00:06<00:04,  2.16s/it]Processing files:  80%|████████  | 4/5 [00:08<00:02,  2.20s/it]Processing files: 100%|██████████| 5/5 [00:10<00:00,  2.29s/it]Processing files: 100%|██████████| 5/5 [00:10<00:00,  2.17s/it]
+/raid/R12K41024/08_mixed_precision_qat_from_scratch/eval.py:658: UserWarning: 
+The version_base parameter is not specified.
+Please specify a compatability version level, or None.
+Will assume defaults for version 1.1
+  initialize(config_path="config")
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+/home/R12K41024/miniforge3/envs/bcctn/lib/python3.10/site-packages/torch_stoi/stoi.py:76: UserWarning: "sinc_interpolation" resampling method name is being deprecated and replaced by "sinc_interp_hann" in the next release. The default behavior remains unchanged.
+  self.resample = torchaudio.transforms.Resample(
+Average SegSNR Noisy (L): -0.7095
+Average SegSNR Noisy (R): -0.4207
+Average SegSNR Noisy: -0.5651
+Average MBSTOI Noisy: 0.7692
+Average PESQ Noisy: 1.2463
+Average ILD Error Noisy (dB): 3.6874
+Average IPD Error Noisy (rad): 0.1890
+Average IPD Error Noisy (deg): 10.8293
+Average SegSNR (L): 1.9896
+Average SegSNR (R): 2.2100
+Average SegSNR: 2.0998
+Average SegSNR Improvement: 2.6649
+Average MBSTOI: 0.8135
+Average PESQ: 1.7611
+Average ILD Error (dB): 3.5964
+Average IPD Error (rad): 0.1868
+Average IPD Error (deg): 10.7027
+Files Processed: 5
+Total Files: 5
+Processing Rate: 100.0%
+
+===== Evaluating TIMIT at SNR = 9 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_9dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== Evaluating TIMIT at SNR = 12 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_12dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== Evaluating TIMIT at SNR = 15 dB =====
+SNR subdirectory not found: /raid/R12K41024/01_utilization_analysis_8khz/Dataset_16khz_baseline/noisy_testset/snr_15dB
+Using flat structure with specific_snr parameter...
+
+Evaluating on cuda
+win_len: 128, win_inc: 80, fft_len: 128
+kernel_num: [2, 16, 32, 64, 128, 256, 256], kernel_size: 5
+num_heads: 16, embed_dim: 256
+MultiAttnBlock: input_size=256, hidden_size=128, embed_dim=256, num_heads=16, window_size=31
+ComplexMultiheadAttention: embed_dim=256, num_heads=16, batch_first=True
+depthwise: True
+🔥 Enabling Mixed-Precision W4A8 QAT ...
+✅ Mixed-Precision QAT enabled: 48 Conv, 4 Linear, 2 MHA, top_k=4, fp16_accum=True on 1 ComplexMHA.
+   FP8 preserved (6 layers): ['decoder.model.0.0.pointwise_r', 'decoder.model.0.0.pointwise_i', 'decoder.model.3.0.pointwise_r', 'decoder.model.3.0.pointwise_i', 'decoder.model.4.0.pointwise_r', 'decoder.model.4.0.pointwise_i']
+Found 5 clean files and 15 noisy files
+Found 0 matching clean/noisy pairs (azimuth-aligned)
+ERROR: No matching clean/noisy pairs found! Check file naming patterns.
+
+===== VCTK PAPER STYLE AVERAGES =====
+Average MBSTOI Noisy: 0.6532
+Average MBSTOI Enhanced: 0.7473
+Average SegSNR Noisy: -3.19
+Average SegSNR Enhanced: -0.27
+Average SegSNR Improvement: 2.92
+Average ILD Error Noisy: 4.7280 dB
+Average ILD Error Enhanced: 4.3315 dB
+Average IPD Error Noisy: 16.88 deg
+Average IPD Error Enhanced: 16.18 deg
+
+===== TIMIT PAPER STYLE AVERAGES =====
+Average MBSTOI Noisy: 0.6532
+Average MBSTOI Enhanced: 0.7473
+Average SegSNR Noisy: -3.19
+Average SegSNR Enhanced: -0.27
+Average SegSNR Improvement: 2.92
+Average ILD Error Noisy: 4.7280 dB
+Average ILD Error Enhanced: 4.3315 dB
+Average IPD Error Noisy: 16.88 deg
+Average IPD Error Enhanced: 16.18 deg

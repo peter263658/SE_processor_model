@@ -37,10 +37,7 @@ Fusions performed (see FUSIONS.md for full derivation):
     marked has_prelu=false in block meta.
 
 Usage:
-    python ckpt2hwdat.py \\
-        --ckpt   /raid/R12K41024/07_mixed_precision_qat/Checkpoints/epoch=XX-step=YY.ckpt \\
-        --config /raid/R12K41024/07_mixed_precision_qat/config/config.yaml \\
-        --outdir ./export_out
+    python ckpt2hwdat.py --outdir ./export_out
 """
 
 from __future__ import annotations
@@ -56,11 +53,18 @@ from typing import Any, Dict, Optional
 import numpy as np
 import torch
 import torch.nn as nn
-from scipy.signal import get_window
+REPO_09 = "/raid/R12K41024/09_weight_tied_mha"
+FINETUNE_STRICT_RUN = os.path.join(
+    REPO_09, "outputs/finetune_strict/2026-05-10_02-40-16"
+)
+DEFAULT_CKPT = os.path.join(
+    FINETUNE_STRICT_RUN,
+    "logs/lightning_logs/version_0/checkpoints/epoch=45-step=44528.ckpt",
+)
+DEFAULT_CONFIG = os.path.join(FINETUNE_STRICT_RUN, ".hydra/config.yaml")
 
-REPO_07 = "/raid/R12K41024/07_mixed_precision_qat"
-if REPO_07 not in sys.path:
-    sys.path.insert(0, REPO_07)
+if REPO_09 not in sys.path:
+    sys.path.insert(0, REPO_09)
 
 from omegaconf import OmegaConf  # noqa: E402
 from DCNN.models.binaural_attention_model import BinauralAttentionDCNN  # noqa: E402
@@ -80,6 +84,70 @@ def _ensure(path: str) -> None:
 
 def _w_bin(path: str, arr: np.ndarray) -> None:
     arr.tofile(path)
+    _w_sidecars(path, arr)
+
+
+def _sidecar_base(path: str) -> str:
+    return path[:-4] if path.endswith(".bin") else path
+
+
+def _w_sidecars(path: str, arr: np.ndarray) -> None:
+    """Write plain readmemh-friendly hex and debug decimal sidecars.
+
+    Hex is one storage word per line: 8-bit for byte arrays, 16-bit for fp16,
+    and 32-bit for fp32. Decimal is one numeric value per line.
+    """
+    a = np.asarray(arr)
+    flat = a.reshape(-1)
+    base = _sidecar_base(path)
+
+    if a.dtype == np.float16:
+        hex_words = flat.view(np.uint16)
+        fmt = "{:04X}"
+    elif a.dtype == np.float32:
+        hex_words = flat.view(np.uint32)
+        fmt = "{:08X}"
+    elif a.dtype == np.int8:
+        hex_words = flat.view(np.uint8)
+        fmt = "{:02X}"
+    elif a.dtype == np.uint8:
+        hex_words = flat
+        fmt = "{:02X}"
+    elif a.dtype == np.int16:
+        hex_words = flat.view(np.uint16)
+        fmt = "{:04X}"
+    elif a.dtype == np.uint16:
+        hex_words = flat
+        fmt = "{:04X}"
+    elif a.dtype == np.int32:
+        hex_words = flat.view(np.uint32)
+        fmt = "{:08X}"
+    elif a.dtype == np.uint32:
+        hex_words = flat
+        fmt = "{:08X}"
+    else:
+        # Fall back to byte-wise storage for uncommon dtypes.
+        hex_words = a.view(np.uint8).reshape(-1)
+        fmt = "{:02X}"
+
+    with open(base + ".hex", "w") as f:
+        for v in hex_words:
+            f.write(fmt.format(int(v)) + "\n")
+
+    with open(base + ".dec", "w") as f:
+        if np.issubdtype(a.dtype, np.floating):
+            for v in flat.astype(np.float64):
+                f.write(f"{float(v):.10e}\n")
+        else:
+            for v in flat:
+                f.write(f"{int(v)}\n")
+
+
+def _w_dec_values(path: str, t: torch.Tensor) -> None:
+    flat = t.detach().cpu().reshape(-1)
+    with open(path, "w") as f:
+        for v in flat:
+            f.write(f"{float(v):.10e}\n")
 
 
 def _w_fp16(path: str, t: torch.Tensor) -> None:
@@ -107,7 +175,7 @@ def export_conv_int4(module: nn.Module, dotted: str, outdir: str,
     if scale_gran == "per_channel":
         q, scale = eh.int4_per_channel(w)
     elif scale_gran == "per_group":
-        q, scale, _ = eh.int4_per_group_last_dim(w, group_size)
+        q, scale, used_per_group = eh.int4_per_group_last_dim(w, group_size)
     elif scale_gran == "per_head":
         assert num_heads is not None
         q, scale = eh.int4_per_head_linear(w, num_heads)
@@ -133,6 +201,7 @@ def export_conv_int4(module: nn.Module, dotted: str, outdir: str,
     }
     if scale_gran == "per_group":
         meta["group_size"] = group_size
+        meta["effective_scale_granularity"] = "per_group" if used_per_group else "per_channel"
     if scale_gran == "per_head":
         meta["num_heads"] = num_heads
 
@@ -152,6 +221,8 @@ def export_conv_fp8(module: nn.Module, dotted: str, outdir: str) -> Dict[str, An
     d = os.path.join(outdir, "weights", dotted)
     _ensure(d)
     _w_bin(os.path.join(d, "w_fp8.e4m3.bin"), fp8_bytes)
+    _w_dec_values(os.path.join(d, "w_fp8.e4m3.value.dec"),
+                  w.to(torch.float8_e4m3fn).to(torch.float32))
 
     meta = {
         "dotted": dotted,
@@ -322,23 +393,31 @@ def export_stft(model: nn.Module, outdir: str, model_cfg: Dict[str, Any]) -> Dic
     win_len = model_cfg.get("win_len", 128)
     fft_len = model_cfg.get("fft_len", 128)
     hop = model_cfg.get("win_inc", 80)
-    win_type = model_cfg.get("win_type", "hann")
+    win_type = model_cfg.get("win_type", "hamming")
 
-    win = torch.tensor(get_window(win_type, win_len), dtype=torch.float32)
+    if str(win_type).lower() == "hamming":
+        win = torch.hamming_window(win_len, periodic=False, dtype=torch.float32)
+    elif str(win_type).lower() == "hann":
+        win = torch.hann_window(win_len, periodic=False, dtype=torch.float32)
+    else:
+        raise ValueError(f"unsupported STFT win_type={win_type}")
     _w_fp16(os.path.join(d, "stft_window.fp16.bin"), win)
     _w_fp16(os.path.join(d, "istft_window.fp16.bin"), win)
 
+    masking_mode = model_cfg.get("masking_mode", getattr(model, "masking_mode", "C"))
     meta = {
         "win_len": int(win_len),
         "win_inc": int(hop),
         "fft_len": int(fft_len),
         "win_type": win_type,
-        "num_freq_bins": int(fft_len // 2 + 1),
-        "masking_mode": "E",
-        "notes": (
-            "masking_mode 'E' applies |mask|*|spec|*exp(j*(∠mask + ∠spec)) and "
-            "pads DC bin with 0. Hardware must implement magnitude mult + angle add."
-        ),
+        "window_periodic": False,
+        "center": False,
+        "normalized": True,
+        "num_freq_bins_before_dc_drop": int(fft_len // 2 + 1),
+        "num_freq_bins_after_dc_drop": int(fft_len // 2),
+        "dc_bin_removed_before_model": True,
+        "masking_mode": masking_mode,
+        "notes": "STFT matches torch.stft with hamming_window(periodic=False), center=False, normalized=True.",
     }
     _w_json(os.path.join(d, "meta.json"), meta)
     return meta
@@ -350,8 +429,10 @@ def export_stft(model: nn.Module, outdir: str, model_cfg: Dict[str, Any]) -> Dic
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--ckpt", required=True, help="Lightning checkpoint to export.")
-    ap.add_argument("--config", default=os.path.join(REPO_07, "config/config.yaml"))
+    ap.add_argument("--ckpt", default=DEFAULT_CKPT,
+                    help="Lightning checkpoint to export. Defaults to 09 tied-MHA finetune strict best.")
+    ap.add_argument("--config", default=DEFAULT_CONFIG,
+                    help="Hydra config. Defaults to the finetune strict run config.")
     ap.add_argument("--outdir", default="./export_out")
     ap.add_argument("--no-qat", action="store_true",
                     help="Skip mixed-precision parametrization registration "
@@ -382,8 +463,9 @@ def main():
             "mha":                 {"weight_bits": 4, "weight_scale": "per_head",    "num_heads": num_heads},
         }
         enable_mixed_precision_qat(model, config=mp_cfg,
-                                   activation_format="e4m3",
-                                   top_k=training_cfg.get("top_k_attention", 4))
+                                   activation_format=training_cfg.get("fp8_dtype", "e4m3"),
+                                   top_k=training_cfg.get("top_k_attention", 4),
+                                   fp16_accumulator=training_cfg.get("fp16_accumulator", False))
 
     sd = eh.load_state_dict_from_ckpt(args.ckpt)
     missing, unexpected = model.load_state_dict(sd, strict=False)
@@ -394,7 +476,12 @@ def main():
         print(f"  (first 5 unexpected) {unexpected[:5]}")
 
     # Per-layer config — reuse dump_hw_config emitter.
-    layer_cfg = dhc.build_config(model, num_heads, embed_dim, int4_group_size)
+    layer_cfg = dhc.build_config(
+        model, num_heads, embed_dim, int4_group_size,
+        top_k_attention=training_cfg.get("top_k_attention", 4),
+        model_cfg=model_cfg,
+        fp16_accumulator=training_cfg.get("fp16_accumulator", False),
+    )
     _w_json(os.path.join(args.outdir, "layer_config.json"), layer_cfg)
 
     # Walk blocks and export.
@@ -416,7 +503,7 @@ def main():
                 scale_gran="per_channel",
             ))
 
-        # Pointwise (INT4 per-channel normally, FP8 for outlier)
+        # Pointwise (INT4 per-group requested normally, FP8 for outlier)
         if b.pointwise_r is not None:
             if b.is_outlier_fp8:
                 layer_metas.append(export_conv_fp8(
@@ -426,11 +513,11 @@ def main():
             else:
                 layer_metas.append(export_conv_int4(
                     b.pointwise_r, f"{b.dotted}.pointwise_r", args.outdir,
-                    scale_gran="per_channel",
+                    scale_gran="per_group", group_size=int4_group_size,
                 ))
                 layer_metas.append(export_conv_int4(
                     b.pointwise_i, f"{b.dotted}.pointwise_i", args.outdir,
-                    scale_gran="per_channel",
+                    scale_gran="per_group", group_size=int4_group_size,
                 ))
 
     # Attention block
@@ -456,9 +543,10 @@ def main():
     layer_metas.append(export_mha(
         cmha.MultiheadAttention_re, "mattn.mattn.MultiheadAttention_re",
         args.outdir, num_heads, embed_dim))
-    layer_metas.append(export_mha(
-        cmha.MultiheadAttention_im, "mattn.mattn.MultiheadAttention_im",
-        args.outdir, num_heads, embed_dim))
+    if hasattr(cmha, "MultiheadAttention_im"):
+        layer_metas.append(export_mha(
+            cmha.MultiheadAttention_im, "mattn.mattn.MultiheadAttention_im",
+            args.outdir, num_heads, embed_dim))
 
     # STFT
     stft_meta = export_stft(model, args.outdir, model_cfg)
@@ -473,6 +561,8 @@ def main():
             "head_dim": embed_dim // num_heads,
             "int4_group_size": int4_group_size,
             "softmax_topk_k": training_cfg.get("top_k_attention", 4),
+            "qat_scope": training_cfg.get("qat_scope", "full"),
+            "tied_mha": bool(getattr(cmha, "tied", False)),
         },
         "fusions_applied": [
             "BN (real) + complex conv real-output bias → (bn_scale_r, bn_bias_r)",

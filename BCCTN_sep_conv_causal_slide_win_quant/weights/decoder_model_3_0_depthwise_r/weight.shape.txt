@@ -1,3 +1,0 @@
-Shape: [16, 1, 5, 1]
-Dtype: float32
-Data file: weight.dat

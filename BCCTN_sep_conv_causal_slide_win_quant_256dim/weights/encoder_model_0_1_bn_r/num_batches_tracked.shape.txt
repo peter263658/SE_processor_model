@@ -1,3 +1,0 @@
-Shape: []
-Dtype: int64
-Data file: num_batches_tracked.dat

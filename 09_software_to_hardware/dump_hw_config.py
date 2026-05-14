@@ -10,9 +10,7 @@ shape, expected I/O activation dtype, and which post-MAC fusion slots
 (BN scale, BN bias, PReLU α, 1/√D) apply.
 
 Usage:
-    python dump_hw_config.py \
-        --config /raid/R12K41024/07_mixed_precision_qat/config/config.yaml \
-        --out    layer_config.json
+    python dump_hw_config.py --out layer_config.json
 """
 
 from __future__ import annotations
@@ -27,10 +25,14 @@ from typing import Any, Dict, List, Optional
 import torch
 import torch.nn as nn
 
-# Make the 07_mixed_precision_qat package importable.
-REPO_07 = "/raid/R12K41024/07_mixed_precision_qat"
-if REPO_07 not in sys.path:
-    sys.path.insert(0, REPO_07)
+REPO_09 = "/raid/R12K41024/09_weight_tied_mha"
+FINETUNE_STRICT_RUN = os.path.join(
+    REPO_09, "outputs/finetune_strict/2026-05-10_02-40-16"
+)
+DEFAULT_CONFIG = os.path.join(FINETUNE_STRICT_RUN, ".hydra/config.yaml")
+
+if REPO_09 not in sys.path:
+    sys.path.insert(0, REPO_09)
 
 from omegaconf import OmegaConf  # noqa: E402
 from DCNN.models.binaural_attention_model import BinauralAttentionDCNN  # noqa: E402
@@ -107,20 +109,20 @@ def block_cfg(block: eh.BlockInfo) -> Dict[str, Any]:
         # Post-MAC operations hardware must execute (in order):
         # 1. scale_{r,i}  2. + bias_{r,i}  3. PReLU (if present)
         "post_mac_fma_real": {
-            "scale_name": f"blocks/{block.kind}/{block.stage_idx}/bn_scale_r.fp16.bin",
-            "bias_name":  f"blocks/{block.kind}/{block.stage_idx}/bn_bias_r.fp16.bin",
+            "scale_name": f"blocks/{block.kind}/stage_{block.stage_idx}/bn_scale_r.fp16.bin",
+            "bias_name":  f"blocks/{block.kind}/stage_{block.stage_idx}/bn_bias_r.fp16.bin",
             "length": block.num_out_channels,
             "dtype": "fp16",
         },
         "post_mac_fma_imag": {
-            "scale_name": f"blocks/{block.kind}/{block.stage_idx}/bn_scale_i.fp16.bin",
-            "bias_name":  f"blocks/{block.kind}/{block.stage_idx}/bn_bias_i.fp16.bin",
+            "scale_name": f"blocks/{block.kind}/stage_{block.stage_idx}/bn_scale_i.fp16.bin",
+            "bias_name":  f"blocks/{block.kind}/stage_{block.stage_idx}/bn_bias_i.fp16.bin",
             "length": block.num_out_channels,
             "dtype": "fp16",
         },
         "prelu": {
-            "alpha_r_file": f"blocks/{block.kind}/{block.stage_idx}/prelu_alpha_r.fp32.bin",
-            "alpha_i_file": f"blocks/{block.kind}/{block.stage_idx}/prelu_alpha_i.fp32.bin",
+            "alpha_r_file": f"blocks/{block.kind}/stage_{block.stage_idx}/prelu_alpha_r.fp32.bin",
+            "alpha_i_file": f"blocks/{block.kind}/stage_{block.stage_idx}/prelu_alpha_i.fp32.bin",
             "num_parameters": 1,
             "dtype": "fp32",
         } if block.prelu_r is not None else None,
@@ -128,7 +130,12 @@ def block_cfg(block: eh.BlockInfo) -> Dict[str, Any]:
 
 
 def build_config(model: nn.Module, num_heads: int, embed_dim: int,
-                 int4_group_size: int) -> Dict[str, Any]:
+                 int4_group_size: int, top_k_attention: Optional[int] = 4,
+                 model_cfg: Optional[Dict[str, Any]] = None,
+                 fp16_accumulator: bool = False) -> Dict[str, Any]:
+    model_cfg = model_cfg or {}
+    tied_mha = bool(getattr(getattr(model, "mattn", None).mattn, "tied", False)) \
+        if hasattr(getattr(model, "mattn", None), "mattn") else False
     cfg_out: Dict[str, Any] = {
         "model": {
             "name": "BinauralAttentionDCNN",
@@ -139,8 +146,10 @@ def build_config(model: nn.Module, num_heads: int, embed_dim: int,
             "activation_format": "fp8_e4m3",
             "accumulator": "fp16",
             "qk_scale_fused_into_q": True,       # 1/sqrt(D) pre-folded
-            "softmax_topk_k": 4,
-            "topk_renorm_after_softmax": True,
+            "softmax_topk_k": top_k_attention,
+            "topk_renorm_after_softmax": top_k_attention is not None,
+            "tied_mha": tied_mha,
+            "fp16_accumulator": fp16_accumulator,
         },
         "blocks": [],
         "layers": [],
@@ -152,8 +161,7 @@ def build_config(model: nn.Module, num_heads: int, embed_dim: int,
     for b in blocks:
         cfg_out["blocks"].append(block_cfg(b))
 
-        # Depthwise: per-channel INT4 (or FP8 if the whole block is outlier — but
-        # outlier applies only to pointwise per handoff §2.1, so DW is always INT4).
+        # Depthwise: per-channel INT4.
         if b.depthwise_r is not None:
             for half, sub in (("r", b.depthwise_r), ("i", b.depthwise_i)):
                 cfg_out["layers"].append(conv_cfg(
@@ -163,17 +171,23 @@ def build_config(model: nn.Module, num_heads: int, embed_dim: int,
                     is_transposed=(b.kind == "decoder"),
                 ))
 
-        # Pointwise: INT4 normally; FP8 for decoder outlier stages.
+        # Pointwise: INT4 per-group requested normally; FP8 for decoder outlier stages.
         if b.pointwise_r is not None:
             pw_fmt = "fp8_e4m3" if b.is_outlier_fp8 else "int4"
-            pw_gran = "per_tensor" if b.is_outlier_fp8 else "per_channel"  # last-dim=1 → fallback
+            pw_gran = "per_tensor" if b.is_outlier_fp8 else "per_group"
             for half, sub in (("r", b.pointwise_r), ("i", b.pointwise_i)):
-                cfg_out["layers"].append(conv_cfg(
+                layer = conv_cfg(
                     sub, f"{b.dotted}.pointwise_{half}",
                     weight_format=pw_fmt, scale_gran=pw_gran,
                     is_pointwise=True,
                     group_size=(int4_group_size if pw_fmt == "int4" else None),
-                ))
+                )
+                if pw_fmt == "int4":
+                    last = conv_weight_shape(sub)[-1]
+                    layer["effective_scale_granularity"] = (
+                        "per_group" if (last % int4_group_size == 0 and last != 1) else "per_channel"
+                    )
+                cfg_out["layers"].append(layer)
 
     # ── Attention block ──
     try:
@@ -214,10 +228,10 @@ def build_config(model: nn.Module, num_heads: int, embed_dim: int,
             "has_bias": op.bias is not None,
         }
 
-        # ComplexMultiheadAttention: two nn.MultiheadAttention instances (re, im)
+        # ComplexMultiheadAttention: tied strict model has only MultiheadAttention_re.
         cmha = matt.mattn
         mha_re = cmha.MultiheadAttention_re
-        mha_im = cmha.MultiheadAttention_im
+        mha_im = getattr(cmha, "MultiheadAttention_im", None)
 
         def _mha_cfg(mha, dotted):
             in_proj_shape = list(mha.in_proj_weight.shape) if not hasattr(mha, "parametrizations") or "in_proj_weight" not in mha.parametrizations else list(mha.parametrizations["in_proj_weight"].original.shape)
@@ -237,16 +251,24 @@ def build_config(model: nn.Module, num_heads: int, embed_dim: int,
                 "act_format": "fp8_e4m3",
                 "accumulator": "fp16",
                 "qk_scale_inv_sqrt_D": 1.0 / sqrt_d,
-                "softmax_followed_by_topk": True,
-                "topk_k": 4,
+                "softmax_followed_by_topk": top_k_attention is not None,
+                "topk_k": top_k_attention,
+                "fp16_accumulator": fp16_accumulator,
             }
 
         cfg_out["attention"] = {
+            "tied_mha": tied_mha,
             "input_proj": in_cfg,
             "output_proj": out_cfg_,
-            "mha_real_half": _mha_cfg(mha_re, "mattn.mattn.MultiheadAttention_re"),
-            "mha_imag_half": _mha_cfg(mha_im, "mattn.mattn.MultiheadAttention_im"),
-            "complex_flow": "4-pass (re×re, im×im, re×im, im×re)",
+            "mha_shared": _mha_cfg(mha_re, "mattn.mattn.MultiheadAttention_re"),
+            "mha_imag_half": (
+                _mha_cfg(mha_im, "mattn.mattn.MultiheadAttention_im")
+                if mha_im is not None else None
+            ),
+            "complex_flow": (
+                "2-pass tied: a=M(x.real), b=M(x.imag), output=(a-b)+j(a+b)"
+                if tied_mha else "4-pass (re×re, im×im, re×im, im×re)"
+            ),
             "window_size": getattr(matt, "window_size", None),
         }
 
@@ -257,7 +279,11 @@ def build_config(model: nn.Module, num_heads: int, embed_dim: int,
             "win_len": getattr(stft_mod, "win_len", None),
             "win_inc": getattr(stft_mod, "win_inc", None),
             "fft_len": getattr(stft_mod, "fft_len", None),
-            "win_type": "hann",
+            "win_type": model_cfg.get("win_type", "hamming"),
+            "window_periodic": False,
+            "center": False,
+            "normalized": True,
+            "dc_bin_removed_before_model": True,
             "window_file": "misc/stft_window.fp16.bin",
             "masking_mode": getattr(model, "masking_mode", "E"),
         }
@@ -273,7 +299,7 @@ def build_config(model: nn.Module, num_heads: int, embed_dim: int,
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--config", default=os.path.join(REPO_07, "config/config.yaml"),
+    ap.add_argument("--config", default=DEFAULT_CONFIG,
                     help="Hydra config file used to build the model skeleton.")
     ap.add_argument("--out", default="layer_config.json",
                     help="Output JSON path.")
@@ -300,10 +326,16 @@ def main():
             "mha":                 {"weight_bits": 4, "weight_scale": "per_head",    "num_heads": num_heads},
         }
         enable_mixed_precision_qat(model, config=mp_cfg,
-                                   activation_format="e4m3",
-                                   top_k=training_cfg.get("top_k_attention", 4))
+                                   activation_format=training_cfg.get("fp8_dtype", "e4m3"),
+                                   top_k=training_cfg.get("top_k_attention", 4),
+                                   fp16_accumulator=training_cfg.get("fp16_accumulator", False))
 
-    hw_cfg = build_config(model, num_heads, embed_dim, int4_group_size)
+    hw_cfg = build_config(
+        model, num_heads, embed_dim, int4_group_size,
+        top_k_attention=training_cfg.get("top_k_attention", 4),
+        model_cfg=model_cfg,
+        fp16_accumulator=training_cfg.get("fp16_accumulator", False),
+    )
 
     os.makedirs(os.path.dirname(os.path.abspath(args.out)) or ".", exist_ok=True)
     with open(args.out, "w") as f:

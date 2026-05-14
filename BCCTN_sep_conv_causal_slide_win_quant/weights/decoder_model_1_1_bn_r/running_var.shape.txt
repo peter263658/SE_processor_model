@@ -1,3 +1,0 @@
-Shape: [64]
-Dtype: float32
-Data file: running_var.dat

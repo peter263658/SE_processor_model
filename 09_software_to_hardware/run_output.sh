@@ -1,2 +1,13 @@
-python dump_hw_config.py --out layer_config.json
-python ckpt2hwdat.py --ckpt /path/to/W4A8_trained.ckpt --outdir ./export_out
+#!/usr/bin/env bash
+set -euo pipefail
+
+cd "$(dirname "$0")"
+
+CONDA_ENV="${CONDA_ENV:-bcctn}"
+OUTDIR="${1:-./export_out}"
+
+conda run --no-capture-output -n "${CONDA_ENV}" python ckpt2hwdat.py \
+  --outdir "${OUTDIR}"
+
+conda run --no-capture-output -n "${CONDA_ENV}" python golden_dump.py \
+  --outdir "${OUTDIR}/golden"

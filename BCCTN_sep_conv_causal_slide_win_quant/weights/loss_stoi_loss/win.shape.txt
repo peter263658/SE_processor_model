@@ -1,3 +1,0 @@
-Shape: [256]
-Dtype: float32
-Data file: win.dat
