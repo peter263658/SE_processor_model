@@ -1183,7 +1183,11 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
     # Generate paper-style table for noisy and enhanced metrics
     with open(output_file, 'w') as f:
         # Header
-        f.write("SNR,MBSTOI_noisy,MBSTOI,SegSNR_noisy,SegSNR,SegSNR_impr,L_ILD_noisy,L_ILD,L_IPD_noisy,L_IPD\n")
+        f.write(
+            "SNR,MBSTOI_noisy,MBSTOI,PESQ_noisy,PESQ,"
+            "SegSNR_noisy,SegSNR,SegSNR_impr,"
+            "L_ILD_noisy,L_ILD,L_IPD_noisy,L_IPD\n"
+        )
         
         for snr in paper_snrs:
             if snr in results_by_snr:
@@ -1191,6 +1195,8 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
                 f.write(f"{snr}," +
                         f"{result.get('Average MBSTOI Noisy', 'N/A'):.4f}," +
                         f"{result.get('Average MBSTOI', 'N/A'):.4f}," +
+                        f"{result.get('Average PESQ Noisy', 'N/A'):.4f}," +
+                        f"{result.get('Average PESQ', 'N/A'):.4f}," +
                         f"{result.get('Average SegSNR Noisy', 'N/A'):.2f}," +
                         f"{result.get('Average SegSNR', 'N/A'):.2f}," +
                         f"{result.get('Average SegSNR Improvement', 'N/A'):.2f}," +
@@ -1203,6 +1209,8 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
     if results_by_snr:
         avg_mbstoi_noisy = np.nanmean([r.get('Average MBSTOI Noisy', 0) for r in results_by_snr.values()])
         avg_mbstoi = np.nanmean([r.get('Average MBSTOI', 0) for r in results_by_snr.values()])
+        avg_pesq_noisy = np.nanmean([r.get('Average PESQ Noisy', np.nan) for r in results_by_snr.values()])
+        avg_pesq = np.nanmean([r.get('Average PESQ', np.nan) for r in results_by_snr.values()])
         avg_segsnr_noisy = np.nanmean([r.get('Average SegSNR Noisy', 0) for r in results_by_snr.values()])
         avg_segsnr = np.nanmean([r.get('Average SegSNR', 0) for r in results_by_snr.values()])
         avg_segsnr_impr = np.nanmean([r.get('Average SegSNR Improvement', 0) for r in results_by_snr.values()])
@@ -1214,6 +1222,8 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
         print(f"\n===== {dataset_name} PAPER STYLE AVERAGES =====")
         print(f"Average MBSTOI Noisy: {avg_mbstoi_noisy:.4f}")
         print(f"Average MBSTOI Enhanced: {avg_mbstoi:.4f}")
+        print(f"Average PESQ Noisy: {avg_pesq_noisy:.4f}")
+        print(f"Average PESQ Enhanced: {avg_pesq:.4f}")
         print(f"Average SegSNR Noisy: {avg_segsnr_noisy:.2f}")
         print(f"Average SegSNR Enhanced: {avg_segsnr:.2f}")
         print(f"Average SegSNR Improvement: {avg_segsnr_impr:.2f}")
@@ -1228,6 +1238,8 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
             f.write(f"===== {dataset_name} PAPER STYLE AVERAGES =====\n")
             f.write(f"Average MBSTOI Noisy: {avg_mbstoi_noisy:.4f}\n")
             f.write(f"Average MBSTOI Enhanced: {avg_mbstoi:.4f}\n")
+            f.write(f"Average PESQ Noisy: {avg_pesq_noisy:.4f}\n")
+            f.write(f"Average PESQ Enhanced: {avg_pesq:.4f}\n")
             f.write(f"Average SegSNR Noisy: {avg_segsnr_noisy:.2f}\n")
             f.write(f"Average SegSNR Enhanced: {avg_segsnr:.2f}\n")
             f.write(f"Average SegSNR Improvement: {avg_segsnr_impr:.2f}\n")

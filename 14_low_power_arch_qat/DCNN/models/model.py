@@ -10,6 +10,42 @@ from DCNN.utils.show import show_params, show_model
 from DCNN.utils.apply_mask import apply_mask
 
 
+def _low_power_bn_kwargs(low_power):
+    cfg = (low_power or {}).get("bn_affine", {})
+    return {
+        "scale_mode": cfg.get("scale_mode", "none"),
+        "tie_real_imag_scale": cfg.get("tie_real_imag_scale", False),
+        "pow2_min_exp": cfg.get("pow2_min_exp", -8),
+        "pow2_max_exp": cfg.get("pow2_max_exp", 8),
+    }
+
+
+def _low_power_prelu_kwargs(low_power):
+    cfg = (low_power or {}).get("prelu_pow2", {})
+    return {
+        "pow2_slope": cfg.get("enabled", False),
+        "min_exp": cfg.get("min_exp", -8),
+        "max_exp": cfg.get("max_exp", 0),
+    }
+
+
+def _mha_projection_cfg(low_power):
+    cfg = (low_power or {}).get("mha_projection", {})
+    if not cfg.get("enabled", False):
+        return {
+            "input_proj_groups": 1,
+            "qkv_groups": 1,
+            "out_proj_groups": 1,
+            "output_proj_groups": 1,
+        }
+    return {
+        "input_proj_groups": int(cfg.get("input_proj_groups", 1) or 1),
+        "qkv_groups": int(cfg.get("qkv_groups", 1) or 1),
+        "out_proj_groups": int(cfg.get("out_proj_groups", 1) or 1),
+        "output_proj_groups": int(cfg.get("output_proj_groups", 1) or 1),
+    }
+
+
 
 class DCNN(nn.Module):
     def __init__(
@@ -73,6 +109,7 @@ class DCNN(nn.Module):
         # print(f"flatten_size: {flatten_size}")
         self.tied_mha = kwargs.get("tied_mha", False)
         self.attention_softmax = kwargs.get("attention_softmax", {})
+        self.low_power = kwargs.get("low_power", {})
         self.mattn = MultiAttnBlock(
             input_size=flatten_size,  # 512 or 1024
             hidden_size=self.rnn_units,
@@ -82,17 +119,23 @@ class DCNN(nn.Module):
             window_size=self.attn_win,  # None or int
             tied_mha=self.tied_mha,
             attention_softmax=self.attention_softmax,
+            low_power=self.low_power,
         )
 
         # self.encoder = Encoder(self.kernel_num, kernel_size)
         # self.decoder = Decoder(self.kernel_num, self.kernel_size)
-        self.encoder = Encoder(self.kernel_num, kernel_size, use_depthwise=self.use_depthwise)  
+        self.encoder = Encoder(
+            self.kernel_num, kernel_size,
+            use_depthwise=self.use_depthwise,
+            low_power=self.low_power,
+        )
         self.decoder_grouped_pointwise = kwargs.get("decoder_grouped_pointwise", {})
         self.decoder = Decoder(
             self.kernel_num,
             self.kernel_size,
             use_depthwise=self.use_depthwise,
             decoder_grouped_pointwise=self.decoder_grouped_pointwise,
+            low_power=self.low_power,
         )
         print(f"depthwise: {self.use_depthwise}")
         # show_model(self)
@@ -133,7 +176,8 @@ class DCNN(nn.Module):
         return params
 
 class Encoder(nn.Module):
-    def __init__(self, kernel_num, kernel_size, use_depthwise=True):
+    def __init__(self, kernel_num, kernel_size, use_depthwise=True,
+                 low_power=None):
         super().__init__()
 
         self.kernel_num = list(kernel_num)
@@ -141,6 +185,8 @@ class Encoder(nn.Module):
             self.kernel_num = [2] + self.kernel_num
         self.kernel_size = kernel_size
         self.use_depthwise = use_depthwise
+        bn_kwargs = _low_power_bn_kwargs(low_power)
+        prelu_kwargs = _low_power_prelu_kwargs(low_power)
 
         self.model = nn.ModuleList()
         for idx in range(len(self.kernel_num) - 1):
@@ -170,8 +216,9 @@ class Encoder(nn.Module):
                 nn.Sequential(
                     conv_layer,
                     torch_complex.NaiveComplexBatchNorm2d(
-                        self.kernel_num[idx + 1]//2),
-                    torch_complex.ComplexPReLU()
+                        self.kernel_num[idx + 1]//2,
+                        **bn_kwargs),
+                    torch_complex.ComplexPReLU(**prelu_kwargs)
                 )
             )
 
@@ -296,7 +343,7 @@ class _DecoderBlockSplit(nn.Module):
 
 class Decoder(nn.Module):
     def __init__(self, kernel_num, kernel_size, use_depthwise=True,
-                 decoder_grouped_pointwise=None):
+                 decoder_grouped_pointwise=None, low_power=None):
         super().__init__()
 
         self.kernel_num = list(kernel_num)
@@ -304,6 +351,8 @@ class Decoder(nn.Module):
             self.kernel_num = [2] + self.kernel_num
         self.kernel_size = kernel_size
         self.use_depthwise = use_depthwise
+        bn_kwargs = _low_power_bn_kwargs(low_power)
+        prelu_kwargs = _low_power_prelu_kwargs(low_power)
         cfg = decoder_grouped_pointwise or {}
         self.grouped_pw_mode = cfg.get("mode", "off")
         if self.grouped_pw_mode not in ("off", "split", "grouped"):
@@ -424,8 +473,9 @@ class Decoder(nn.Module):
             
             if idx != 1:
                 block.append(torch_complex.NaiveComplexBatchNorm2d(
-                    self.kernel_num[idx - 1]//2))
-                block.append(torch_complex.ComplexPReLU())
+                    self.kernel_num[idx - 1]//2,
+                    **bn_kwargs))
+                block.append(torch_complex.ComplexPReLU(**prelu_kwargs))
             
             if self.grouped_pw_mode == "off":
                 self.model.append(nn.Sequential(*block))
@@ -452,10 +502,14 @@ class Decoder(nn.Module):
 class MultiAttnBlock(nn.Module):
     def __init__(self, input_size, hidden_size, embed_dim=512, num_heads=32,
                  batch_first=True, window_size=None, tied_mha=False,
-                 attention_softmax=None):
+                 attention_softmax=None, low_power=None):
         super().__init__()
+        proj_cfg = _mha_projection_cfg(low_power)
         # Project to embed_dim first (exactly as in paper)
-        self.input_proj = nn.Linear(input_size, embed_dim, dtype=torch.complex64)
+        self.input_proj = torch_complex.GroupedLinear(
+            input_size, embed_dim, dtype=torch.complex64,
+            groups=proj_cfg["input_proj_groups"],
+        )
 
         self.window_size = window_size
         if isinstance(attention_softmax, dict):
@@ -463,13 +517,25 @@ class MultiAttnBlock(nn.Module):
         else:
             self.softmax_mode = attention_softmax or "softmax"
 
-        print(f"MultiAttnBlock: input_size={input_size}, hidden_size={hidden_size}, embed_dim={embed_dim}, num_heads={num_heads}, window_size={window_size}, tied_mha={tied_mha}, softmax_mode={self.softmax_mode}")
+        print(
+            f"MultiAttnBlock: input_size={input_size}, hidden_size={hidden_size}, "
+            f"embed_dim={embed_dim}, num_heads={num_heads}, window_size={window_size}, "
+            f"tied_mha={tied_mha}, softmax_mode={self.softmax_mode}, "
+            f"mha_projection={proj_cfg}"
+        )
         # Use the right number of heads as in paper
         self.mattn = torch_complex.ComplexMultiheadAttention(
             embed_dim=embed_dim, num_heads=num_heads, batch_first=batch_first,
-            tied=tied_mha, softmax_mode=self.softmax_mode)
+            tied=tied_mha, softmax_mode=self.softmax_mode,
+            mha_projection={
+                "qkv_groups": proj_cfg["qkv_groups"],
+                "out_proj_groups": proj_cfg["out_proj_groups"],
+            })
         # Project back to original dimension
-        self.output_proj = nn.Linear(embed_dim, input_size, dtype=torch.complex64)
+        self.output_proj = torch_complex.GroupedLinear(
+            embed_dim, input_size, dtype=torch.complex64,
+            groups=proj_cfg["output_proj_groups"],
+        )
 
         # print(f"MultiAttnBlock: input_size={input_size}, hidden_size={hidden_size}, embed_dim={embed_dim}, num_heads={num_heads}")
     def forward(self, x):

@@ -119,15 +119,54 @@ class ComplexAmpTanh(Module):
         return complex_amp_tanh(input)
 
 
-class ComplexPReLU(Module):
-    def __init__(self):
-        super().__init__()
-        self.r_prelu = PReLU(dtype=torch.float32)        
-        self.i_prelu = PReLU(dtype=torch.float32)
+def _round_ste_or_plain(x):
+    fn = globals().get("_ste_round")
+    return fn(x) if fn is not None else torch.round(x)
 
+
+def _pow2_quantize_scale(scale, min_exp=-8, max_exp=8):
+    signed = torch.sign(scale)
+    magnitude = scale.abs().clamp_min(2.0 ** int(min_exp))
+    exponent = _round_ste_or_plain(torch.log2(magnitude)).clamp(
+        int(min_exp), int(max_exp)
+    )
+    quantized = signed * torch.pow(torch.full_like(magnitude, 2.0), exponent)
+    return torch.where(scale == 0, torch.zeros_like(quantized), quantized)
+
+
+def _quantize_bn_scale(weight, mode="none", pow2_min_exp=-8, pow2_max_exp=8):
+    if weight is None:
+        return None
+    mode = str(mode or "none").lower()
+    if mode in ("none", "off", "false"):
+        return weight
+    if mode == "pow2":
+        return _pow2_quantize_scale(weight, pow2_min_exp, pow2_max_exp)
+    if mode in ("fp8_e4m3", "e4m3", "fp8_e5m2", "e5m2"):
+        return _fake_fp8_quantize_tensor(weight, _fp8_dtype_from_mode(mode))
+    raise ValueError(f"Unsupported BN affine scale_mode: {mode}")
+
+
+class ComplexPReLU(Module):
+    def __init__(self, pow2_slope=False, min_exp=-8, max_exp=0):
+        super().__init__()
+        self.r_prelu = PReLU(dtype=torch.float32)
+        self.i_prelu = PReLU(dtype=torch.float32)
+        self.pow2_slope = bool(pow2_slope)
+        self.pow2_min_exp = int(min_exp)
+        self.pow2_max_exp = int(max_exp)
+
+    def _apply_prelu(self, x, module):
+        if not self.pow2_slope:
+            return module(x)
+        slope = _pow2_quantize_scale(
+            module.weight, self.pow2_min_exp, self.pow2_max_exp
+        )
+        return F.prelu(x, slope)
 
     def forward(self, input):
-        result = self.r_prelu(input.real) + 1j*self.i_prelu(input.imag)
+        result = self._apply_prelu(input.real, self.r_prelu) \
+            + 1j*self._apply_prelu(input.imag, self.i_prelu)
         return result
 
 
@@ -172,21 +211,109 @@ class ComplexLinear(Module):
         return apply_complex(self.fc_r, self.fc_i, input)
 
 
+def _valid_group_count(requested_groups, in_features, out_features):
+    requested_groups = max(1, int(requested_groups))
+    max_groups = math.gcd(int(in_features), int(out_features))
+    for groups in range(min(requested_groups, max_groups), 0, -1):
+        if max_groups % groups == 0:
+            return groups
+    return 1
+
+
+def _linear_group_mask(weight, groups):
+    groups = _valid_group_count(groups, weight.shape[1], weight.shape[0])
+    if groups <= 1:
+        return None
+    out_features, in_features = weight.shape
+    out_per_group = out_features // groups
+    in_per_group = in_features // groups
+    mask = torch.zeros(
+        (out_features, in_features), dtype=torch.float32, device=weight.device
+    )
+    for group_idx in range(groups):
+        out_lo = group_idx * out_per_group
+        in_lo = group_idx * in_per_group
+        mask[out_lo:out_lo + out_per_group, in_lo:in_lo + in_per_group] = 1.0
+    return mask.to(weight.dtype)
+
+
+def _mha_in_proj_group_mask(weight, embed_dim, groups):
+    groups = _valid_group_count(groups, embed_dim, embed_dim)
+    if groups <= 1:
+        return None
+    pieces = []
+    for _ in range(3):
+        pieces.append(_linear_group_mask(weight[:embed_dim], groups))
+    return torch.cat(pieces, dim=0).to(weight.dtype)
+
+
+class GroupedLinear(Linear):
+    """Linear with a compile-time block-diagonal connectivity mask.
+
+    The weight and bias parameter names stay identical to nn.Linear, so dense
+    checkpoints can warm-start grouped projection experiments directly.
+    """
+    def __init__(self, in_features, out_features, bias=True, dtype=None,
+                 device=None, groups=1):
+        super().__init__(
+            in_features, out_features, bias=bias, dtype=dtype, device=device
+        )
+        self.groups = _valid_group_count(groups, in_features, out_features)
+
+    @property
+    def grouped_active(self):
+        return self.groups > 1
+
+    def forward(self, input):
+        mask = _linear_group_mask(self.weight, self.groups)
+        weight = self.weight if mask is None else self.weight * mask
+        return F.linear(input, weight, self.bias)
+
+
 class NaiveComplexBatchNorm1d(Module):
     '''
     Naive approach to complex batch norm, perform batch norm independently on real and imaginary part.
     '''
 
     def __init__(self, num_features, eps=1e-5, momentum=0.1, affine=True,
-                 track_running_stats=True):
+                 track_running_stats=True, scale_mode="none",
+                 tie_real_imag_scale=False, pow2_min_exp=-8, pow2_max_exp=8):
         super().__init__()
         self.bn_r = BatchNorm1d(
             num_features, eps, momentum, affine, track_running_stats)
         self.bn_i = BatchNorm1d(
             num_features, eps, momentum, affine, track_running_stats)
+        self.scale_mode = scale_mode
+        self.tie_real_imag_scale = bool(tie_real_imag_scale)
+        self.pow2_min_exp = int(pow2_min_exp)
+        self.pow2_max_exp = int(pow2_max_exp)
 
     def forward(self, input):
-        return self.bn_r(input.real).type(torch.complex64) + 1j*self.bn_i(input.imag).type(torch.complex64)
+        if str(self.scale_mode).lower() in ("none", "off", "false") and not self.tie_real_imag_scale:
+            return self.bn_r(input.real).type(torch.complex64) + 1j*self.bn_i(input.imag).type(torch.complex64)
+        r_weight = self.bn_r.weight
+        i_weight = self.bn_i.weight
+        if self.tie_real_imag_scale and r_weight is not None and i_weight is not None:
+            tied = 0.5 * (r_weight + i_weight)
+            r_weight = tied
+            i_weight = tied
+        r_weight = _quantize_bn_scale(
+            r_weight, self.scale_mode, self.pow2_min_exp, self.pow2_max_exp
+        )
+        i_weight = _quantize_bn_scale(
+            i_weight, self.scale_mode, self.pow2_min_exp, self.pow2_max_exp
+        )
+        real = F.batch_norm(
+            input.real, self.bn_r.running_mean, self.bn_r.running_var,
+            r_weight, self.bn_r.bias, self.bn_r.training or not self.bn_r.track_running_stats,
+            self.bn_r.momentum, self.bn_r.eps
+        )
+        imag = F.batch_norm(
+            input.imag, self.bn_i.running_mean, self.bn_i.running_var,
+            i_weight, self.bn_i.bias, self.bn_i.training or not self.bn_i.track_running_stats,
+            self.bn_i.momentum, self.bn_i.eps
+        )
+        return real.type(torch.complex64) + 1j*imag.type(torch.complex64)
 
 
 class NaiveComplexBatchNorm2d(Module):
@@ -195,15 +322,44 @@ class NaiveComplexBatchNorm2d(Module):
     '''
 
     def __init__(self, num_features, eps=1e-5, momentum=0.1, affine=True,
-                 track_running_stats=True):
+                 track_running_stats=True, scale_mode="none",
+                 tie_real_imag_scale=False, pow2_min_exp=-8, pow2_max_exp=8):
         super().__init__()
         self.bn_r = BatchNorm2d(
             num_features, eps, momentum, affine, track_running_stats)
         self.bn_i = BatchNorm2d(
             num_features, eps, momentum, affine, track_running_stats)
+        self.scale_mode = scale_mode
+        self.tie_real_imag_scale = bool(tie_real_imag_scale)
+        self.pow2_min_exp = int(pow2_min_exp)
+        self.pow2_max_exp = int(pow2_max_exp)
 
     def forward(self, input):
-        return self.bn_r(input.real).type(torch.complex64) + 1j*self.bn_i(input.imag).type(torch.complex64)
+        if str(self.scale_mode).lower() in ("none", "off", "false") and not self.tie_real_imag_scale:
+            return self.bn_r(input.real).type(torch.complex64) + 1j*self.bn_i(input.imag).type(torch.complex64)
+        r_weight = self.bn_r.weight
+        i_weight = self.bn_i.weight
+        if self.tie_real_imag_scale and r_weight is not None and i_weight is not None:
+            tied = 0.5 * (r_weight + i_weight)
+            r_weight = tied
+            i_weight = tied
+        r_weight = _quantize_bn_scale(
+            r_weight, self.scale_mode, self.pow2_min_exp, self.pow2_max_exp
+        )
+        i_weight = _quantize_bn_scale(
+            i_weight, self.scale_mode, self.pow2_min_exp, self.pow2_max_exp
+        )
+        real = F.batch_norm(
+            input.real, self.bn_r.running_mean, self.bn_r.running_var,
+            r_weight, self.bn_r.bias, self.bn_r.training or not self.bn_r.track_running_stats,
+            self.bn_r.momentum, self.bn_r.eps
+        )
+        imag = F.batch_norm(
+            input.imag, self.bn_i.running_mean, self.bn_i.running_var,
+            i_weight, self.bn_i.bias, self.bn_i.training or not self.bn_i.track_running_stats,
+            self.bn_i.momentum, self.bn_i.eps
+        )
+        return real.type(torch.complex64) + 1j*imag.type(torch.complex64)
 
 
 class _ComplexBatchNorm(Module):
@@ -874,6 +1030,151 @@ def _quantize_attention_probs(probs, attention_datapath):
     raise ValueError(f"Unsupported attention prob_quant mode: {mode}")
 
 
+def _prob_packet_config(attention_datapath):
+    if not _attention_datapath_enabled(attention_datapath):
+        return None
+    packet_cfg = _attention_datapath_value(attention_datapath, "prob_packet", None)
+    if not packet_cfg or not bool(packet_cfg.get("enabled", False)):
+        return None
+    return packet_cfg
+
+
+def _prob_packet_window_width(packet_cfg, idx_bits):
+    encoded_width = 2 ** int(idx_bits)
+    requested = packet_cfg.get("causal_window", None)
+    if requested is None:
+        return encoded_width
+
+    window_width = int(requested)
+    if window_width <= 0:
+        raise ValueError("q0.8 probability packet causal_window must be positive.")
+    if window_width > encoded_width:
+        raise ValueError(
+            "q0.8 probability packet causal_window exceeds local_idx encoding: "
+            f"causal_window={window_width}, local_idx_bits={idx_bits}, "
+            f"max_encodable={encoded_width}."
+        )
+    return window_width
+
+
+def _packetize_q08_attention_probs(probs, packet_cfg):
+    top_k = int(packet_cfg.get("top_k", 4))
+    idx_bits = int(packet_cfg.get("local_idx_bits", 5))
+    encoded_width = 2 ** idx_bits
+    window_width = _prob_packet_window_width(packet_cfg, idx_bits)
+    prob_scale = float(packet_cfg.get("prob_scale", 256))
+    prob_max_code = int(packet_cfg.get("prob_max_code", 255))
+    validate_local_idx = bool(packet_cfg.get("validate_local_idx", True))
+    renormalize = bool(packet_cfg.get("renormalize", False))
+
+    q_len = probs.size(-2)
+    key_len = probs.size(-1)
+    k = min(max(1, top_k), key_len)
+
+    row = torch.arange(q_len, device=probs.device).view(
+        *([1] * (probs.dim() - 2)), q_len, 1
+    )
+    key = torch.arange(key_len, device=probs.device).view(
+        *([1] * (probs.dim() - 1)), key_len
+    )
+    local_idx_full = row - key
+    in_window = (local_idx_full >= 0) & (local_idx_full < window_width)
+    in_window = in_window.expand_as(probs)
+
+    masked_probs = probs.clamp(min=0.0).masked_fill(~in_window, float("-inf"))
+    topk_probs, topk_idx = torch.topk(masked_probs, k=k, dim=-1)
+    valid_slot = torch.gather(in_window, -1, topk_idx) & torch.isfinite(topk_probs)
+    safe_row = row.expand_as(topk_idx)
+    safe_idx = torch.where(valid_slot, topk_idx, safe_row)
+    safe_probs = torch.where(valid_slot, topk_probs, torch.zeros_like(topk_probs))
+
+    if validate_local_idx:
+        local_idx = row - safe_idx
+        invalid = valid_slot & ((local_idx < 0) | (local_idx >= encoded_width))
+        if torch.any(invalid):
+            raise ValueError(
+                "Internal bug: q0.8 probability packet local_idx overflow after "
+                "window-aware top-k. The packetizer selected an entry outside "
+                f"the encodable causal window ({encoded_width} keys)."
+            )
+
+    codes = _ste_round(safe_probs * prob_scale).clamp(0.0, float(prob_max_code))
+    packet_probs = codes / prob_scale
+    if renormalize:
+        denom = packet_probs.sum(dim=-1, keepdim=True)
+        packet_probs = torch.where(
+            denom > 0,
+            packet_probs / denom.clamp_min(1.0 / prob_scale),
+            packet_probs,
+        )
+
+    dense_probs = torch.zeros_like(probs).scatter_add(
+        -1, safe_idx, packet_probs.to(probs.dtype)
+    )
+    dense_codes = torch.zeros_like(probs).scatter_add(
+        -1, safe_idx, codes.to(probs.dtype)
+    )
+    return {
+        "probs": dense_probs,
+        "codes": dense_codes,
+        "indices": safe_idx,
+        "probs_topk": packet_probs,
+        "codes_topk": codes,
+        "valid_slot": valid_slot,
+        "window_width": window_width,
+    }
+
+
+def _gather_packet_values(v, packet_indices):
+    key_len = v.size(-2)
+    value_dim = v.size(-1)
+    q_len = packet_indices.size(-2)
+    top_k = packet_indices.size(-1)
+
+    flat_v = v.reshape(-1, key_len, value_dim)
+    flat_idx = packet_indices.reshape(-1, q_len, top_k)
+    batch_idx = torch.arange(flat_v.size(0), device=v.device).view(-1, 1, 1)
+    gathered = flat_v[batch_idx, flat_idx]
+    return gathered.reshape(*v.shape[:-2], q_len, top_k, value_dim)
+
+
+def _packet_slots_in_key_order(packet):
+    order = torch.argsort(packet["indices"], dim=-1)
+    return {
+        "indices": torch.gather(packet["indices"], -1, order),
+        "probs_topk": torch.gather(packet["probs_topk"], -1, order),
+        "codes_topk": torch.gather(packet["codes_topk"], -1, order),
+    }
+
+
+def _q08_packet_fixed_matmul(packet, v, packet_cfg):
+    prob_scale = float(packet_cfg.get("prob_scale", 256))
+    slots = _packet_slots_in_key_order(packet)
+    selected_v = _gather_packet_values(v, slots["indices"]).to(torch.float32)
+    products = slots["codes_topk"].unsqueeze(-1).to(torch.float32) * selected_v
+    return (products.sum(dim=-2) / prob_scale).to(v.dtype)
+
+
+def _q08_packet_dequant_matmul(packet, v, out_dtype):
+    slots = _packet_slots_in_key_order(packet)
+    selected_v = _gather_packet_values(v, slots["indices"])
+    packet_probs = slots["probs_topk"].to(out_dtype)
+    selected_v = selected_v.to(out_dtype)
+    return (packet_probs.unsqueeze(-1) * selected_v).sum(dim=-2).to(v.dtype)
+
+
+def _q08_packet_lmul_matmul(packet, v, mantissa_bits=4, bit_exact=False):
+    slots = _packet_slots_in_key_order(packet)
+    selected_v = _gather_packet_values(v, slots["indices"])
+    multiply = _lmul_multiply_bit_exact if bit_exact else _lmul_multiply
+    products = multiply(
+        slots["probs_topk"].unsqueeze(-1),
+        selected_v,
+        mantissa_bits,
+    )
+    return products.sum(dim=-2).to(v.dtype)
+
+
 def _apply_qk_scale(scores, head_dim, attention_datapath):
     if not _attention_datapath_enabled(attention_datapath):
         return scores / math.sqrt(head_dim)
@@ -963,9 +1264,96 @@ def _lmul_multiply(x, y, mantissa_bits=4):
     return approx.to(out_dtype)
 
 
-def _lmul_matmul(a, b, mantissa_bits=4):
-    products = _lmul_multiply(a.unsqueeze(-1), b.unsqueeze(-3), mantissa_bits)
+def _lmul_multiply_bit_exact(x, y, mantissa_bits=4):
+    """Bit-field L-Mul simulator with explicit mantissa integer codes."""
+    out_dtype = torch.promote_types(x.dtype, y.dtype)
+    x_f = x.to(torch.float32)
+    y_f = y.to(torch.float32)
+    zero = (x_f == 0) | (y_f == 0) | ~torch.isfinite(x_f) | ~torch.isfinite(y_f)
+
+    sign = torch.sign(x_f) * torch.sign(y_f)
+    mx, ex = torch.frexp(x_f.abs())
+    my, ey = torch.frexp(y_f.abs())
+    sx = (mx * 2.0).clamp(1.0, 2.0)
+    sy = (my * 2.0).clamp(1.0, 2.0)
+    ex = ex - 1
+    ey = ey - 1
+
+    scale = float(2 ** int(mantissa_bits))
+    max_code = scale - 1.0
+    fx_code = _ste_floor((sx - 1.0).clamp(0.0, 1.0 - 1.0 / scale) * scale).clamp(0.0, max_code)
+    fy_code = _ste_floor((sy - 1.0).clamp(0.0, 1.0 - 1.0 / scale) * scale).clamp(0.0, max_code)
+    offset_code = float(round(scale * (2.0 ** (-_lmul_offset(mantissa_bits)))))
+    sig_code = scale + fx_code + fy_code + offset_code
+
+    carry = sig_code >= (2.0 * scale)
+    sig_code = torch.where(carry, _ste_floor(sig_code / 2.0), sig_code)
+    sig = sig_code / scale
+    exp = ex + ey + carry.to(ex.dtype)
+    approx = torch.ldexp(sig, exp) * sign
+    approx = torch.where(zero, torch.zeros_like(approx), approx)
+    return approx.to(out_dtype)
+
+
+def _lmul_matmul(a, b, mantissa_bits=4, bit_exact=False):
+    multiply = _lmul_multiply_bit_exact if bit_exact else _lmul_multiply
+    products = multiply(a.unsqueeze(-1), b.unsqueeze(-3), mantissa_bits)
     return products.sum(dim=-2)
+
+
+def _infer_causal_window_from_mask(attn_mask, q_len, key_len):
+    if attn_mask is None or q_len != key_len or q_len <= 0:
+        return None
+
+    mask = attn_mask
+    while mask.dim() > 2:
+        mask = mask[0]
+    if mask.dim() != 2 or mask.shape[-2:] != (q_len, key_len):
+        return None
+
+    valid = ~mask if mask.dtype == torch.bool else torch.isfinite(mask)
+    valid_per_row = valid.sum(dim=-1)
+    if valid_per_row.numel() == 0:
+        return None
+
+    window_width = int(valid_per_row.max().detach().cpu().item())
+    if window_width <= 0 or window_width >= key_len:
+        return None
+    return window_width
+
+
+def _lmul_windowed_qk_matmul(q, k_t, window_width, mantissa_bits=4,
+                             bit_exact=False, chunk_size=32):
+    q_len = q.size(-2)
+    key_len = k_t.size(-1)
+    if window_width is None or window_width >= key_len:
+        return _lmul_matmul(
+            q, k_t, mantissa_bits=mantissa_bits, bit_exact=bit_exact
+        )
+
+    chunk_size = max(1, int(chunk_size))
+    scores = q.new_zeros(*q.shape[:-1], key_len)
+    for q_start in range(0, q_len, chunk_size):
+        q_end = min(q_start + chunk_size, q_len)
+        key_start = max(0, q_start - int(window_width) + 1)
+        key_end = min(key_len, q_end)
+        if key_start >= key_end:
+            continue
+
+        sub_scores = _lmul_matmul(
+            q[..., q_start:q_end, :],
+            k_t[..., :, key_start:key_end],
+            mantissa_bits=mantissa_bits,
+            bit_exact=bit_exact,
+        )
+        rows = torch.arange(q_start, q_end, device=q.device).view(-1, 1)
+        keys = torch.arange(key_start, key_end, device=q.device).view(1, -1)
+        local_idx = rows - keys
+        valid = (local_idx >= 0) & (local_idx < int(window_width))
+        valid = valid.view(*([1] * (sub_scores.dim() - 2)), q_end - q_start, key_end - key_start)
+        scores[..., q_start:q_end, key_start:key_end] = sub_scores.masked_fill(~valid, 0.0)
+
+    return scores
 
 
 def _lmul_target_enabled(attention_datapath, target):
@@ -1157,7 +1545,7 @@ def _approx_attention_probs(attn, softmax_mode):
 
 def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
                            fp16_accumulator=False, softmax_mode="softmax",
-                           attention_datapath=None):
+                           attention_datapath=None, mha_projection=None):
     """Manually recreate nn.MultiheadAttention forward with optional top-k masking
     after softmax. Uses `mha.in_proj_weight`, `mha.in_proj_bias`, `mha.out_proj`
     directly so any parametrization (e.g. INT4 fake quant) applies transparently.
@@ -1173,9 +1561,10 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
             match the hardware datapath (per 07 handoff §2.1). Output is cast
             back to the original activation dtype before out_proj.
         softmax_mode: "softmax", "shift", "taylor2", or "relu2".
-        attention_datapath: optional P3 datapath dict for QK scale,
+        attention_datapath: optional P3/P4/P5 datapath dict for QK scale,
             finite score quantization, probability quantization, and B0 score
             capture. Kept out of state_dict by ComplexMultiheadAttention.
+        mha_projection: optional low-power grouped QKV/O projection settings.
     """
     B, T, E = x.shape
     H = mha.num_heads
@@ -1187,7 +1576,14 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
     else:
         x_q = x
 
-    qkv = F.linear(x_q, mha.in_proj_weight, mha.in_proj_bias)
+    mha_projection = mha_projection or {}
+    qkv_groups = int(mha_projection.get("qkv_groups", 1) or 1)
+    out_proj_groups = int(mha_projection.get("out_proj_groups", 1) or 1)
+    in_proj_weight = mha.in_proj_weight
+    in_proj_mask = _mha_in_proj_group_mask(in_proj_weight, E, qkv_groups)
+    if in_proj_mask is not None:
+        in_proj_weight = in_proj_weight * in_proj_mask
+    qkv = F.linear(x_q, in_proj_weight, mha.in_proj_bias)
     q, k, v = qkv.chunk(3, dim=-1)
 
     # (B, T, E) → (B, H, T, D)
@@ -1206,10 +1602,34 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
         v = v.to(torch.float16)
 
     lmul_bits = int(_attention_datapath_value(attention_datapath, "lmul_mantissa_bits", 4))
+    lmul_bit_exact = bool(_attention_datapath_value(attention_datapath, "lmul_bit_exact", False))
 
     # QK^T / sqrt(D). Hardware datapath: fp16 accumulator when enabled.
     if _lmul_target_enabled(attention_datapath, "qk"):
-        qk_scores = _lmul_matmul(q, k.transpose(-2, -1), mantissa_bits=lmul_bits)
+        k_t = k.transpose(-2, -1)
+        qk_force_dense = bool(_attention_datapath_value(
+            attention_datapath, "lmul_qk_force_dense", False
+        ))
+        qk_window_width = (
+            None if qk_force_dense
+            else _infer_causal_window_from_mask(attn_mask, T, T)
+        )
+        if qk_window_width is not None:
+            qk_chunk_size = int(_attention_datapath_value(
+                attention_datapath, "lmul_qk_chunk_size", 32
+            ))
+            qk_scores = _lmul_windowed_qk_matmul(
+                q, k_t, qk_window_width,
+                mantissa_bits=lmul_bits,
+                bit_exact=lmul_bit_exact,
+                chunk_size=qk_chunk_size,
+            )
+        else:
+            qk_scores = _lmul_matmul(
+                q, k_t,
+                mantissa_bits=lmul_bits,
+                bit_exact=lmul_bit_exact,
+            )
     else:
         qk_scores = torch.matmul(q, k.transpose(-2, -1))
     attn = _apply_qk_scale(qk_scores, D, attention_datapath)
@@ -1251,10 +1671,34 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
         attn = attn / (attn.sum(dim=-1, keepdim=True) + 1e-8)
 
     attn = _quantize_attention_probs(attn, attention_datapath)
+    packet_cfg = _prob_packet_config(attention_datapath)
+    packet = None
+    if packet_cfg is not None:
+        packet = _packetize_q08_attention_probs(attn, packet_cfg)
+        attn = packet["probs"]
 
     # Score × V
-    if _lmul_target_enabled(attention_datapath, "score_v"):
-        out = _lmul_matmul(attn, v, mantissa_bits=lmul_bits)
+    score_v_mode = (
+        str(packet_cfg.get("score_v_mode", "dequant_fp16")).lower()
+        if packet_cfg is not None else "dequant_fp16"
+    )
+    if packet is not None and score_v_mode == "fixed_shift_add":
+        out = _q08_packet_fixed_matmul(packet, v, packet_cfg)
+    elif packet is not None and score_v_mode == "lmul":
+        out = _q08_packet_lmul_matmul(
+            packet, v,
+            mantissa_bits=lmul_bits,
+            bit_exact=lmul_bit_exact,
+        )
+    elif packet is not None:
+        packet_dtype = torch.float16 if fp16_accumulator else v.dtype
+        out = _q08_packet_dequant_matmul(packet, v, packet_dtype)
+    elif _lmul_target_enabled(attention_datapath, "score_v"):
+        out = _lmul_matmul(
+            attn, v,
+            mantissa_bits=lmul_bits,
+            bit_exact=lmul_bit_exact,
+        )
     else:
         out = torch.matmul(attn, v)  # (B, H, T, D)
     out = out.transpose(1, 2).contiguous().reshape(B, T, E)
@@ -1262,19 +1706,32 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
     if fp16_accumulator:
         out = out.to(orig_dtype)
 
-    out = mha.out_proj(out)
+    out_proj_weight = mha.out_proj.weight
+    out_proj_mask = _linear_group_mask(out_proj_weight, out_proj_groups)
+    if out_proj_mask is not None:
+        out_proj_weight = out_proj_weight * out_proj_mask
+    out = F.linear(out, out_proj_weight, mha.out_proj.bias)
     return out
 
 
 class ComplexMultiheadAttention(Module):
     def __init__(self, embed_dim=512, num_heads=8, batch_first=True, tied=False,
-                 softmax_mode="softmax"):
+                 softmax_mode="softmax", mha_projection=None):
         super().__init__()
         self.embed_dim = embed_dim
         self.num_heads = num_heads
         self.tied = tied
         self.softmax_mode = _canonical_softmax_mode(softmax_mode)
-        print(f"ComplexMultiheadAttention: embed_dim={embed_dim}, num_heads={num_heads}, batch_first={batch_first}, tied={tied}, softmax_mode={self.softmax_mode}")
+        self.mha_projection = dict(mha_projection or {})
+        self.projection_grouped_active = (
+            int(self.mha_projection.get("qkv_groups", 1) or 1) > 1
+            or int(self.mha_projection.get("out_proj_groups", 1) or 1) > 1
+        )
+        print(
+            f"ComplexMultiheadAttention: embed_dim={embed_dim}, num_heads={num_heads}, "
+            f"batch_first={batch_first}, tied={tied}, softmax_mode={self.softmax_mode}, "
+            f"mha_projection={self.mha_projection}"
+        )
 
         self.MultiheadAttention_re = MultiheadAttention(self.embed_dim, self.num_heads, batch_first=batch_first)
         if not tied:
@@ -1282,7 +1739,7 @@ class ComplexMultiheadAttention(Module):
 
         # Mixed-precision QAT hooks (set externally by enable_mixed_precision_qat)
         self.top_k = None
-        self.use_custom_forward = self.softmax_mode != "softmax"
+        self.use_custom_forward = self.softmax_mode != "softmax" or self.projection_grouped_active
         self.activation_quantizer = None
         self.fp16_accumulator = False
         self.attention_datapath = {}
@@ -1297,22 +1754,26 @@ class ComplexMultiheadAttention(Module):
                                                self.top_k, self.activation_quantizer,
                                                self.fp16_accumulator,
                                                self.softmax_mode,
-                                               self.attention_datapath) \
+                                               self.attention_datapath,
+                                               self.mha_projection) \
                       - _mha_attention_forward(self.MultiheadAttention_im, x.imag, attn_mask,
                                                self.top_k, self.activation_quantizer,
                                                self.fp16_accumulator,
                                                self.softmax_mode,
-                                               self.attention_datapath)
+                                               self.attention_datapath,
+                                               self.mha_projection)
             imaginary = _mha_attention_forward(self.MultiheadAttention_re, x.imag, attn_mask,
                                                self.top_k, self.activation_quantizer,
                                                self.fp16_accumulator,
                                                self.softmax_mode,
-                                               self.attention_datapath) \
+                                               self.attention_datapath,
+                                               self.mha_projection) \
                       + _mha_attention_forward(self.MultiheadAttention_im, x.real, attn_mask,
                                                self.top_k, self.activation_quantizer,
                                                self.fp16_accumulator,
                                                self.softmax_mode,
-                                               self.attention_datapath)
+                                               self.attention_datapath,
+                                               self.mha_projection)
             return torch.complex(real, imaginary)
 
         real      = self._forward_real(x, attn_mask)
@@ -1330,12 +1791,14 @@ class ComplexMultiheadAttention(Module):
                                        self.top_k, self.activation_quantizer,
                                        self.fp16_accumulator,
                                        self.softmax_mode,
-                                       self.attention_datapath)
+                                       self.attention_datapath,
+                                       self.mha_projection)
             b = _mha_attention_forward(self.MultiheadAttention_re, x.imag, attn_mask,
                                        self.top_k, self.activation_quantizer,
                                        self.fp16_accumulator,
                                        self.softmax_mode,
-                                       self.attention_datapath)
+                                       self.attention_datapath,
+                                       self.mha_projection)
         else:
             a, _ = self.MultiheadAttention_re(x.real, x.real, x.real, attn_mask=attn_mask)
             b, _ = self.MultiheadAttention_re(x.imag, x.imag, x.imag, attn_mask=attn_mask)

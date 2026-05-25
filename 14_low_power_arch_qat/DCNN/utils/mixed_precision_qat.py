@@ -364,6 +364,7 @@ def _set_topk_on_complex_mha(model: nn.Module, top_k: Optional[int], fp8_dtype,
                 (top_k is not None)
                 or fp16_accumulator
                 or datapath_enabled
+                or getattr(m, "projection_grouped_active", False)
                 or softmax_mode != "softmax"
             )
             m.top_k = top_k

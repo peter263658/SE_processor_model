@@ -62,8 +62,42 @@ model:
     lmul_enabled: false
     lmul_targets: []          # qk | score_v, e.g. [qk, score_v]
     lmul_mantissa_bits: 4
+    lmul_qk_chunk_size: 32
+    lmul_qk_force_dense: false
+    # 2026-05-19 low-power Phase B/C additions. This is separate from
+    # prob_quant=q0.8 because the old P3 path tested a value grid, while this
+    # path simulates the packet fields consumed by Score x V.
+    lmul_bit_exact: false
+    prob_packet:
+      enabled: false
+      top_k: 4
+      local_idx_bits: 5
+      causal_window: null      # null couples window to 2**local_idx_bits
+      prob_bits: 8
+      prob_scale: 256
+      prob_max_code: 255
+      score_v_mode: "dequant_fp16"  # dequant_fp16 | fixed_shift_add | lmul
+      validate_local_idx: true
+      renormalize: false
     topk_stability_min_jaccard: 0.98
     top1_flip_max_rate: 0.01
+  # 2026-05-19 low-power architecture experiments.
+  low_power:
+    prelu_pow2:
+      enabled: false
+      min_exp: -8
+      max_exp: 0
+    bn_affine:
+      scale_mode: "none"       # none | fp8_e4m3 | pow2
+      tie_real_imag_scale: false
+      pow2_min_exp: -8
+      pow2_max_exp: 8
+    mha_projection:
+      enabled: false
+      input_proj_groups: 1
+      qkv_groups: 1
+      out_proj_groups: 1
+      output_proj_groups: 1
   # Decoder grouped pointwise experiment.
   # mode:
   #   off     - legacy cat([x, skip]) -> pointwise path
