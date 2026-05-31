@@ -1,0 +1,135 @@
+#!/bin/bash
+# VCTK+TIMIT cross-domain eval for selected P3 attention datapath variants.
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+cd "$REPO_DIR"
+
+export PYTHONPATH="${PYTHONPATH:-}:${REPO_DIR}"
+export HYDRA_FULL_ERROR=1
+export NUMBA_CACHE_DIR="${NUMBA_CACHE_DIR:-/tmp/numba_cache}"
+export MPLCONFIGDIR="${MPLCONFIGDIR:-/tmp/mpl_cache}"
+
+GPU_ID="${GPU_ID:-0}"
+BATCH_SIZE="${BATCH_SIZE:-8}"
+LIMIT_PAIRS="${LIMIT_PAIRS:-750}"
+METRIC_WORKERS="${METRIC_WORKERS:-64}"
+MODE="${MODE:-shift_topk_pow2_clamp8_nomantissa}"
+P2_BEST_CKPT="${P2_BEST_CKPT:-${REPO_DIR}/outputs/p2_skip/s050_topk_2026-05-17_21-27-05/logs/lightning_logs/version_0/checkpoints/epoch=27-step=27104.ckpt}"
+P2_INDEX="${P2_INDEX:-${REPO_DIR}/Checkpoints/p2_skip_indices_g42_topk_l1_r050.pt}"
+OUT_ROOT="${OUT_ROOT:-${REPO_DIR}/outputs/p3_attention_fp8}"
+RESULT_ROOT="${RESULT_ROOT:-${REPO_DIR}/results/p3_attention_fp8_timit}"
+VARIANTS=("$@")
+if [ "${#VARIANTS[@]}" -eq 0 ]; then
+  VARIANTS=(a1_fp16_accum)
+fi
+
+latest_non_last_ckpt() {
+  ckpt_dir="$1/logs/lightning_logs/version_0/checkpoints"
+  ckpt="$(find "$ckpt_dir" -maxdepth 1 -type f -name '*.ckpt' ! -name 'last.ckpt' | sort | tail -n 1)"
+  if [ -z "$ckpt" ]; then
+    ckpt="${ckpt_dir}/last.ckpt"
+  fi
+  if [ ! -f "$ckpt" ]; then
+    echo "no checkpoint found under $ckpt_dir" >&2
+    exit 1
+  fi
+  echo "$ckpt"
+}
+
+latest_run_dir() {
+  variant="$1"
+  run_dir="$(ls -d "${OUT_ROOT}/${variant}"_* 2>/dev/null | sort | tail -n 1)"
+  if [ -z "$run_dir" ]; then
+    echo "no run dir found for variant $variant under $OUT_ROOT" >&2
+    exit 1
+  fi
+  echo "$run_dir"
+}
+
+variant_overrides() {
+  case "$1" in
+    a0_p2)
+      echo "training.fp16_accumulator=false model.attention_datapath.enabled=false training.int4_scale_format=fp32"
+      ;;
+    a1_fp16_accum)
+      echo "training.fp16_accumulator=true model.attention_datapath.enabled=false training.int4_scale_format=fp32"
+      ;;
+    b_score_fp8)
+      echo "training.fp16_accumulator=true model.attention_datapath.enabled=true model.attention_datapath.score_quant=fp8_e4m3 model.attention_datapath.prob_quant=none training.int4_scale_format=fp32"
+      ;;
+    b_score_fixed)
+      if [ -z "${SCORE_FIXED_INT_BITS:-}" ] || [ -z "${SCORE_FIXED_FRAC_BITS:-}" ]; then
+        echo "b_score_fixed requires SCORE_FIXED_INT_BITS and SCORE_FIXED_FRAC_BITS" >&2
+        exit 2
+      fi
+      echo "training.fp16_accumulator=true model.attention_datapath.enabled=true model.attention_datapath.score_quant=fixed model.attention_datapath.score_fixed_int_bits=${SCORE_FIXED_INT_BITS} model.attention_datapath.score_fixed_frac_bits=${SCORE_FIXED_FRAC_BITS} model.attention_datapath.prob_quant=none training.int4_scale_format=fp32"
+      ;;
+    b_prob_q08)
+      echo "training.fp16_accumulator=true model.attention_datapath.enabled=true model.attention_datapath.score_quant=none model.attention_datapath.prob_quant=q0.8 training.int4_scale_format=fp32"
+      ;;
+    b_prob_fp8)
+      echo "training.fp16_accumulator=true model.attention_datapath.enabled=true model.attention_datapath.score_quant=none model.attention_datapath.prob_quant=fp8_e4m3 training.int4_scale_format=fp32"
+      ;;
+    b_prob_pow2)
+      echo "training.fp16_accumulator=true model.attention_datapath.enabled=true model.attention_datapath.score_quant=none model.attention_datapath.prob_quant=pow2 training.int4_scale_format=fp32"
+      ;;
+    c2b_scale_fp8)
+      echo "training.fp16_accumulator=true model.attention_datapath.enabled=false training.int4_scale_format=fp8_e4m3"
+      ;;
+    c2c_scale_pow2)
+      echo "training.fp16_accumulator=true model.attention_datapath.enabled=false training.int4_scale_format=pow2"
+      ;;
+    *)
+      echo "unknown P3 variant: $1" >&2
+      exit 2
+      ;;
+  esac
+}
+
+common_overrides=(
+  training.qat_scope=full
+  training.top_k_attention=4
+  model.attention_softmax.mode="$MODE"
+  model.decoder_grouped_pointwise.mode=grouped
+  model.decoder_grouped_pointwise.groups_x=4
+  model.decoder_grouped_pointwise.groups_skip=2
+  model.decoder_grouped_pointwise.skip_select_ratio=0.5
+  model.decoder_grouped_pointwise.skip_select_mode=topk_l1
+  model.decoder_grouped_pointwise.skip_indices_path="$P2_INDEX"
+)
+
+mkdir -p "$RESULT_ROOT" logs
+
+for variant in "${VARIANTS[@]}"; do
+  read -r -a p3_overrides <<< "$(variant_overrides "$variant")"
+  if [ "$variant" = "a0_p2" ]; then
+    best_ckpt="$P2_BEST_CKPT"
+  else
+    run_dir="$(latest_run_dir "$variant")"
+    best_ckpt="$(latest_non_last_ckpt "$run_dir")"
+  fi
+  out_dir="${RESULT_ROOT}/${variant}_vctk_timit_w${LIMIT_PAIRS}"
+  log_file="logs/p3_timit_${variant}_$(date +%Y%m%d_%H%M%S).log"
+  echo "[timit] ${variant}: checkpoint=${best_ckpt}, output=${out_dir}"
+
+  CUDA_VISIBLE_DEVICES="$GPU_ID" conda run --no-capture-output -n bcctn python eval.py \
+    --model_checkpoint "$best_ckpt" \
+    --vctk_test_dir /raid/R12K41024/BCCTN/Dataset/noisy_testset \
+    --vctk_clean_dir /raid/R12K41024/BCCTN/Dataset/clean_testset \
+    --timit_test_dir /raid/R12K41024/BCCTN/Dataset/noisy_testset_timit \
+    --timit_clean_dir /raid/R12K41024/BCCTN/Dataset/clean_testset_timit \
+    --output_dir "$out_dir" \
+    --paper_style_eval \
+    --batch_size "$BATCH_SIZE" \
+    --limit_pairs "$LIMIT_PAIRS" \
+    --metric_workers "$METRIC_WORKERS" \
+    --hydra_overrides \
+      "${common_overrides[@]}" \
+      "${p3_overrides[@]}" \
+    2>&1 | tee "$log_file"
+done
+
+echo "[p3-timit] done. Results under ${RESULT_ROOT}"

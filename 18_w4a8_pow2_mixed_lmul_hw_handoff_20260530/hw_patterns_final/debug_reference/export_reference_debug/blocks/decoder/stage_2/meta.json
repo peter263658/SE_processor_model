@@ -1,0 +1,29 @@
+{
+  "bn_bias_files": [
+    "bn_bias_r_fused.fp32.bin",
+    "bn_bias_i_fused.fp32.bin"
+  ],
+  "bn_scale_exp_range": [
+    -9,
+    4
+  ],
+  "bn_scale_format": "signed_apot",
+  "conv_bias_fused_into_bn_bias": true,
+  "dotted": "decoder.model.2.0",
+  "has_bn": true,
+  "has_prelu": true,
+  "is_outlier_fp8": false,
+  "kind": "decoder",
+  "num_out_channels": 32,
+  "prelu": {
+    "exp_range": [
+      -8,
+      0
+    ],
+    "format": "signed_pow2",
+    "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+    "num_parameters_i": 1,
+    "num_parameters_r": 1
+  },
+  "stage_idx": 2
+}

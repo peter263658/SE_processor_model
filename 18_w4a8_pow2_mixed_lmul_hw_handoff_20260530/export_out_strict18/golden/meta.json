@@ -1,0 +1,60 @@
+{
+  "activation": {
+    "calib_path": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/activation_calibration_p999_b64.json",
+    "fp8_mode": "calibrated_pow2_e4m3",
+    "note": "calibrated_pow2_e4m3 => block-float: raw e4m3 code + per-tensor pow2 exponent; eager==fused exactly, so golden == deployed HW. out_proj input is the fp16 Score x V accumulator (W4A16, not block-float A8).",
+    "pow2_round": "floor"
+  },
+  "config": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/strict_core_deploy_config.yaml",
+  "input": {
+    "dtype": "torch.float32",
+    "files": {
+      "value": "input_waveform.fp32.bin"
+    },
+    "is_complex": false,
+    "shape": [
+      1,
+      2,
+      32000
+    ]
+  },
+  "input_wav": "/raid/R12K41024/BCCTN/Dataset/noisy_testset/snr_0dB/p225_p225_009_az-40_snr+0.0.wav",
+  "layer_io": {},
+  "load_report": {
+    "missing_count": 0,
+    "unexpected_count": 0
+  },
+  "model": {
+    "fft_len": 128,
+    "masking_mode": "C",
+    "win_inc": 80,
+    "win_len": 128,
+    "win_type": "hamming"
+  },
+  "outlier_descale": {
+    "apot_exp_max": -6,
+    "apot_exp_min": -16,
+    "delayed_apot_descale": true,
+    "note": "delayed=true => golden = true \u00a73.4 HW path: APoT(amax/448)*sum(LMul(code,act)). delayed=false => effective-weight path (NOT the deployed hardware)."
+  },
+  "output": {
+    "dtype": "torch.float32",
+    "files": {
+      "value": "output_waveform.fp32.bin"
+    },
+    "is_complex": false,
+    "shape": [
+      1,
+      2,
+      31968
+    ]
+  },
+  "sample_rate": 16000,
+  "source_ckpt": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/strict_core_pow2_blockfloat_deploy_ep3_vctk0.8357_timit0.7898.ckpt",
+  "training": {
+    "int4_group_size": 32,
+    "int4_scale_format": "apot_clip",
+    "qat_scope": "full",
+    "top_k_attention": 4
+  }
+}

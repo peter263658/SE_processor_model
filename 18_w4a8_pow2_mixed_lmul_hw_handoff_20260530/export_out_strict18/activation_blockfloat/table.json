@@ -1,0 +1,479 @@
+{
+  "decoder.model.0.0.depthwise_i": {
+    "calib_amax": 1377.957275390625,
+    "descale_pow2": 4.0,
+    "descale_pow2_exp": 2,
+    "scale_general_float": 0.3251189336570689,
+    "scale_pow2": 0.25,
+    "scale_pow2_exp": -2,
+    "scaled_amax": 344.48931884765625
+  },
+  "decoder.model.0.0.depthwise_r": {
+    "calib_amax": 1377.957275390625,
+    "descale_pow2": 4.0,
+    "descale_pow2_exp": 2,
+    "scale_general_float": 0.3251189336570689,
+    "scale_pow2": 0.25,
+    "scale_pow2_exp": -2,
+    "scaled_amax": 344.48931884765625
+  },
+  "decoder.model.0.0.split_pointwise_cat.imag": {
+    "calib_amax": 646.2990112304688,
+    "descale_pow2": 2.0,
+    "descale_pow2_exp": 1,
+    "scale_general_float": 0.6931776038881239,
+    "scale_pow2": 0.5,
+    "scale_pow2_exp": -1,
+    "scaled_amax": 323.1495056152344
+  },
+  "decoder.model.0.0.split_pointwise_cat.real": {
+    "calib_amax": 621.410888671875,
+    "descale_pow2": 2.0,
+    "descale_pow2_exp": 1,
+    "scale_general_float": 0.7209400545869071,
+    "scale_pow2": 0.5,
+    "scale_pow2_exp": -1,
+    "scaled_amax": 310.7054443359375
+  },
+  "decoder.model.1.0.depthwise_i": {
+    "calib_amax": 8.447351455688477,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 53.03437442493472,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 270.31524658203125
+  },
+  "decoder.model.1.0.depthwise_r": {
+    "calib_amax": 8.447351455688477,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 53.03437442493472,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 270.31524658203125
+  },
+  "decoder.model.1.0.split_pointwise_cat.imag": {
+    "calib_amax": 5.474592208862305,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 81.83257910512033,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 350.3739013671875
+  },
+  "decoder.model.1.0.split_pointwise_cat.real": {
+    "calib_amax": 5.855758190155029,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 76.50589137256355,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 374.7685241699219
+  },
+  "decoder.model.2.0.depthwise_i": {
+    "calib_amax": 6.018890857696533,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 74.43231827789819,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 385.2090148925781
+  },
+  "decoder.model.2.0.depthwise_r": {
+    "calib_amax": 6.018890857696533,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 74.43231827789819,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 385.2090148925781
+  },
+  "decoder.model.2.0.split_pointwise_cat.imag": {
+    "calib_amax": 5.972867012023926,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 75.00585549588416,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 382.26348876953125
+  },
+  "decoder.model.2.0.split_pointwise_cat.real": {
+    "calib_amax": 6.295196056365967,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 71.16537689830383,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 402.8925476074219
+  },
+  "decoder.model.3.0.depthwise_i": {
+    "calib_amax": 10.459437370300293,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 42.83213180013887,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 334.7019958496094
+  },
+  "decoder.model.3.0.depthwise_r": {
+    "calib_amax": 10.459437370300293,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 42.83213180013887,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 334.7019958496094
+  },
+  "decoder.model.3.0.split_pointwise_cat.imag": {
+    "calib_amax": 6.8948893547058105,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 64.97566196537105,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 441.2729187011719
+  },
+  "decoder.model.3.0.split_pointwise_cat.real": {
+    "calib_amax": 7.4481611251831055,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 60.149074713926304,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 238.34115600585938
+  },
+  "decoder.model.4.0.depthwise_i": {
+    "calib_amax": 14.984909057617188,
+    "descale_pow2": 0.0625,
+    "descale_pow2_exp": -4,
+    "scale_general_float": 29.896744670083326,
+    "scale_pow2": 16.0,
+    "scale_pow2_exp": 4,
+    "scaled_amax": 239.758544921875
+  },
+  "decoder.model.4.0.depthwise_r": {
+    "calib_amax": 14.984909057617188,
+    "descale_pow2": 0.0625,
+    "descale_pow2_exp": -4,
+    "scale_general_float": 29.896744670083326,
+    "scale_pow2": 16.0,
+    "scale_pow2_exp": 4,
+    "scaled_amax": 239.758544921875
+  },
+  "decoder.model.4.0.split_pointwise_cat.imag": {
+    "calib_amax": 10.417282104492188,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 43.005459150118575,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 333.35302734375
+  },
+  "decoder.model.4.0.split_pointwise_cat.real": {
+    "calib_amax": 9.25623893737793,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 48.39978775730563,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 296.19964599609375
+  },
+  "decoder.model.5.0.depthwise_i": {
+    "calib_amax": 2.221984386444092,
+    "descale_pow2": 0.0078125,
+    "descale_pow2_exp": -7,
+    "scale_general_float": 201.62157877128374,
+    "scale_pow2": 128.0,
+    "scale_pow2_exp": 7,
+    "scaled_amax": 284.41400146484375
+  },
+  "decoder.model.5.0.depthwise_r": {
+    "calib_amax": 2.221984386444092,
+    "descale_pow2": 0.0078125,
+    "descale_pow2_exp": -7,
+    "scale_general_float": 201.62157877128374,
+    "scale_pow2": 128.0,
+    "scale_pow2_exp": 7,
+    "scaled_amax": 284.41400146484375
+  },
+  "decoder.model.5.0.split_pointwise_cat.imag": {
+    "calib_amax": 4.973792552947998,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 90.07211202133222,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 318.3227233886719
+  },
+  "decoder.model.5.0.split_pointwise_cat.real": {
+    "calib_amax": 5.7662200927734375,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 77.69387792905437,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 369.0380859375
+  },
+  "encoder.model.0.0.depthwise_i": {
+    "calib_amax": 0.5017966032028198,
+    "descale_pow2": 0.001953125,
+    "descale_pow2_exp": -9,
+    "scale_general_float": 892.7920140163326,
+    "scale_pow2": 512.0,
+    "scale_pow2_exp": 9,
+    "scaled_amax": 256.91986083984375
+  },
+  "encoder.model.0.0.depthwise_r": {
+    "calib_amax": 0.5017966032028198,
+    "descale_pow2": 0.001953125,
+    "descale_pow2_exp": -9,
+    "scale_general_float": 892.7920140163326,
+    "scale_pow2": 512.0,
+    "scale_pow2_exp": 9,
+    "scaled_amax": 256.91986083984375
+  },
+  "encoder.model.0.0.pointwise_i": {
+    "calib_amax": 1.2841084003448486,
+    "descale_pow2": 0.00390625,
+    "descale_pow2_exp": -8,
+    "scale_general_float": 348.88020347790666,
+    "scale_pow2": 256.0,
+    "scale_pow2_exp": 8,
+    "scaled_amax": 328.73175048828125
+  },
+  "encoder.model.0.0.pointwise_r": {
+    "calib_amax": 1.2841084003448486,
+    "descale_pow2": 0.00390625,
+    "descale_pow2_exp": -8,
+    "scale_general_float": 348.88020347790666,
+    "scale_pow2": 256.0,
+    "scale_pow2_exp": 8,
+    "scaled_amax": 328.73175048828125
+  },
+  "encoder.model.1.0.depthwise_i": {
+    "calib_amax": 6.300126075744629,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 71.10968806240115,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 403.20806884765625
+  },
+  "encoder.model.1.0.depthwise_r": {
+    "calib_amax": 6.300126075744629,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 71.10968806240115,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 403.20806884765625
+  },
+  "encoder.model.1.0.pointwise_i": {
+    "calib_amax": 7.952178955078125,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 56.33676034339178,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 254.4697265625
+  },
+  "encoder.model.1.0.pointwise_r": {
+    "calib_amax": 7.952178955078125,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 56.33676034339178,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 254.4697265625
+  },
+  "encoder.model.2.0.depthwise_i": {
+    "calib_amax": 8.113420486450195,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 55.21715542146271,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 259.62945556640625
+  },
+  "encoder.model.2.0.depthwise_r": {
+    "calib_amax": 8.113420486450195,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 55.21715542146271,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 259.62945556640625
+  },
+  "encoder.model.2.0.pointwise_i": {
+    "calib_amax": 9.699756622314453,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 46.18672585757136,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 310.3922119140625
+  },
+  "encoder.model.2.0.pointwise_r": {
+    "calib_amax": 9.699756622314453,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 46.18672585757136,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 310.3922119140625
+  },
+  "encoder.model.3.0.depthwise_i": {
+    "calib_amax": 5.0504350662231445,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 88.70522917840954,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 323.22784423828125
+  },
+  "encoder.model.3.0.depthwise_r": {
+    "calib_amax": 5.0504350662231445,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 88.70522917840954,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 323.22784423828125
+  },
+  "encoder.model.3.0.pointwise_i": {
+    "calib_amax": 4.441366672515869,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 100.8698522399243,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 284.2474670410156
+  },
+  "encoder.model.3.0.pointwise_r": {
+    "calib_amax": 4.441366672515869,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 100.8698522399243,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 284.2474670410156
+  },
+  "encoder.model.4.0.depthwise_i": {
+    "calib_amax": 4.131208419799805,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 108.44284637222678,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 264.3973388671875
+  },
+  "encoder.model.4.0.depthwise_r": {
+    "calib_amax": 4.131208419799805,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 108.44284637222678,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 264.3973388671875
+  },
+  "encoder.model.4.0.pointwise_i": {
+    "calib_amax": 3.2301557064056396,
+    "descale_pow2": 0.0078125,
+    "descale_pow2_exp": -7,
+    "scale_general_float": 138.69300452346076,
+    "scale_pow2": 128.0,
+    "scale_pow2_exp": 7,
+    "scaled_amax": 413.4599304199219
+  },
+  "encoder.model.4.0.pointwise_r": {
+    "calib_amax": 3.2301557064056396,
+    "descale_pow2": 0.0078125,
+    "descale_pow2_exp": -7,
+    "scale_general_float": 138.69300452346076,
+    "scale_pow2": 128.0,
+    "scale_pow2_exp": 7,
+    "scaled_amax": 413.4599304199219
+  },
+  "encoder.model.5.0.depthwise_i": {
+    "calib_amax": 3.8948400020599365,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 115.02398038508845,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 249.26976013183594
+  },
+  "encoder.model.5.0.depthwise_r": {
+    "calib_amax": 3.8948400020599365,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 115.02398038508845,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 249.26976013183594
+  },
+  "encoder.model.5.0.pointwise_i": {
+    "calib_amax": 2.678140163421631,
+    "descale_pow2": 0.0078125,
+    "descale_pow2_exp": -7,
+    "scale_general_float": 167.28026640234867,
+    "scale_pow2": 128.0,
+    "scale_pow2_exp": 7,
+    "scaled_amax": 342.80194091796875
+  },
+  "encoder.model.5.0.pointwise_r": {
+    "calib_amax": 2.678140163421631,
+    "descale_pow2": 0.0078125,
+    "descale_pow2_exp": -7,
+    "scale_general_float": 167.28026640234867,
+    "scale_pow2": 128.0,
+    "scale_pow2_exp": 7,
+    "scaled_amax": 342.80194091796875
+  },
+  "mattn.input_proj.imag": {
+    "calib_amax": 3.55458402633667,
+    "descale_pow2": 0.015625,
+    "descale_pow2_exp": -6,
+    "scale_general_float": 126.03443797661627,
+    "scale_pow2": 64.0,
+    "scale_pow2_exp": 6,
+    "scaled_amax": 227.49337768554688
+  },
+  "mattn.input_proj.real": {
+    "calib_amax": 3.2899727821350098,
+    "descale_pow2": 0.0078125,
+    "descale_pow2_exp": -7,
+    "scale_general_float": 136.17133929882328,
+    "scale_pow2": 128.0,
+    "scale_pow2_exp": 7,
+    "scaled_amax": 421.11651611328125
+  },
+  "mattn.mattn.activation_quantizer": {
+    "calib_amax": 11.45147705078125,
+    "descale_pow2": 0.03125,
+    "descale_pow2_exp": -5,
+    "scale_general_float": 39.12159086669403,
+    "scale_pow2": 32.0,
+    "scale_pow2_exp": 5,
+    "scaled_amax": 366.447265625
+  },
+  "mattn.output_proj.imag": {
+    "calib_amax": 47.12316131591797,
+    "descale_pow2": 0.125,
+    "descale_pow2_exp": -3,
+    "scale_general_float": 9.507002236046244,
+    "scale_pow2": 8.0,
+    "scale_pow2_exp": 3,
+    "scaled_amax": 376.98529052734375
+  },
+  "mattn.output_proj.real": {
+    "calib_amax": 54.47113037109375,
+    "descale_pow2": 0.125,
+    "descale_pow2_exp": -3,
+    "scale_general_float": 8.224540172893871,
+    "scale_pow2": 8.0,
+    "scale_pow2_exp": 3,
+    "scaled_amax": 435.76904296875
+  }
+}

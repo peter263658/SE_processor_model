@@ -1,0 +1,543 @@
+{
+  "format_version": 1,
+  "keys": {
+    "decoder.model.0.0.depthwise_i": {
+      "calib_amax": 1377.957275390625,
+      "descale": 3.0757974897112166,
+      "max_abs": 3143.351318359375,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 0.3251189336570689,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.0.0.depthwise_r": {
+      "calib_amax": 1377.957275390625,
+      "descale": 3.0757974897112166,
+      "max_abs": 3143.351318359375,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 0.3251189336570689,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.0.0.split_pointwise_cat.imag": {
+      "calib_amax": 646.2990112304688,
+      "descale": 1.442631721496582,
+      "max_abs": 1245.1279296875,
+      "num_batches": 128,
+      "num_elements": 627572736,
+      "quantile": 0.999,
+      "scale": 0.6931776038881239,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.0.0.split_pointwise_cat.real": {
+      "calib_amax": 621.410888671875,
+      "descale": 1.387077876499721,
+      "max_abs": 1351.8135986328125,
+      "num_batches": 128,
+      "num_elements": 627572736,
+      "quantile": 0.999,
+      "scale": 0.7209400545869071,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.1.0.depthwise_i": {
+      "calib_amax": 8.447351455688477,
+      "descale": 0.01885569521359035,
+      "max_abs": 20.241336822509766,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 53.03437442493472,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.1.0.depthwise_r": {
+      "calib_amax": 8.447351455688477,
+      "descale": 0.01885569521359035,
+      "max_abs": 20.241336822509766,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 53.03437442493472,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.1.0.split_pointwise_cat.imag": {
+      "calib_amax": 5.474592208862305,
+      "descale": 0.01222007189478193,
+      "max_abs": 21.015104293823242,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 81.83257910512033,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.1.0.split_pointwise_cat.real": {
+      "calib_amax": 5.855758190155029,
+      "descale": 0.013070888817310333,
+      "max_abs": 22.017120361328125,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 76.50589137256355,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.2.0.depthwise_i": {
+      "calib_amax": 6.018890857696533,
+      "descale": 0.013435024235929762,
+      "max_abs": 13.49706745147705,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 74.43231827789819,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.2.0.depthwise_r": {
+      "calib_amax": 6.018890857696533,
+      "descale": 0.013435024235929762,
+      "max_abs": 13.49706745147705,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 74.43231827789819,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.2.0.split_pointwise_cat.imag": {
+      "calib_amax": 5.972867012023926,
+      "descale": 0.013332292437553406,
+      "max_abs": 20.136157989501953,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 75.00585549588416,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.2.0.split_pointwise_cat.real": {
+      "calib_amax": 6.295196056365967,
+      "descale": 0.014051776911531175,
+      "max_abs": 20.164241790771484,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 71.16537689830383,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.3.0.depthwise_i": {
+      "calib_amax": 10.459437370300293,
+      "descale": 0.023346958415848867,
+      "max_abs": 30.089189529418945,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 42.83213180013887,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.3.0.depthwise_r": {
+      "calib_amax": 10.459437370300293,
+      "descale": 0.023346958415848867,
+      "max_abs": 30.089189529418945,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 42.83213180013887,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.3.0.split_pointwise_cat.imag": {
+      "calib_amax": 6.8948893547058105,
+      "descale": 0.015390378023896898,
+      "max_abs": 33.20505142211914,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 64.97566196537105,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.3.0.split_pointwise_cat.real": {
+      "calib_amax": 7.4481611251831055,
+      "descale": 0.016625359654426575,
+      "max_abs": 26.538999557495117,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 60.149074713926304,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.4.0.depthwise_i": {
+      "calib_amax": 14.984909057617188,
+      "descale": 0.03344845771789551,
+      "max_abs": 49.282615661621094,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 29.896744670083326,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.4.0.depthwise_r": {
+      "calib_amax": 14.984909057617188,
+      "descale": 0.03344845771789551,
+      "max_abs": 49.282615661621094,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 29.896744670083326,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.4.0.split_pointwise_cat.imag": {
+      "calib_amax": 10.417282104492188,
+      "descale": 0.02325286184038435,
+      "max_abs": 38.65500259399414,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 43.005459150118575,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.4.0.split_pointwise_cat.real": {
+      "calib_amax": 9.25623893737793,
+      "descale": 0.020661247628075734,
+      "max_abs": 39.05177307128906,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 48.39978775730563,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.5.0.depthwise_i": {
+      "calib_amax": 2.221984386444092,
+      "descale": 0.004959786576884133,
+      "max_abs": 4.865196228027344,
+      "num_batches": 256,
+      "num_elements": 209190912,
+      "quantile": 0.999,
+      "scale": 201.62157877128374,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.5.0.depthwise_r": {
+      "calib_amax": 2.221984386444092,
+      "descale": 0.004959786576884133,
+      "max_abs": 4.865196228027344,
+      "num_batches": 256,
+      "num_elements": 209190912,
+      "quantile": 0.999,
+      "scale": 201.62157877128374,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.5.0.split_pointwise_cat.imag": {
+      "calib_amax": 4.973792552947998,
+      "descale": 0.01110221551997321,
+      "max_abs": 43.79920959472656,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 90.07211202133222,
+      "stat": "max_of_batch_quantile"
+    },
+    "decoder.model.5.0.split_pointwise_cat.real": {
+      "calib_amax": 5.7662200927734375,
+      "descale": 0.012871026992797852,
+      "max_abs": 43.50895690917969,
+      "num_batches": 128,
+      "num_elements": 1255145472,
+      "quantile": 0.999,
+      "scale": 77.69387792905437,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.0.0.depthwise_i": {
+      "calib_amax": 0.5017966032028198,
+      "descale": 0.0011200817035777228,
+      "max_abs": 3.0364322662353516,
+      "num_batches": 256,
+      "num_elements": 418381824,
+      "quantile": 0.999,
+      "scale": 892.7920140163326,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.0.0.depthwise_r": {
+      "calib_amax": 0.5017966032028198,
+      "descale": 0.0011200817035777228,
+      "max_abs": 3.0364322662353516,
+      "num_batches": 256,
+      "num_elements": 418381824,
+      "quantile": 0.999,
+      "scale": 892.7920140163326,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.0.0.pointwise_i": {
+      "calib_amax": 1.2841084003448486,
+      "descale": 0.002866313393626894,
+      "max_abs": 6.533924102783203,
+      "num_batches": 256,
+      "num_elements": 209190912,
+      "quantile": 0.999,
+      "scale": 348.88020347790666,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.0.0.pointwise_r": {
+      "calib_amax": 1.2841084003448486,
+      "descale": 0.002866313393626894,
+      "max_abs": 6.533924102783203,
+      "num_batches": 256,
+      "num_elements": 209190912,
+      "quantile": 0.999,
+      "scale": 348.88020347790666,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.1.0.depthwise_i": {
+      "calib_amax": 6.300126075744629,
+      "descale": 0.014062781419072832,
+      "max_abs": 43.79920959472656,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 71.10968806240115,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.1.0.depthwise_r": {
+      "calib_amax": 6.300126075744629,
+      "descale": 0.014062781419072832,
+      "max_abs": 43.79920959472656,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 71.10968806240115,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.1.0.pointwise_i": {
+      "calib_amax": 7.952178955078125,
+      "descale": 0.017750399453299388,
+      "max_abs": 47.134010314941406,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 56.33676034339178,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.1.0.pointwise_r": {
+      "calib_amax": 7.952178955078125,
+      "descale": 0.017750399453299388,
+      "max_abs": 47.134010314941406,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 56.33676034339178,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.2.0.depthwise_i": {
+      "calib_amax": 8.113420486450195,
+      "descale": 0.018110313585826328,
+      "max_abs": 52.362735748291016,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 55.21715542146271,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.2.0.depthwise_r": {
+      "calib_amax": 8.113420486450195,
+      "descale": 0.018110313585826328,
+      "max_abs": 52.362735748291016,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 55.21715542146271,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.2.0.pointwise_i": {
+      "calib_amax": 9.699756622314453,
+      "descale": 0.021651242460523332,
+      "max_abs": 43.96784210205078,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 46.18672585757136,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.2.0.pointwise_r": {
+      "calib_amax": 9.699756622314453,
+      "descale": 0.021651242460523332,
+      "max_abs": 43.96784210205078,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 46.18672585757136,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.3.0.depthwise_i": {
+      "calib_amax": 5.0504350662231445,
+      "descale": 0.011273292558533805,
+      "max_abs": 33.20505142211914,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 88.70522917840954,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.3.0.depthwise_r": {
+      "calib_amax": 5.0504350662231445,
+      "descale": 0.011273292558533805,
+      "max_abs": 33.20505142211914,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 88.70522917840954,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.3.0.pointwise_i": {
+      "calib_amax": 4.441366672515869,
+      "descale": 0.009913764894008636,
+      "max_abs": 21.326156616210938,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 100.8698522399243,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.3.0.pointwise_r": {
+      "calib_amax": 4.441366672515869,
+      "descale": 0.009913764894008636,
+      "max_abs": 21.326156616210938,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 100.8698522399243,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.4.0.depthwise_i": {
+      "calib_amax": 4.131208419799805,
+      "descale": 0.009221447365624564,
+      "max_abs": 24.155017852783203,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 108.44284637222678,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.4.0.depthwise_r": {
+      "calib_amax": 4.131208419799805,
+      "descale": 0.009221447365624564,
+      "max_abs": 24.155017852783203,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 108.44284637222678,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.4.0.pointwise_i": {
+      "calib_amax": 3.2301557064056396,
+      "descale": 0.0072101689875125885,
+      "max_abs": 17.324703216552734,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 138.69300452346076,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.4.0.pointwise_r": {
+      "calib_amax": 3.2301557064056396,
+      "descale": 0.0072101689875125885,
+      "max_abs": 17.324703216552734,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 138.69300452346076,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.5.0.depthwise_i": {
+      "calib_amax": 3.8948400020599365,
+      "descale": 0.008693839290312358,
+      "max_abs": 26.490571975708008,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 115.02398038508845,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.5.0.depthwise_r": {
+      "calib_amax": 3.8948400020599365,
+      "descale": 0.008693839290312358,
+      "max_abs": 26.490571975708008,
+      "num_batches": 256,
+      "num_elements": 1673527296,
+      "quantile": 0.999,
+      "scale": 115.02398038508845,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.5.0.pointwise_i": {
+      "calib_amax": 2.678140163421631,
+      "descale": 0.005977991436208997,
+      "max_abs": 15.673382759094238,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 167.28026640234867,
+      "stat": "max_of_batch_quantile"
+    },
+    "encoder.model.5.0.pointwise_r": {
+      "calib_amax": 2.678140163421631,
+      "descale": 0.005977991436208997,
+      "max_abs": 15.673382759094238,
+      "num_batches": 256,
+      "num_elements": 836763648,
+      "quantile": 0.999,
+      "scale": 167.28026640234867,
+      "stat": "max_of_batch_quantile"
+    },
+    "mattn.input_proj.imag": {
+      "calib_amax": 3.55458402633667,
+      "descale": 0.007934339344501495,
+      "max_abs": 15.970304489135742,
+      "num_batches": 64,
+      "num_elements": 418381824,
+      "quantile": 0.999,
+      "scale": 126.03443797661627,
+      "stat": "max_of_batch_quantile"
+    },
+    "mattn.input_proj.real": {
+      "calib_amax": 3.2899727821350098,
+      "descale": 0.007343689245837075,
+      "max_abs": 17.426265716552734,
+      "num_batches": 64,
+      "num_elements": 418381824,
+      "quantile": 0.999,
+      "scale": 136.17133929882328,
+      "stat": "max_of_batch_quantile"
+    },
+    "mattn.mattn.activation_quantizer": {
+      "calib_amax": 11.45147705078125,
+      "descale": 0.02556133270263672,
+      "max_abs": 25.19928550720215,
+      "num_batches": 512,
+      "num_elements": 3347054592,
+      "quantile": 0.999,
+      "scale": 39.12159086669403,
+      "stat": "max_of_batch_quantile"
+    },
+    "mattn.output_proj.imag": {
+      "calib_amax": 47.12316131591797,
+      "descale": 0.1051856279373169,
+      "max_abs": 84.36027526855469,
+      "num_batches": 64,
+      "num_elements": 418381824,
+      "quantile": 0.999,
+      "scale": 9.507002236046244,
+      "stat": "max_of_batch_quantile"
+    },
+    "mattn.output_proj.real": {
+      "calib_amax": 54.47113037109375,
+      "descale": 0.12158734457833427,
+      "max_abs": 102.74850463867188,
+      "num_batches": 64,
+      "num_elements": 418381824,
+      "quantile": 0.999,
+      "scale": 8.224540172893871,
+      "stat": "max_of_batch_quantile"
+    }
+  },
+  "max_fp8_value": 448.0,
+  "mode": "calibrated_e4m3",
+  "quantile": 0.999,
+  "requested_batches": 64,
+  "scale_definition": "scale=448/calib_amax, descale=calib_amax/448",
+  "source_ckpt": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/strict_core_apot_descale_deploy_ep2_vctk0.8365_timit0.7912.ckpt",
+  "split": "train",
+  "stat": "max_of_batch_quantile"
+}

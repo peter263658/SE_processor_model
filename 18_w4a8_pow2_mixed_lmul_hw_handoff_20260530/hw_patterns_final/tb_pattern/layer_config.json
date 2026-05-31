@@ -1,0 +1,2090 @@
+{
+  "attention": {
+    "embed_dim": 256,
+    "head_dim": 16,
+    "num_heads": 16,
+    "out_proj_groups": 1,
+    "prob_packet": {
+      "causal_window": null,
+      "enabled": true,
+      "local_idx_bits": 5,
+      "prob_bits": 8,
+      "prob_max_code": 255,
+      "prob_scale": 256,
+      "renormalize": false,
+      "score_v_mode": "lmul",
+      "top_k": 4,
+      "validate_local_idx": true
+    },
+    "projection_scale_format": "positive_apot[-16,-1] per head (48 groups for in_proj)",
+    "projection_weight_format": "int4_symmetric_qmax7",
+    "qk_product": "lmul_m8",
+    "qk_scale": {
+      "fused_into_q_projection_in_export": false,
+      "mode": "pow2",
+      "pow2_exp": -2
+    },
+    "qkv_block_shape": [
+      3,
+      4,
+      64,
+      64
+    ],
+    "qkv_groups": 4,
+    "score_v_product": "top4_packet_lmul_m8",
+    "softmax": {
+      "mode": "shift_topk_pow2_clamp8_nomantissa"
+    },
+    "tied_mha": true
+  },
+  "blocks": [
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.0.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 8,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 0
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.1.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 16,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 1
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.2.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 32,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 2
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.3.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 64,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 3
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.4.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 128,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 4
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.5.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 128,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 5
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.0.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": true,
+      "kind": "decoder",
+      "num_out_channels": 128,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 0
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.1.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": false,
+      "kind": "decoder",
+      "num_out_channels": 64,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 1
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.2.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": false,
+      "kind": "decoder",
+      "num_out_channels": 32,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 2
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.3.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": true,
+      "kind": "decoder",
+      "num_out_channels": 16,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 3
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.4.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_decoder_pw_outlier_fp8": true,
+      "kind": "decoder",
+      "num_out_channels": 8,
+      "prelu_format": "signed_pow2[-8,0]",
+      "prelu_num_parameters_i": 1,
+      "prelu_num_parameters_r": 1,
+      "stage_idx": 4
+    },
+    {
+      "bn_scale_format": "signed_apot[-9,4]",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.5.0",
+      "has_bn": false,
+      "has_prelu": false,
+      "is_decoder_pw_outlier_fp8": false,
+      "kind": "decoder",
+      "num_out_channels": 1,
+      "prelu_format": null,
+      "prelu_num_parameters_i": 0,
+      "prelu_num_parameters_r": 0,
+      "stage_idx": 5
+    }
+  ],
+  "layers": [
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.0.0.depthwise_r",
+      "groups": 1,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.0.0.depthwise_i",
+      "groups": 1,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.0.0.pointwise_r",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.0.0.pointwise_i",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.1.0.depthwise_r",
+      "groups": 8,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.1.0.depthwise_i",
+      "groups": 8,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.1.0.pointwise_r",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.1.0.pointwise_i",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.2.0.depthwise_r",
+      "groups": 16,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.2.0.depthwise_i",
+      "groups": 16,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.2.0.pointwise_r",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.2.0.pointwise_i",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.3.0.depthwise_r",
+      "groups": 32,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.3.0.depthwise_i",
+      "groups": 32,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.3.0.pointwise_r",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.3.0.pointwise_i",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.4.0.depthwise_r",
+      "groups": 64,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.4.0.depthwise_i",
+      "groups": 64,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.4.0.pointwise_r",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        64,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.4.0.pointwise_i",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        64,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.5.0.depthwise_r",
+      "groups": 128,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.5.0.depthwise_i",
+      "groups": 128,
+      "has_bias": false,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.5.0.pointwise_r",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        128,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "encoder.model.5.0.pointwise_i",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": true,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        128,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.0.0.depthwise_r",
+      "groups": 128,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.0.0.depthwise_i",
+      "groups": 128,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.0.0.pointwise_r_x",
+      "group_size": null,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        128,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.0.0.pointwise_i_x",
+      "group_size": null,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        128,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.0.0.pointwise_r_skip",
+      "group_size": null,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        128,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.0.0.pointwise_i_skip",
+      "group_size": null,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        128,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.1.0.depthwise_r",
+      "groups": 64,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.1.0.depthwise_i",
+      "groups": 64,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.1.0.pointwise_r_x",
+      "group_size": 32,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.1.0.pointwise_i_x",
+      "group_size": 32,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.1.0.pointwise_r_skip",
+      "group_size": 32,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.1.0.pointwise_i_skip",
+      "group_size": 32,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.2.0.depthwise_r",
+      "groups": 32,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.2.0.depthwise_i",
+      "groups": 32,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.2.0.pointwise_r_x",
+      "group_size": 32,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.2.0.pointwise_i_x",
+      "group_size": 32,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.2.0.pointwise_r_skip",
+      "group_size": 32,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.2.0.pointwise_i_skip",
+      "group_size": 32,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.3.0.depthwise_r",
+      "groups": 16,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.3.0.depthwise_i",
+      "groups": 16,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.3.0.pointwise_r_x",
+      "group_size": null,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.3.0.pointwise_i_x",
+      "group_size": null,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.3.0.pointwise_r_skip",
+      "group_size": null,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.3.0.pointwise_i_skip",
+      "group_size": null,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.4.0.depthwise_r",
+      "groups": 8,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.4.0.depthwise_i",
+      "groups": 8,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.4.0.pointwise_r_x",
+      "group_size": null,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        8,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.4.0.pointwise_i_x",
+      "group_size": null,
+      "groups": 4,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        8,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.4.0.pointwise_r_skip",
+      "group_size": null,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        8,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.4.0.pointwise_i_skip",
+      "group_size": null,
+      "groups": 2,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "fp8_fp8_lmul_m4",
+      "scale_format": null,
+      "scale_granularity": "per_tensor_amax_scaled_fp8",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        8,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.5.0.depthwise_r",
+      "groups": 1,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.5.0.depthwise_i",
+      "groups": 1,
+      "has_bias": true,
+      "is_depthwise": true,
+      "kernel_size": [
+        5,
+        1
+      ],
+      "module_type": "ParametrizedConvTranspose2d",
+      "padding": [
+        2,
+        0
+      ],
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_output_channel",
+      "stride": [
+        2,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.5.0.pointwise_r_x",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.5.0.pointwise_i_x",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.5.0.pointwise_r_skip",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "activation_format": "fp8_e4m3_at_op_input",
+      "dotted_name": "decoder.model.5.0.pointwise_i_skip",
+      "group_size": 32,
+      "groups": 1,
+      "has_bias": false,
+      "is_pointwise": true,
+      "kernel_size": [
+        1,
+        1
+      ],
+      "module_type": "ParametrizedConv2d",
+      "padding": [
+        0,
+        0
+      ],
+      "runtime_product": "int4_code_x_fp8_shift_add",
+      "scale_format": "apot_clip",
+      "scale_granularity": "per_group_input_channels",
+      "stride": [
+        1,
+        1
+      ],
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        4,
+        1,
+        1
+      ]
+    }
+  ],
+  "load_report": {
+    "missing_count": 0,
+    "missing_first10": [],
+    "unexpected_count": 0,
+    "unexpected_first10": []
+  },
+  "model": {
+    "activation_format": "fp8_e4m3 at Conv/Linear/MHA op inputs",
+    "decoder_grouped_pointwise": {
+      "channel_shuffle": false,
+      "groups_skip": 2,
+      "groups_x": 4,
+      "mode": "grouped",
+      "skip_indices_path": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/p2_skip_indices_g42_topk_l1_r050.pt",
+      "skip_select_mode": "topk_l1",
+      "skip_select_ratio": 0.5
+    },
+    "int4_group_size": 32,
+    "int4_scale_format": "apot_clip",
+    "low_power": {
+      "all_lmul_multiply": {
+        "attention_mantissa_bits": null,
+        "bit_exact": true,
+        "checkpoint_chunks": false,
+        "enabled": false,
+        "learnable_bias_correction": {
+          "enabled": false,
+          "init_value": 0.0
+        },
+        "linear_chunk_size": 0,
+        "mantissa_bits": 4,
+        "ste_mode": "real"
+      },
+      "bn_affine": {
+        "pow2_max_exp": 4,
+        "pow2_min_exp": -9,
+        "scale_mode": "fold_apot",
+        "tie_real_imag_scale": false
+      },
+      "mha_projection": {
+        "enabled": true,
+        "input_proj_groups": 1,
+        "out_proj_groups": 1,
+        "output_proj_groups": 1,
+        "qkv_groups": 4
+      },
+      "outlier_fp8_lmul": {
+        "bit_exact": true,
+        "enabled": true,
+        "mantissa_bits": 4
+      },
+      "prelu_pow2": {
+        "enabled": true,
+        "max_exp": 0,
+        "min_exp": -8
+      }
+    },
+    "name": "18 strict-core BCCTN zero-multiplier neural core"
+  },
+  "out_of_scope": [
+    "STFT",
+    "iSTFT",
+    "window multiply",
+    "waveform-domain mask apply"
+  ],
+  "skip_indices": "static top-50% skip channels; see skip_indices/meta.json after ckpt2hwdat.py"
+}

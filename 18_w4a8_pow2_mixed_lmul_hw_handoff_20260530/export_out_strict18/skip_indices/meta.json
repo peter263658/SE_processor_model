@@ -1,0 +1,47 @@
+{
+  "format": "uint16 channel indices, stored group-wise",
+  "items": [
+    {
+      "count": 64,
+      "file": "decoder_stage_0.u16.bin",
+      "max": 125,
+      "min": 3,
+      "stage_idx": 0
+    },
+    {
+      "count": 64,
+      "file": "decoder_stage_1.u16.bin",
+      "max": 127,
+      "min": 4,
+      "stage_idx": 1
+    },
+    {
+      "count": 32,
+      "file": "decoder_stage_2.u16.bin",
+      "max": 63,
+      "min": 0,
+      "stage_idx": 2
+    },
+    {
+      "count": 16,
+      "file": "decoder_stage_3.u16.bin",
+      "max": 29,
+      "min": 0,
+      "stage_idx": 3
+    },
+    {
+      "count": 8,
+      "file": "decoder_stage_4.u16.bin",
+      "max": 15,
+      "min": 4,
+      "stage_idx": 4
+    },
+    {
+      "count": 4,
+      "file": "decoder_stage_5.u16.bin",
+      "max": 3,
+      "min": 0,
+      "stage_idx": 5
+    }
+  ]
+}

@@ -27,6 +27,7 @@ METRIC_WORKERS="${METRIC_WORKERS:-32}"
 P2_INDEX="${P2_INDEX:-${REPO_DIR}/Checkpoints/p2_skip_indices_g42_topk_l1_r050.pt}"
 OUT_ROOT="${OUT_ROOT:-${REPO_DIR}/results/kd_output_qat_full}"
 TAG="${TAG:-}"
+LEARNABLE_BC="${LEARNABLE_BC:-0}"
 
 if [ ! -f "$CKPT" ]; then
   echo "missing CKPT: $CKPT" >&2
@@ -90,10 +91,18 @@ overrides=(
   model.low_power.all_lmul_multiply.checkpoint_chunks=false
 )
 
+if [ "$LEARNABLE_BC" = "1" ]; then
+  overrides+=(
+    model.low_power.all_lmul_multiply.learnable_bias_correction.enabled=true
+    model.low_power.all_lmul_multiply.learnable_bias_correction.init_value=0.0
+  )
+fi
+
 echo "[kd-full-eval] ckpt=${CKPT}"
 echo "[kd-full-eval] out=${OUT}"
 echo "[kd-full-eval] log=${LOG}"
 echo "[kd-full-eval] gpu=${GPU_ID}, limit=${LIMIT}, metric_workers=${METRIC_WORKERS}"
+echo "[kd-full-eval] learnable_bc=${LEARNABLE_BC}"
 
 CUDA_VISIBLE_DEVICES="$GPU_ID" conda run --no-capture-output -n bcctn python eval.py \
   --model_checkpoint "$CKPT" \

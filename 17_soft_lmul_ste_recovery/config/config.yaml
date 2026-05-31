@@ -1,0 +1,209 @@
+dataset:
+  noisy_test_dataset_dir: /raid/R12K41024/BCCTN/Dataset/noisy_testset/snr_0dB
+  noisy_training_dataset_dir: /raid/R12K41024/BCCTN/Dataset/noisy_trainset
+  noisy_validation_dataset_dir: /raid/R12K41024/BCCTN/Dataset/noisy_valset
+  target_test_dataset_dir: /raid/R12K41024/BCCTN/Dataset/clean_testset
+  target_training_dataset_dir: /raid/R12K41024/BCCTN/Dataset/clean_trainset
+  target_validation_dataset_dir: /raid/R12K41024/BCCTN/Dataset/clean_valset
+defaults:
+- model
+- training
+- dataset: speech_dataset
+model:
+  attention: true
+  binaural: true
+  use_depthwise: true
+  # Loss function weights as described in the paper (section 3.1)
+  ild_weight: 1        # Weight for ILD loss (γ)
+  ipd_weight: 10       # Weight for IPD loss (κ)
+  snr_loss_weight: 1   # Weight for SNR loss (α)
+  stoi_weight: 10      # Weight for STOI loss (β)
+  masking_mode: 'C'
+  rnn_layers: 2
+  rnn_units: 128
+
+  win_len: 128
+  win_inc: 80
+  fft_len: 128
+
+  win_type: 'hamming'
+  kernel_size: 5
+  kernel_num: [16, 32, 64, 128, 256, 256]
+  embed_dim: 256
+  num_heads: 16
+  attn_win: 31
+  # ── 09 weight-tied ComplexMHA ──
+  # MHA_re ≡ MHA_im → ComplexMHA(x) = (1+i)·[M(x.real) + i·M(x.imag)]
+  # Halves MHA params (526K→263K) and per-step softmax passes (4→2).
+  tied_mha: true
+  # RTL-style attention probability path. Override with:
+  #   model.attention_softmax.mode=shift
+  #   model.attention_softmax.mode=shift_topk_pow2
+  #   model.attention_softmax.mode=shift_topk_pow2_floor
+  #   model.attention_softmax.mode=shift_topk_pow2_ceil
+  #   model.attention_softmax.mode=shift_topk_pow2_clamp8
+  #   model.attention_softmax.mode=shift_topk_pow2_nomantissa
+  #   model.attention_softmax.mode=shift_topk_pow2_clamp8_nomantissa
+  #   model.attention_softmax.mode=taylor2
+  #   model.attention_softmax.mode=relu2
+  attention_softmax:
+    mode: softmax
+  # P3 attention datapath/storage simulation. Disabled keeps the P1/P2 path
+  # bit-equivalent unless explicitly overridden for an experiment.
+  attention_datapath:
+    enabled: false
+    score_quant: "none"       # none | fp8_e4m3 | fixed
+    prob_quant: "none"        # none | fp8_e4m3 | q0.8 | pow2
+    qk_scale_mode: "pow2"     # pow2 | fp16 | fp8_e4m3
+    score_fixed_int_bits: null
+    score_fixed_frac_bits: null
+    finite_mask_threshold: -10000.0
+    # P4 feasibility knobs. Keep disabled for P3; enable isolated variants only.
+    lmul_enabled: false
+    lmul_targets: []          # qk | score_v, e.g. [qk, score_v]
+    lmul_mantissa_bits: 4
+    lmul_qk_chunk_size: 32
+    lmul_qk_force_dense: false
+    lmul_all_projection_ops: false
+    lmul_linear_chunk_size: 0
+    lmul_checkpoint_chunks: false
+    # 2026-05-19 low-power Phase B/C additions. This is separate from
+    # prob_quant=q0.8 because the old P3 path tested a value grid, while this
+    # path simulates the packet fields consumed by Score x V.
+    lmul_bit_exact: false
+    prob_packet:
+      enabled: false
+      top_k: 4
+      local_idx_bits: 5
+      causal_window: null      # null couples window to 2**local_idx_bits
+      prob_bits: 8
+      prob_scale: 256
+      prob_max_code: 255
+      score_v_mode: "dequant_fp16"  # dequant_fp16 | fixed_shift_add | lmul
+      validate_local_idx: true
+      renormalize: false
+    topk_stability_min_jaccard: 0.98
+    top1_flip_max_rate: 0.01
+  # 2026-05-19 low-power architecture experiments.
+  low_power:
+    prelu_pow2:
+      enabled: false
+      min_exp: -8
+      max_exp: 0
+    bn_affine:
+      scale_mode: "none"       # none | fp8_e4m3 | pow2
+      tie_real_imag_scale: false
+      pow2_min_exp: -8
+      pow2_max_exp: 8
+    mha_projection:
+      enabled: false
+      input_proj_groups: 1
+      qkv_groups: 1
+      out_proj_groups: 1
+      output_proj_groups: 1
+    all_lmul_multiply:
+      enabled: false
+      mantissa_bits: 4
+      bit_exact: true
+      linear_chunk_size: 0
+      checkpoint_chunks: false
+      attention_mantissa_bits: null  # if null, MHA uses `mantissa_bits`; set explicitly for mixed (e.g. conv=5, MHA=4)
+      # Learnable per-channel δ added at every patched Conv/ConvT/Linear
+      # output. Lets QAT *learn* the L-Mul bias compensation instead of
+      # post-hoc patching it (which over-corrects QAT-trained models).
+      # Mutually exclusive with BCCTN_BIAS_CORRECTION_PATH (fixed offline δ).
+      # Hardware deployment: fold into bias param at inference, or keep as
+      # a C_out-sized add — does not break "L-Mul replaces multipliers".
+      learnable_bias_correction:
+        enabled: false
+        init_value: 0.0   # typically 0.0; non-zero only when warm-starting from a calibration
+      # STE backward variant for the L-Mul multiply / matmul primitives.
+      # Inference is bit-exact identical across modes — training-only knob.
+      #   "real"            legacy: backward = real-mult identity (current default)
+      #   "autograd_lmul"   backward = autograd through L-Mul forward
+      #                     (gradient naturally damped ~0.5–0.67×; OOM @ b128)
+      #   "lmul_exact"      backward = analytic L-Mul grad (pow2floor): ≈ autograd_lmul
+      #                     (differs only at clamp-saturated bins), real-STE memory
+      #   "grad_scale_<f>"  backward = real-mult × float f, e.g. "grad_scale_0.67"
+      ste_mode: "real"
+  # Decoder grouped pointwise experiment.
+  # mode:
+  #   off     - legacy cat([x, skip]) -> pointwise path
+  #   split   - R0 scaffolding: Wx*x + Ws*skip, groups forced to 1
+  #   grouped - P1: branch-asymmetric grouped pointwise
+  decoder_grouped_pointwise:
+    mode: "off"
+    groups_x: 1
+    groups_skip: 1
+    channel_shuffle: false
+    skip_select_ratio: 1.0
+    skip_select_mode: "topk_l1"
+    skip_indices_path: null
+  # Precomputed output-level knowledge distillation. Disabled by default.
+  kd:
+    enabled: false
+    teacher_output_dir: null
+    teacher_noisy_root: null
+    lambda_kd: 0.1
+    kd_mode: waveform_mse     # waveform_mse | stft_l1 | binaural
+    # waveform_mse : time-domain MSE between student and teacher waveform.
+    # stft_l1      : L1 on STFT magnitude (channel-wise). Magnitude-only, drops phase/IPD.
+    # binaural     : reuses task BinauralLoss (SNR+STOI+ILD+IPD) with teacher as target.
+    #                Preserves spatial cues; lambda typically O(0.01) ~ O(0.3) for
+    #                ~3% contribution (per probe). DO NOT start at O(1) — too strong.
+    stft_n_fft: 128
+    stft_hop: 80
+training:
+  accelerator: auto
+  batch_size: 32
+  accumulate_grad_batches: 1
+  num_sanity_val_steps: 2
+  # From-scratch: restore original LR (fine-tune used 5e-4 warm-start).
+  learning_rate: 0.001
+  # Plateau keeps LR cuts tied to val_loss progress, matches 2026-04-18 direction.
+  lr_scheduler: plateau
+  plateau:
+    factor: 0.5
+    patience: 3          # longer horizon for from-scratch (fine-tune used 2)
+    threshold: 0.05      # val_loss noise band
+    min_lr: 1.0e-6
+  # Fallback milestones (unused when lr_scheduler=plateau).
+  learning_rate_decay_steps: [15, 30, 45]
+  learning_rate_decay_values: 0.5
+  n_epochs: 150          # original FP8 training budget
+  n_workers: 4
+  prefetch_factor: 4
+  pin_memory: true
+  # Trainer batch-limit knobs (float in (0,1] = fraction of batches, int = #batches,
+  # 1.0 = full epoch). Defaults keep full epochs; a fast probe sets e.g.
+  # limit_train_batches=0.5 for an early validation signal. Plumbed via
+  # DCNN/utils/base_trainer.py into pl.Trainer (defaults are behaviour-preserving).
+  limit_train_batches: 1.0
+  limit_val_batches: 1.0
+  # From-scratch — no warm-start. Weights initialised by model code.
+  train_checkpoint_path: null
+  # Full Lightning resume checkpoint. Restores optimizer/scheduler/epoch state.
+  resume_ckpt_path: null
+  # Mixed-Precision W4A8 QAT (takes precedence over fp8_qat).
+  mixed_precision_qat: true
+  # mha_only: conv stays FP8, only MHA Q/K/V/O projections get W4A8.
+  qat_scope: mha_only
+  # Drop top-K: projection W4A8 is the DMA win; top-K only sparsifies softmax·V.
+  top_k_attention: null
+  # Tighten group size: 07 fine-tune had IPD regression (16.46°>15.43°) under gsz=256.
+  # Report 03 flagged MHA imag path as needing per-head + smaller grouping for outliers.
+  int4_group_size: 32
+  # P3-C2 scale representation. Keep fp32 for P1/P2 equivalence; override with
+  # fp8_e4m3 or pow2 only after P3-B passes.
+  int4_scale_format: "fp32"
+  # P3-A explicit knob. False is the real P2 path; true runs QK/softmax/ScorexV
+  # on fp16 tensors in the custom attention forward.
+  fp16_accumulator: false
+  fp8_qat: false
+  fp8_dtype: "e4m3"
+  early_stopping:
+    enabled: true
+    key_to_monitor: validation_loss
+    min_delta: 0.05
+    # 20 epochs > 2× plateau.patience × a few LR cuts; gives room for a 150ep run.
+    patience_in_epochs: 20

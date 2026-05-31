@@ -1,0 +1,20 @@
+{
+  "bn_bias_files": [
+    "bn_bias_r_fused.fp32.bin",
+    "bn_bias_i_fused.fp32.bin"
+  ],
+  "bn_scale_exp_range": [
+    -9,
+    4
+  ],
+  "bn_scale_format": "signed_apot",
+  "conv_bias_fused_into_bn_bias": true,
+  "dotted": "decoder.model.5.0",
+  "has_bn": false,
+  "has_prelu": false,
+  "is_outlier_fp8": false,
+  "kind": "decoder",
+  "num_out_channels": 1,
+  "prelu": null,
+  "stage_idx": 5
+}

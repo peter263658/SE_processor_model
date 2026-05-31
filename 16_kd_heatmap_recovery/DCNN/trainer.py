@@ -133,6 +133,7 @@ class DCNNLightningModule(BaseLightningModule):
         )
         if all_lmul_cfg.get("enabled", False):
             from DCNN.utils.all_lmul_multiply import enable_all_lmul_multiply
+            lbc_cfg = all_lmul_cfg.get("learnable_bias_correction", {}) or {}
             model = enable_all_lmul_multiply(
                 model,
                 mantissa_bits=all_lmul_cfg.get("mantissa_bits", 4),
@@ -140,6 +141,8 @@ class DCNNLightningModule(BaseLightningModule):
                 linear_chunk_size=all_lmul_cfg.get("linear_chunk_size", 0),
                 checkpoint_chunks=all_lmul_cfg.get("checkpoint_chunks", False),
                 attention_mantissa_bits=all_lmul_cfg.get("attention_mantissa_bits", None),
+                learnable_bias_correction=bool(lbc_cfg.get("enabled", False)),
+                learnable_bc_init=float(lbc_cfg.get("init_value", 0.0)),
             )
 
         super().__init__(model, loss)
@@ -160,6 +163,31 @@ class DCNNLightningModule(BaseLightningModule):
                 f"[kd] enabled: mode={self._kd_mode}, "
                 f"lambda={self._kd_lambda}, teacher_output_dir={teacher_dir}"
             )
+
+    def on_load_checkpoint(self, checkpoint):
+        # Resume robustness when toggling learnable_bias_correction across
+        # stages (e.g. curriculum stage 1 from v4 Ep5 enables learnable δ for
+        # the first time → ckpt has no learnable_bc keys → strict load fails).
+        # We pad any missing learnable_bc keys with zeros and silently drop
+        # any unexpected ones if learnable δ is disabled. Other key mismatches
+        # are left alone so Lightning still raises on real architecture drift.
+        state_dict = checkpoint.get("state_dict", {})
+        if not state_dict:
+            return
+        current = self.state_dict()
+        current_lbc = {k for k in current if k.endswith(".learnable_bc")}
+        ckpt_lbc = {k for k in state_dict if k.endswith(".learnable_bc")}
+        missing = current_lbc - ckpt_lbc
+        unexpected = ckpt_lbc - current_lbc
+        for k in missing:
+            state_dict[k] = torch.zeros_like(current[k])
+        for k in unexpected:
+            del state_dict[k]
+        if missing:
+            print(f"[ckpt-resume] padded {len(missing)} missing learnable_bc keys with zeros")
+        if unexpected:
+            print(f"[ckpt-resume] dropped {len(unexpected)} unexpected learnable_bc keys "
+                  f"(learnable_bias_correction disabled in current run)")
 
     def configure_optimizers(self):
         training_cfg = self.config["training"]

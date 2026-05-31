@@ -1,0 +1,104 @@
+#!/bin/bash
+# Run full 750-pair x 8 SNR VCTK eval on trained P2 skip-subset variants.
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+cd "$REPO_DIR"
+
+export PYTHONPATH="${PYTHONPATH:-}:${REPO_DIR}"
+export HYDRA_FULL_ERROR=1
+export NUMBA_CACHE_DIR="${NUMBA_CACHE_DIR:-/tmp/numba_cache}"
+export MPLCONFIGDIR="${MPLCONFIGDIR:-/tmp/mpl_cache}"
+
+GPU_ID="${GPU_ID:-0}"
+P1_VARIANT="${P1_VARIANT:-g42}"
+GX="${GX:-4}"
+GS="${GS:-2}"
+BATCH_SIZE="${BATCH_SIZE:-8}"
+LIMIT_PAIRS="${LIMIT_PAIRS:-750}"
+METRIC_WORKERS="${METRIC_WORKERS:-64}"
+MODE="${MODE:-shift_topk_pow2_clamp8_nomantissa}"
+OUT_ROOT="${OUT_ROOT:-${REPO_DIR}/outputs/p2_skip}"
+RESULT_ROOT="${RESULT_ROOT:-${REPO_DIR}/results/p2_skip_full}"
+INDEX_DIR="${INDEX_DIR:-${REPO_DIR}/Checkpoints}"
+VARIANTS=("$@")
+if [ "${#VARIANTS[@]}" -eq 0 ]; then
+  VARIANTS=(s075_first s075_topk s050_first s050_topk)
+fi
+
+variant_mode_ratio() {
+  case "$1" in
+    s075_first) echo "first_n 0.75 075" ;;
+    s075_topk) echo "topk_l1 0.75 075" ;;
+    s050_first) echo "first_n 0.50 050" ;;
+    s050_topk) echo "topk_l1 0.50 050" ;;
+    *)
+      echo "unknown P2 variant: $1" >&2
+      exit 2
+      ;;
+  esac
+}
+
+latest_non_last_ckpt() {
+  ckpt_dir="$1/logs/lightning_logs/version_0/checkpoints"
+  ckpt="$(find "$ckpt_dir" -maxdepth 1 -type f -name '*.ckpt' ! -name 'last.ckpt' | sort | tail -n 1)"
+  if [ -z "$ckpt" ]; then
+    ckpt="${ckpt_dir}/last.ckpt"
+  fi
+  if [ ! -f "$ckpt" ]; then
+    echo "no checkpoint found under $ckpt_dir" >&2
+    exit 1
+  fi
+  echo "$ckpt"
+}
+
+latest_run_dir() {
+  variant="$1"
+  run_dir="$(ls -d "${OUT_ROOT}/${variant}"_* 2>/dev/null | sort | tail -n 1)"
+  if [ -z "$run_dir" ]; then
+    echo "no run dir found for variant $variant under $OUT_ROOT" >&2
+    exit 1
+  fi
+  echo "$run_dir"
+}
+
+mkdir -p "$RESULT_ROOT" logs
+
+for variant in "${VARIANTS[@]}"; do
+  read -r skip_mode ratio tag < <(variant_mode_ratio "$variant")
+  index_path="${INDEX_DIR}/p2_skip_indices_${P1_VARIANT}_${skip_mode}_r${tag}.pt"
+  if [ ! -f "$index_path" ]; then
+    echo "missing skip index: $index_path" >&2
+    exit 1
+  fi
+  run_dir="$(latest_run_dir "$variant")"
+  best_ckpt="$(latest_non_last_ckpt "$run_dir")"
+  out_dir="${RESULT_ROOT}/${variant}_w${LIMIT_PAIRS}"
+  log_file="logs/p2_full_eval_${variant}_$(date +%Y%m%d_%H%M%S).log"
+  echo "[full-eval] ${variant}: ratio=${ratio}, ckpt=${best_ckpt}, output=${out_dir}"
+
+  CUDA_VISIBLE_DEVICES="$GPU_ID" conda run --no-capture-output -n bcctn python eval.py \
+    --model_checkpoint "$best_ckpt" \
+    --vctk_test_dir /raid/R12K41024/BCCTN/Dataset/noisy_testset \
+    --vctk_clean_dir /raid/R12K41024/BCCTN/Dataset/clean_testset \
+    --output_dir "$out_dir" \
+    --paper_style_eval \
+    --batch_size "$BATCH_SIZE" \
+    --limit_pairs "$LIMIT_PAIRS" \
+    --metric_workers "$METRIC_WORKERS" \
+    --hydra_overrides \
+      training.qat_scope=full \
+      training.top_k_attention=4 \
+      model.attention_softmax.mode="$MODE" \
+      model.decoder_grouped_pointwise.mode=grouped \
+      model.decoder_grouped_pointwise.groups_x="$GX" \
+      model.decoder_grouped_pointwise.groups_skip="$GS" \
+      model.decoder_grouped_pointwise.skip_select_ratio="$ratio" \
+      model.decoder_grouped_pointwise.skip_select_mode="$skip_mode" \
+      model.decoder_grouped_pointwise.skip_indices_path="$index_path" \
+    2>&1 | tee "$log_file"
+done
+
+echo "[full-eval] done. Results under ${RESULT_ROOT}"

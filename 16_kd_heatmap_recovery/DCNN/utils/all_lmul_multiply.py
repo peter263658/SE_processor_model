@@ -399,6 +399,9 @@ def enable_all_lmul_multiply(model: nn.Module, mantissa_bits: int = 4,
                         bc = bc.to(device=out.device, dtype=out.dtype)
                         self.bias_correction = bc  # cache moved tensor
                     out = out + bc.view(1, -1, 1, 1)
+                lbc = getattr(self, "learnable_bc", None)
+                if lbc is not None:
+                    out = out + lbc.view(1, -1, 1, 1)
                 return out
             module.forward = types.MethodType(forward, module)
             counts["conv2d"] += 1
@@ -420,6 +423,9 @@ def enable_all_lmul_multiply(model: nn.Module, mantissa_bits: int = 4,
                         bc = bc.to(device=out.device, dtype=out.dtype)
                         self.bias_correction = bc
                     out = out + bc.view(1, -1, 1, 1)
+                lbc = getattr(self, "learnable_bc", None)
+                if lbc is not None:
+                    out = out + lbc.view(1, -1, 1, 1)
                 return out
             module.forward = types.MethodType(forward, module)
             counts["conv_transpose2d"] += 1
@@ -439,6 +445,9 @@ def enable_all_lmul_multiply(model: nn.Module, mantissa_bits: int = 4,
                         self.bias_correction = bc
                     # Linear output [..., C_out] — last-dim broadcast
                     out = out + bc
+                lbc = getattr(self, "learnable_bc", None)
+                if lbc is not None:
+                    out = out + lbc
                 return out
             module.forward = types.MethodType(forward, module)
             counts["linear"] += 1
@@ -471,4 +480,10 @@ def enable_all_lmul_multiply(model: nn.Module, mantissa_bits: int = 4,
         f"bit_exact={bit_exact}, linear_chunk_size={linear_chunk_size}, "
         f"checkpoint_chunks={checkpoint_chunks}"
     )
+    if learnable_bias_correction:
+        print(
+            f"[L-Mul patch] learnable bias-correction enabled: "
+            f"{counts['learnable_bc_registered']} nn.Parameter(C_out) registered, "
+            f"init={learnable_bc_init}"
+        )
     return model

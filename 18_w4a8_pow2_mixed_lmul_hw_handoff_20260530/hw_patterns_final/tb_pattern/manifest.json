@@ -1,0 +1,3581 @@
+{
+  "activation_blockfloat": {
+    "activation_storage": "raw e4m3 code = e4m3(x * 2^scale_pow2_exp); no per-activation runtime descale",
+    "calib_path": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/activation_calibration_p999_b64.json",
+    "exceptions": {
+      "mha_out_proj": "input = Score x V fp16 accumulator (NOT block-float A8); INT4 weight still shift-add (W4A16). No activation exponent for out_proj.",
+      "qk_descale_placement": "QK activation descale (2^-k applied to Q and K) must be applied on the QK accumulator BEFORE softmax (it sets logit temperature); not deferred to score x V / attention output."
+    },
+    "files": [
+      "table.json",
+      "boundary_keys.json",
+      "scale_pow2_exp.int16.bin",
+      "descale_pow2_exp.int16.bin"
+    ],
+    "format": "blockfloat_e4m3_shared_exponent",
+    "fusion_rule": "final_post_acc_descale_exp = weight_APoT_exp + descale_pow2_exp(input boundary) = weight_APoT_exp - scale_pow2_exp; pure exponent offset (shift-add, no multiply)",
+    "num_boundaries": 53,
+    "rounding": "floor(log2(448/calib_amax)) == DCNN.utils.fp8_qat._pow2_round(mode=floor)",
+    "scale_pow2_exp_range": [
+      -2,
+      9
+    ]
+  },
+  "blocks": [
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.0.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 8,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 0
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.1.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 16,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 1
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.2.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 32,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 2
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.3.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 64,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 3
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.4.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 128,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 4
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "encoder.model.5.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "kind": "encoder",
+      "num_out_channels": 128,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 5
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.0.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": true,
+      "kind": "decoder",
+      "num_out_channels": 128,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 0
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.1.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "kind": "decoder",
+      "num_out_channels": 64,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 1
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.2.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": false,
+      "kind": "decoder",
+      "num_out_channels": 32,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 2
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.3.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": true,
+      "kind": "decoder",
+      "num_out_channels": 16,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 3
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.4.0",
+      "has_bn": true,
+      "has_prelu": true,
+      "is_outlier_fp8": true,
+      "kind": "decoder",
+      "num_out_channels": 8,
+      "prelu": {
+        "exp_range": [
+          -8,
+          0
+        ],
+        "format": "signed_pow2",
+        "note": "Current source code uses scalar PReLU per real/imag block unless num_parameters is changed.",
+        "num_parameters_i": 1,
+        "num_parameters_r": 1
+      },
+      "stage_idx": 4
+    },
+    {
+      "bn_bias_files": [
+        "bn_bias_r_fused.fp32.bin",
+        "bn_bias_i_fused.fp32.bin"
+      ],
+      "bn_scale_exp_range": [
+        -9,
+        4
+      ],
+      "bn_scale_format": "signed_apot",
+      "conv_bias_fused_into_bn_bias": true,
+      "dotted": "decoder.model.5.0",
+      "has_bn": false,
+      "has_prelu": false,
+      "is_outlier_fp8": false,
+      "kind": "decoder",
+      "num_out_channels": 1,
+      "prelu": null,
+      "stage_idx": 5
+    }
+  ],
+  "code_dir": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/code",
+  "config": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/strict_core_deploy_config.yaml",
+  "hardware_notes": [
+    "Conv/DW/MHA projection INT4 q uses qmax=7.",
+    "Conv pointwise scale groups follow the Conv2d input-channel axis, not the trailing kW axis.",
+    "INT4 APoT scales are exported as exponent/sign code files; fp16/fp32 scale files are debug views.",
+    "MHA QKV qkv_groups mask is applied after per-head quantization, matching current source behavior.",
+    "MHA in_proj compact block file stores only diagonal 64x64 Q/K/V blocks for qkv_groups=4.",
+    "BN alpha is APoT of gamma/sqrt(running_var+eps); conv bias is fused into the exported BN bias.",
+    "Decoder PW outliers (12) are PER-TENSOR SCALED FP8: stored e4m3 = fp8(w*448/amax); effective weight = e4m3_code * (amax/448). The per-tensor descale is exported (exact fp32 fp8_descale + APoT fp8_descale_apot_*) and applies once per output on the fp16 accumulator.",
+    "PReLU is exported as signed pow2. Current source uses scalar PReLU per real/imag block.",
+    "QK 1/sqrt(head_dim) is not pre-fused; metadata gives the runtime pow2 shift exponent.",
+    "ACTIVATIONS are block-float: e4m3 raw code + per-tensor shared exponent (see activation_blockfloat/). The activation enters every MAC / L-Mul as raw e4m3 code; there is NO runtime activation amax/descale. Each layer's post-acc descale = weight APoT exponent + the input boundary's descale_pow2_exp (a shift-add offset, no multiply). Because the activation scale is a single pow2, eager==fused exactly at every L-Mul site, so the validated MBSTOI (VCTK 0.8357 / TIMIT 0.7898) IS the deployed hardware number.",
+    "EXCEPTION: MHA internal out_proj input is the Score x V fp16 accumulator (W4A16, not A8); INT4 weight still shift-add. QK activation descale must be applied on the QK accumulator BEFORE softmax (logit temperature). STFT/iSTFT/complex-mask are Q1.15 DSP, outside the zero-mult core."
+  ],
+  "layers": [
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.0.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.0.0.depthwise_r",
+        "descale_pow2_exp": -9,
+        "scale_pow2_exp": 9
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 5,
+      "packed_bytes_dense": 3,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.0.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.0.0.depthwise_i",
+        "descale_pow2_exp": -9,
+        "scale_pow2_exp": 9
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 5,
+      "packed_bytes_dense": 3,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.0.0.pointwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.0.0.pointwise_r",
+        "descale_pow2_exp": -8,
+        "scale_pow2_exp": 8
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 8,
+      "packed_bytes_dense": 4,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.0.0.pointwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.0.0.pointwise_i",
+        "descale_pow2_exp": -8,
+        "scale_pow2_exp": 8
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 8,
+      "packed_bytes_dense": 4,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.1.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.1.0.depthwise_r",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 40,
+      "packed_bytes_dense": 20,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.1.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.1.0.depthwise_i",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 40,
+      "packed_bytes_dense": 20,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.1.0.pointwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.1.0.pointwise_r",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 128,
+      "packed_bytes_dense": 64,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.1.0.pointwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.1.0.pointwise_i",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 128,
+      "packed_bytes_dense": 64,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.2.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.2.0.depthwise_r",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 80,
+      "packed_bytes_dense": 40,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.2.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.2.0.depthwise_i",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 80,
+      "packed_bytes_dense": 40,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.2.0.pointwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.2.0.pointwise_r",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 512,
+      "packed_bytes_dense": 256,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.2.0.pointwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.2.0.pointwise_i",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 512,
+      "packed_bytes_dense": 256,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.3.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.3.0.depthwise_r",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 160,
+      "packed_bytes_dense": 80,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.3.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.3.0.depthwise_i",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 160,
+      "packed_bytes_dense": 80,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.3.0.pointwise_r",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "encoder.model.3.0.pointwise_r",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 2048,
+      "packed_bytes_dense": 1024,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.3.0.pointwise_i",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "encoder.model.3.0.pointwise_i",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 2048,
+      "packed_bytes_dense": 1024,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.4.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.4.0.depthwise_r",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 320,
+      "packed_bytes_dense": 160,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.4.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.4.0.depthwise_i",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 320,
+      "packed_bytes_dense": 160,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.4.0.pointwise_r",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "encoder.model.4.0.pointwise_r",
+        "descale_pow2_exp": -7,
+        "scale_pow2_exp": 7
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 8192,
+      "packed_bytes_dense": 4096,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          128,
+          2,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          128,
+          2,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        64,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.4.0.pointwise_i",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "encoder.model.4.0.pointwise_i",
+        "descale_pow2_exp": -7,
+        "scale_pow2_exp": 7
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 8192,
+      "packed_bytes_dense": 4096,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          128,
+          2,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          128,
+          2,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        64,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.5.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.5.0.depthwise_r",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 640,
+      "packed_bytes_dense": 320,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          128,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          128,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.5.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "encoder.model.5.0.depthwise_i",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 640,
+      "packed_bytes_dense": 320,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          128,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          128,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.5.0.pointwise_r",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "encoder.model.5.0.pointwise_r",
+        "descale_pow2_exp": -7,
+        "scale_pow2_exp": 7
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 16384,
+      "packed_bytes_dense": 8192,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          128,
+          4,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          128,
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        128,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "encoder.model.5.0.pointwise_i",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "encoder.model.5.0.pointwise_i",
+        "descale_pow2_exp": -7,
+        "scale_pow2_exp": 7
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 16384,
+      "packed_bytes_dense": 8192,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          128,
+          4,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          128,
+          4,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        128,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.0.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.0.0.depthwise_r",
+        "descale_pow2_exp": 2,
+        "scale_pow2_exp": -2
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 640,
+      "packed_bytes_dense": 320,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          128,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          128,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.0.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.0.0.depthwise_i",
+        "descale_pow2_exp": 2,
+        "scale_pow2_exp": -2
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 640,
+      "packed_bytes_dense": 320,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          128,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          128,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        128,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.0.0.pointwise_r_x",
+      "fp8_amax": 0.6427187919616699,
+      "fp8_descale": 0.0014346400275826454,
+      "fp8_scale": 697.0389404296875,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.0.0.split_pointwise_cat.real",
+        "descale_pow2_exp": 1,
+        "scale_pow2_exp": -1
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        128,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.0.0.pointwise_i_x",
+      "fp8_amax": 0.5917863249778748,
+      "fp8_descale": 0.0013209516182541847,
+      "fp8_scale": 757.0299682617188,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.0.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": 1,
+        "scale_pow2_exp": -1
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        128,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.0.0.pointwise_r_skip",
+      "fp8_amax": 1.6677316427230835,
+      "fp8_descale": 0.0037226155400276184,
+      "fp8_scale": 268.6283264160156,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.0.0.split_pointwise_cat.real",
+        "descale_pow2_exp": 1,
+        "scale_pow2_exp": -1
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        128,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.0.0.pointwise_i_skip",
+      "fp8_amax": 2.356306791305542,
+      "fp8_descale": 0.005259613040834665,
+      "fp8_scale": 190.1280517578125,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.0.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": 1,
+        "scale_pow2_exp": -1
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        128,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.1.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.1.0.depthwise_r",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 320,
+      "packed_bytes_dense": 160,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.1.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.1.0.depthwise_i",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 320,
+      "packed_bytes_dense": 160,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.1.0.pointwise_r_x",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "decoder.model.1.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 2048,
+      "packed_bytes_dense": 1024,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.1.0.pointwise_i_x",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "decoder.model.1.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 2048,
+      "packed_bytes_dense": 1024,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.1.0.pointwise_r_skip",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "decoder.model.1.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 2048,
+      "packed_bytes_dense": 1024,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.1.0.pointwise_i_skip",
+      "effective_scale_granularity": "per_group",
+      "group_size": 32,
+      "input_activation": {
+        "boundary_key": "decoder.model.1.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 2048,
+      "packed_bytes_dense": 1024,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          64,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        64,
+        32,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.2.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.2.0.depthwise_r",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 160,
+      "packed_bytes_dense": 80,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.2.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.2.0.depthwise_i",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 160,
+      "packed_bytes_dense": 80,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.2.0.pointwise_r_x",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.2.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 512,
+      "packed_bytes_dense": 256,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.2.0.pointwise_i_x",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.2.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 512,
+      "packed_bytes_dense": 256,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.2.0.pointwise_r_skip",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.2.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 512,
+      "packed_bytes_dense": 256,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.2.0.pointwise_i_skip",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.2.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 512,
+      "packed_bytes_dense": 256,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          32,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        32,
+        16,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.3.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.3.0.depthwise_r",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 80,
+      "packed_bytes_dense": 40,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.3.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.3.0.depthwise_i",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 80,
+      "packed_bytes_dense": 40,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          16,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        16,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.3.0.pointwise_r_x",
+      "fp8_amax": 0.9620481133460999,
+      "fp8_descale": 0.0021474286913871765,
+      "fp8_scale": 465.6731872558594,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.3.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.3.0.pointwise_i_x",
+      "fp8_amax": 0.9644297361373901,
+      "fp8_descale": 0.002152745146304369,
+      "fp8_scale": 464.523193359375,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.3.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.3.0.pointwise_r_skip",
+      "fp8_amax": 0.3403894305229187,
+      "fp8_descale": 0.0007597978110425174,
+      "fp8_scale": 1316.1396484375,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.3.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.3.0.pointwise_i_skip",
+      "fp8_amax": 0.3491380214691162,
+      "fp8_descale": 0.0007793259574100375,
+      "fp8_scale": 1283.16015625,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.3.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        16,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.4.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.4.0.depthwise_r",
+        "descale_pow2_exp": -4,
+        "scale_pow2_exp": 4
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 40,
+      "packed_bytes_dense": 20,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.4.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.4.0.depthwise_i",
+        "descale_pow2_exp": -4,
+        "scale_pow2_exp": 4
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 40,
+      "packed_bytes_dense": 20,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          8,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        8,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.4.0.pointwise_r_x",
+      "fp8_amax": 1.2181587219238281,
+      "fp8_descale": 0.0027191040571779013,
+      "fp8_scale": 367.7681884765625,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.4.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        8,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.4.0.pointwise_i_x",
+      "fp8_amax": 0.8233725428581238,
+      "fp8_descale": 0.0018378851236775517,
+      "fp8_scale": 544.1036376953125,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.4.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        8,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.4.0.pointwise_r_skip",
+      "fp8_amax": 0.1412784606218338,
+      "fp8_descale": 0.0003153537109028548,
+      "fp8_scale": 3171.04248046875,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.4.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        8,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "descale_apot_exp_range": [
+        -16,
+        -6
+      ],
+      "descale_apot_files": [
+        "fp8_descale_apot_a_exp.int16.bin",
+        "fp8_descale_apot_b_exp.int16.bin",
+        "fp8_descale_apot_has_second.u8.bin",
+        "fp8_descale_apot_residual_sign.int8.bin"
+      ],
+      "descale_hw_note": "Per-tensor descale (amax/448) factors out of the per-element L-Mul into a single scaling of the fp16 accumulator per output. To keep the core multiplier-free, realize it as a pow2/APoT exponent offset folded into L-Mul (shift-add): see fp8_descale_apot_* and HANDOFF_HW_ZERO_MULTIPLIER_CORE.md \u00a73.4. The exact fp32 fp8_descale is the golden reference; the APoT descale is the deployable shift-add form.",
+      "dotted": "decoder.model.4.0.pointwise_i_skip",
+      "fp8_amax": 0.15042901039123535,
+      "fp8_descale": 0.0003357790410518646,
+      "fp8_scale": 2978.14892578125,
+      "fp8_scale_max_val": 448.0,
+      "fp8_scaled": true,
+      "input_activation": {
+        "boundary_key": "decoder.model.4.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -5,
+        "scale_pow2_exp": 5
+      },
+      "is_decoder_pw_outlier": true,
+      "lmul_mantissa_bits": 4,
+      "module_type": "ParametrizedConv2d",
+      "preferred_hw_weight_file": "w_fp8.e4m3.bin",
+      "reconstruction": "weight = e4m3_code_value * fp8_descale  (== code_value / fp8_scale, bit-exact vs module.weight)",
+      "runtime_multiply": "lmul_m4_for_decoder_pw_outlier",
+      "stored_code_is": "fp8_e4m3(weight * fp8_scale)",
+      "weight_format": "fp8_e4m3_per_tensor_scaled",
+      "weight_shape": [
+        8,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.5.0.depthwise_r",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.5.0.depthwise_r",
+        "descale_pow2_exp": -7,
+        "scale_pow2_exp": 7
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 5,
+      "packed_bytes_dense": 3,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.5.0.depthwise_i",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.5.0.depthwise_i",
+        "descale_pow2_exp": -7,
+        "scale_pow2_exp": 7
+      },
+      "is_depthwise": true,
+      "module_type": "ParametrizedConvTranspose2d",
+      "num_elements_dense": 5,
+      "packed_bytes_dense": 3,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_channel",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        1,
+        5,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.5.0.pointwise_r_x",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.5.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 8,
+      "packed_bytes_dense": 4,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.5.0.pointwise_i_x",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.5.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 8,
+      "packed_bytes_dense": 4,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        8,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.5.0.pointwise_r_skip",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.5.0.split_pointwise_cat.real",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 4,
+      "packed_bytes_dense": 2,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "bias_exported_here": false,
+      "conv_bias_fused_elsewhere": true,
+      "dotted": "decoder.model.5.0.pointwise_i_skip",
+      "effective_scale_granularity": "per_channel",
+      "input_activation": {
+        "boundary_key": "decoder.model.5.0.split_pointwise_cat.imag",
+        "descale_pow2_exp": -6,
+        "scale_pow2_exp": 6
+      },
+      "is_pointwise": true,
+      "module_type": "ParametrizedConv2d",
+      "num_elements_dense": 4,
+      "packed_bytes_dense": 2,
+      "preferred_hw_weight_file": "w_int4.packed.bin",
+      "scale_granularity": "per_group",
+      "scale_meta": {
+        "apot_files": [
+          "scale_apot_a_exp.int16.bin",
+          "scale_apot_b_exp.int16.bin",
+          "scale_apot_has_second.u8.bin",
+          "scale_apot_residual_sign.int8.bin"
+        ],
+        "hardware_scale_format": "apot_positive",
+        "quant_scale_debug_files": [
+          "scale_raw.fp32.bin",
+          "scale_quant.fp32.bin",
+          "scale_quant.fp16.bin"
+        ],
+        "quant_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_scale_shape": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "weight_format": "int4_symmetric_qmax7",
+      "weight_shape": [
+        1,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "dotted": "mattn.input_proj",
+      "halves": [
+        "fc_r",
+        "fc_i"
+      ],
+      "input_activation": {
+        "imag": {
+          "boundary_key": "mattn.input_proj.imag",
+          "descale_pow2_exp": -6,
+          "scale_pow2_exp": 6
+        },
+        "real": {
+          "boundary_key": "mattn.input_proj.real",
+          "descale_pow2_exp": -7,
+          "scale_pow2_exp": 7
+        }
+      },
+      "num_heads": 16,
+      "scale_granularity": "per_head",
+      "weight_dtype_logical": "complex64",
+      "weight_shape": [
+        256,
+        256
+      ]
+    },
+    {
+      "dotted": "mattn.output_proj",
+      "halves": [
+        "fc_r",
+        "fc_i"
+      ],
+      "input_activation": {
+        "imag": {
+          "boundary_key": "mattn.output_proj.imag",
+          "descale_pow2_exp": -3,
+          "scale_pow2_exp": 3
+        },
+        "real": {
+          "boundary_key": "mattn.output_proj.real",
+          "descale_pow2_exp": -3,
+          "scale_pow2_exp": 3
+        }
+      },
+      "num_heads": 16,
+      "scale_granularity": "per_head",
+      "weight_dtype_logical": "complex64",
+      "weight_shape": [
+        256,
+        256
+      ]
+    },
+    {
+      "dotted": "mattn.mattn.MultiheadAttention_re",
+      "in_proj": {
+        "bias_file": "bias.fp16.bin",
+        "block_diagonal_mask_applied_after_quant": true,
+        "compact_block_shape": [
+          12,
+          64,
+          64
+        ],
+        "dotted": "mattn.mattn.MultiheadAttention_re/in_proj_weight",
+        "num_heads": 16,
+        "preferred_hw_weight_file": "w_int4.blocks.packed.bin",
+        "qk_scale_fused_into_q_projection": false,
+        "qk_scale_runtime_pow2_exp": -2,
+        "qkv_groups": 4,
+        "scale_granularity": "per_head_qkv",
+        "scale_groups": 48,
+        "scale_meta": {
+          "apot_files": [
+            "scale_apot_a_exp.int16.bin",
+            "scale_apot_b_exp.int16.bin",
+            "scale_apot_has_second.u8.bin",
+            "scale_apot_residual_sign.int8.bin"
+          ],
+          "hardware_scale_format": "apot_positive",
+          "quant_scale_debug_files": [
+            "scale_raw.fp32.bin",
+            "scale_quant.fp32.bin",
+            "scale_quant.fp16.bin"
+          ],
+          "quant_scale_shape": [
+            48,
+            1,
+            1
+          ],
+          "raw_scale_shape": [
+            48,
+            1,
+            1
+          ]
+        },
+        "weight_format": "int4_symmetric_qmax7",
+        "weight_shape": [
+          768,
+          256
+        ]
+      },
+      "input_activation": {
+        "in_proj_qkv": {
+          "boundary_key": "mattn.mattn.activation_quantizer",
+          "descale_pow2_exp": -5,
+          "scale_pow2_exp": 5
+        },
+        "out_proj": "wide_fp16_accumulator_no_blockfloat (Option 2)"
+      },
+      "out_proj": {
+        "bias_exported_here": true,
+        "bias_file": "bias.fp16.bin",
+        "dotted": "mattn.mattn.MultiheadAttention_re/out_proj",
+        "effective_scale_granularity": "per_head_rows",
+        "module_type": "ParametrizedNonDynamicallyQuantizableLinear",
+        "num_elements_dense": 65536,
+        "num_heads": 16,
+        "out_proj_groups": 1,
+        "packed_bytes_dense": 32768,
+        "preferred_hw_weight_file": "w_int4.packed.bin",
+        "scale_granularity": "per_head",
+        "scale_meta": {
+          "apot_files": [
+            "scale_apot_a_exp.int16.bin",
+            "scale_apot_b_exp.int16.bin",
+            "scale_apot_has_second.u8.bin",
+            "scale_apot_residual_sign.int8.bin"
+          ],
+          "hardware_scale_format": "apot_positive",
+          "quant_scale_debug_files": [
+            "scale_raw.fp32.bin",
+            "scale_quant.fp32.bin",
+            "scale_quant.fp16.bin"
+          ],
+          "quant_scale_shape": [
+            16,
+            1,
+            1
+          ],
+          "raw_scale_shape": [
+            16,
+            1,
+            1
+          ]
+        },
+        "weight_format": "int4_symmetric_qmax7",
+        "weight_shape": [
+          256,
+          256
+        ]
+      }
+    }
+  ],
+  "load_report": {
+    "missing_count": 0,
+    "missing_first10": [],
+    "unexpected_count": 0,
+    "unexpected_first10": []
+  },
+  "model": {
+    "attention_datapath": {
+      "enabled": true,
+      "finite_mask_threshold": -10000.0,
+      "lmul_all_projection_ops": false,
+      "lmul_bit_exact": true,
+      "lmul_checkpoint_chunks": false,
+      "lmul_enabled": true,
+      "lmul_linear_chunk_size": 0,
+      "lmul_mantissa_bits": 8,
+      "lmul_qk_chunk_size": 32,
+      "lmul_qk_force_dense": false,
+      "lmul_targets": [
+        "qk"
+      ],
+      "prob_packet": {
+        "causal_window": null,
+        "enabled": true,
+        "local_idx_bits": 5,
+        "prob_bits": 8,
+        "prob_max_code": 255,
+        "prob_scale": 256,
+        "renormalize": false,
+        "score_v_mode": "lmul",
+        "top_k": 4,
+        "validate_local_idx": true
+      },
+      "prob_quant": "none",
+      "qk_scale_mode": "pow2",
+      "score_fixed_frac_bits": null,
+      "score_fixed_int_bits": null,
+      "score_quant": "none",
+      "top1_flip_max_rate": 0.01,
+      "topk_stability_min_jaccard": 0.98
+    },
+    "decoder_groups_skip": 2,
+    "decoder_groups_x": 4,
+    "decoder_skip_select_ratio": 0.5,
+    "embed_dim": 256,
+    "head_dim": 16,
+    "int4_group_size": 32,
+    "int4_scale_format": "apot_clip",
+    "low_power": {
+      "all_lmul_multiply": {
+        "attention_mantissa_bits": null,
+        "bit_exact": true,
+        "checkpoint_chunks": false,
+        "enabled": false,
+        "learnable_bias_correction": {
+          "enabled": false,
+          "init_value": 0.0
+        },
+        "linear_chunk_size": 0,
+        "mantissa_bits": 4,
+        "ste_mode": "real"
+      },
+      "bn_affine": {
+        "pow2_max_exp": 4,
+        "pow2_min_exp": -9,
+        "scale_mode": "fold_apot",
+        "tie_real_imag_scale": false
+      },
+      "mha_projection": {
+        "enabled": true,
+        "input_proj_groups": 1,
+        "out_proj_groups": 1,
+        "output_proj_groups": 1,
+        "qkv_groups": 4
+      },
+      "outlier_fp8_lmul": {
+        "bit_exact": true,
+        "enabled": true,
+        "mantissa_bits": 4
+      },
+      "prelu_pow2": {
+        "enabled": true,
+        "max_exp": 0,
+        "min_exp": -8
+      }
+    },
+    "name": "BCCTN strict-core zero-multiplier deploy",
+    "num_heads": 16,
+    "qkv_groups": 4,
+    "softmax": {
+      "mode": "shift_topk_pow2_clamp8_nomantissa"
+    }
+  },
+  "skip_indices": {
+    "format": "uint16 channel indices, stored group-wise",
+    "items": [
+      {
+        "count": 64,
+        "file": "decoder_stage_0.u16.bin",
+        "max": 125,
+        "min": 3,
+        "stage_idx": 0
+      },
+      {
+        "count": 64,
+        "file": "decoder_stage_1.u16.bin",
+        "max": 127,
+        "min": 4,
+        "stage_idx": 1
+      },
+      {
+        "count": 32,
+        "file": "decoder_stage_2.u16.bin",
+        "max": 63,
+        "min": 0,
+        "stage_idx": 2
+      },
+      {
+        "count": 16,
+        "file": "decoder_stage_3.u16.bin",
+        "max": 29,
+        "min": 0,
+        "stage_idx": 3
+      },
+      {
+        "count": 8,
+        "file": "decoder_stage_4.u16.bin",
+        "max": 15,
+        "min": 4,
+        "stage_idx": 4
+      },
+      {
+        "count": 4,
+        "file": "decoder_stage_5.u16.bin",
+        "max": 3,
+        "min": 0,
+        "stage_idx": 5
+      }
+    ]
+  },
+  "source_ckpt": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/strict_core_pow2_blockfloat_deploy_ep3_vctk0.8357_timit0.7898.ckpt",
+  "stft": {
+    "fft_len": 128,
+    "masking_mode": "C",
+    "scope_note": "DSP front/back-end is outside the zero-multiplier neural core claim.",
+    "win_inc": 80,
+    "win_len": 128,
+    "win_type": "hamming",
+    "window_periodic": false
+  }
+}

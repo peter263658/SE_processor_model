@@ -108,6 +108,15 @@ model:
       linear_chunk_size: 0
       checkpoint_chunks: false
       attention_mantissa_bits: null  # if null, MHA uses `mantissa_bits`; set explicitly for mixed (e.g. conv=5, MHA=4)
+      # Learnable per-channel δ added at every patched Conv/ConvT/Linear
+      # output. Lets QAT *learn* the L-Mul bias compensation instead of
+      # post-hoc patching it (which over-corrects QAT-trained models).
+      # Mutually exclusive with BCCTN_BIAS_CORRECTION_PATH (fixed offline δ).
+      # Hardware deployment: fold into bias param at inference, or keep as
+      # a C_out-sized add — does not break "L-Mul replaces multipliers".
+      learnable_bias_correction:
+        enabled: false
+        init_value: 0.0   # typically 0.0; non-zero only when warm-starting from a calibration
   # Decoder grouped pointwise experiment.
   # mode:
   #   off     - legacy cat([x, skip]) -> pointwise path

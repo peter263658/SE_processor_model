@@ -1,0 +1,9 @@
+{
+  "fft_len": 128,
+  "masking_mode": "C",
+  "scope_note": "DSP front/back-end is outside the zero-multiplier neural core claim.",
+  "win_inc": 80,
+  "win_len": 128,
+  "win_type": "hamming",
+  "window_periodic": false
+}
