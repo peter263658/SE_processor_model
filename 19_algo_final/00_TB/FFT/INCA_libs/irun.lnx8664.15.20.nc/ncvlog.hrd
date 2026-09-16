@@ -1,0 +1,10 @@
+//
+// File created by:  ncverilog
+// Do not modify this file
+//
+-YDIR
+/home/cad/synopsys/synthesis/2021.06-sp2/dw/sim_ver
+-LIBEXT
+.v
+-INCDIR
+/home/cad/synopsys/synthesis/2021.06-sp2/dw/sim_ver

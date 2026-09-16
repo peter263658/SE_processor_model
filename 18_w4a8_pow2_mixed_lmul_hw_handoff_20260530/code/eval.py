@@ -367,6 +367,75 @@ def compute_ipd_error_with_mask(
     return (ipd_err[mask]).mean()
 
 
+def compute_itd_error(clean_left, clean_right, proc_left, proc_right,
+                      sr=SAMPLE_RATE, max_lag_ms=1.0):
+    """
+    ITD error in microseconds: |ITD_clean - ITD_processed|, where ITD is the
+    interaural time delay estimated by GCC-PHAT with parabolic sub-sample peak
+    interpolation. ITD is the dominant low-frequency localization cue and
+    complements IPD (per-bin phase, which wraps) with a single, perceptually
+    interpretable time-delay number.
+    """
+    def _gcc_phat_delay(x, y, max_lag):
+        n = 1
+        while n < len(x) + len(y):
+            n <<= 1
+        X = np.fft.rfft(x, n=n)
+        Y = np.fft.rfft(y, n=n)
+        R = X * np.conj(Y)
+        R /= (np.abs(R) + 1e-12)          # PHAT weighting
+        cc = np.fft.irfft(R, n=n)
+        # re-center to lags [-max_lag, +max_lag]; index max_lag == zero lag
+        cc = np.concatenate((cc[-max_lag:], cc[:max_lag + 1]))
+        k = int(np.argmax(cc))
+        if 0 < k < len(cc) - 1:            # parabolic sub-sample refinement
+            y0, y1, y2 = cc[k - 1], cc[k], cc[k + 1]
+            denom = y0 - 2 * y1 + y2
+            delta = 0.5 * (y0 - y2) / denom if abs(denom) > 1e-12 else 0.0
+        else:
+            delta = 0.0
+        lag = (k - max_lag) + delta
+        return lag / sr * 1e6              # microseconds
+
+    max_lag = max(1, int(max_lag_ms * 1e-3 * sr))
+    try:
+        itd_clean = _gcc_phat_delay(np.asarray(clean_left, np.float64),
+                                    np.asarray(clean_right, np.float64), max_lag)
+        itd_proc = _gcc_phat_delay(np.asarray(proc_left, np.float64),
+                                   np.asarray(proc_right, np.float64), max_lag)
+        return abs(itd_clean - itd_proc)
+    except Exception:
+        return float("nan")
+
+
+def compute_ic_error(clean_left, clean_right, proc_left, proc_right,
+                     sr=SAMPLE_RATE, f_max=1500):
+    """
+    Interaural coherence (MSC) error: |IC_clean - IC_processed|, magnitude-
+    squared coherence averaged over the <= f_max band. IC captures diffuse-
+    field / spatial-width preservation, an axis orthogonal to ILD/IPD/ITD.
+    Referenced against clean (a denoiser is expected to change coherence vs the
+    noisy input, so clean is the correct reference).
+    """
+    n_fft, hop, win = 512, 100, 400
+
+    def _ic(l, r):
+        L = librosa.stft(np.asarray(l, np.float64), n_fft=n_fft, hop_length=hop, win_length=win)
+        R = librosa.stft(np.asarray(r, np.float64), n_fft=n_fft, hop_length=hop, win_length=win)
+        max_bin = int(f_max / (sr / n_fft))
+        L, R = L[:max_bin + 1], R[:max_bin + 1]
+        Slr = np.mean(L * np.conj(R), axis=1)
+        Sll = np.mean(np.abs(L) ** 2, axis=1)
+        Srr = np.mean(np.abs(R) ** 2, axis=1)
+        msc = (np.abs(Slr) ** 2) / (Sll * Srr + 1e-12)
+        return float(np.mean(msc))
+
+    try:
+        return abs(_ic(clean_left, clean_right) - _ic(proc_left, proc_right))
+    except Exception:
+        return float("nan")
+
+
 # 6. Safe MBSTOI calculation
 def safe_mbstoi(clean_left, clean_right, enhanced_left, enhanced_right, sr=SAMPLE_RATE):
     """
@@ -443,14 +512,16 @@ def safe_pesq(clean_left, clean_right, processed_left, processed_right, sr=SAMPL
         # Try to import pesq
         from pesq import pesq
         
-        # PESQ requires 16kHz or 8kHz
-        if sr != 16000 and sr != 8000:
-            # Resample to 16kHz
-            clean_left = librosa.resample(clean_left, orig_sr=sr, target_sr=16000)
-            clean_right = librosa.resample(clean_right, orig_sr=sr, target_sr=16000)
-            processed_left = librosa.resample(processed_left, orig_sr=sr, target_sr=16000)
-            processed_right = librosa.resample(processed_right, orig_sr=sr, target_sr=16000)
-            sr = 16000
+        # nb-PESQ runs at 8kHz (ITU-T P.862), wb-PESQ at 16kHz (P.862.2).
+        # Resample to the band's native rate so nb scores match eval.py in
+        # 20_pesq_finetune (previously nb was computed at 16kHz here).
+        target_sr = 8000 if mode == 'nb' else 16000
+        if sr != target_sr:
+            clean_left = librosa.resample(clean_left, orig_sr=sr, target_sr=target_sr)
+            clean_right = librosa.resample(clean_right, orig_sr=sr, target_sr=target_sr)
+            processed_left = librosa.resample(processed_left, orig_sr=sr, target_sr=target_sr)
+            processed_right = librosa.resample(processed_right, orig_sr=sr, target_sr=target_sr)
+            sr = target_sr
         
         # Calculate PESQ for left and right channels
         try:
@@ -828,6 +899,32 @@ def compute_metrics_for_pair(pair_payload):
             results["IPD_error_noisy_deg"] = float("nan")
             results["IPD_error_deg"] = float("nan")
 
+        # ITD error (us): interaural time-delay fidelity (GCC-PHAT)
+        try:
+            results["ITD_error_noisy"] = compute_itd_error(
+                clean_data[:, 0], clean_data[:, 1],
+                noisy_data[:, 0], noisy_data[:, 1], sr=c_sr)
+            results["ITD_error"] = compute_itd_error(
+                clean_data[:, 0], clean_data[:, 1],
+                enhanced_data[0], enhanced_data[1], sr=c_sr)
+        except Exception as e:
+            print(f"ITD error calculation failed for {filename}: {e}")
+            results["ITD_error_noisy"] = float("nan")
+            results["ITD_error"] = float("nan")
+
+        # Interaural coherence (MSC) error: diffuse-field / spatial-width axis
+        try:
+            results["IC_error_noisy"] = compute_ic_error(
+                clean_data[:, 0], clean_data[:, 1],
+                noisy_data[:, 0], noisy_data[:, 1], sr=c_sr)
+            results["IC_error"] = compute_ic_error(
+                clean_data[:, 0], clean_data[:, 1],
+                enhanced_data[0], enhanced_data[1], sr=c_sr)
+        except Exception as e:
+            print(f"IC error calculation failed for {filename}: {e}")
+            results["IC_error_noisy"] = float("nan")
+            results["IC_error"] = float("nan")
+
         return results
 
     except Exception as e:
@@ -997,9 +1094,22 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
     from DCNN.trainer import DCNNLightningModule
     model = DCNNLightningModule(config)
     model.eval()
-    # Load checkpoint
+    # Load checkpoint. Ignore non-generator submodule keys so finetuned ckpts
+    # from 20_pesq_finetune load for canonical gate evaluation: the training
+    # loss (loss.*, e.g. loss.pesq_loss.* torch_pesq buffers) and MetricGAN's
+    # PESQ critic (disc.*) + anchor loss (base_loss.*). None are part of the
+    # deploy model; any genuine model.* mismatch still raises.
+    _IGNORE = ("loss.", "disc.", "base_loss.")
     checkpoint = torch.load(model_checkpoint, map_location=device)
-    model.load_state_dict(checkpoint["state_dict"])
+    state_dict = {k: v for k, v in checkpoint["state_dict"].items()
+                  if not k.startswith(_IGNORE)}
+    missing, unexpected = model.load_state_dict(state_dict, strict=False)
+    model_missing = [k for k in missing if not k.startswith(_IGNORE)]
+    model_unexpected = [k for k in unexpected if not k.startswith(_IGNORE)]
+    if model_missing or model_unexpected:
+        raise RuntimeError(
+            f"model weight mismatch loading {model_checkpoint}:\n"
+            f"  missing={model_missing}\n  unexpected={model_unexpected}")
     model = model.to(device)
     
     # Create output directory
@@ -1080,9 +1190,13 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
         'IPD_error_noisy': [],
         'IPD_error': [],
         'IPD_error_noisy_deg': [],
-        'IPD_error_deg': []
+        'IPD_error_deg': [],
+        'ITD_error_noisy': [],
+        'ITD_error': [],
+        'IC_error_noisy': [],
+        'IC_error': []
     }
-    
+
     metric_workers = max(1, int(metric_workers or 1))
 
     # Process pairs
@@ -1129,7 +1243,9 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
         'Average ILD Error Noisy (dB)': np.nanmean(results_df['ILD_error_noisy']),
         'Average IPD Error Noisy (rad)': np.nanmean(results_df['IPD_error_noisy']),
         'Average IPD Error Noisy (deg)': np.nanmean(results_df['IPD_error_noisy_deg']),
-        
+        'Average ITD Error Noisy (us)': np.nanmean(results_df['ITD_error_noisy']) if 'ITD_error_noisy' in results_df else float('nan'),
+        'Average IC Error Noisy': np.nanmean(results_df['IC_error_noisy']) if 'IC_error_noisy' in results_df else float('nan'),
+
         # Enhanced signal metrics
         'Average SegSNR (L)': np.nanmean(results_df['SegSNR_L']),
         'Average SegSNR (R)': np.nanmean(results_df['SegSNR_R']),
@@ -1142,7 +1258,9 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
         'Average ILD Error (dB)': np.nanmean(results_df['ILD_error']),
         'Average IPD Error (rad)': np.nanmean(results_df['IPD_error']),
         'Average IPD Error (deg)': np.nanmean(results_df['IPD_error_deg']),
-        
+        'Average ITD Error (us)': np.nanmean(results_df['ITD_error']) if 'ITD_error' in results_df else float('nan'),
+        'Average IC Error': np.nanmean(results_df['IC_error']) if 'IC_error' in results_df else float('nan'),
+
         # Processing stats
         'Files Processed': len(results_df),
         'Total Files': total_pairs,
@@ -1350,7 +1468,11 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
         avg_ild = np.nanmean([r.get('Average ILD Error (dB)', 0) for r in results_by_snr.values()])
         avg_ipd_noisy_deg = np.nanmean([r.get('Average IPD Error Noisy (deg)', 0) for r in results_by_snr.values()])
         avg_ipd_deg = np.nanmean([r.get('Average IPD Error (deg)', 0) for r in results_by_snr.values()])
-        
+        avg_itd_noisy = np.nanmean([r.get('Average ITD Error Noisy (us)', np.nan) for r in results_by_snr.values()])
+        avg_itd = np.nanmean([r.get('Average ITD Error (us)', np.nan) for r in results_by_snr.values()])
+        avg_ic_noisy = np.nanmean([r.get('Average IC Error Noisy', np.nan) for r in results_by_snr.values()])
+        avg_ic = np.nanmean([r.get('Average IC Error', np.nan) for r in results_by_snr.values()])
+
         print(f"\n===== {dataset_name} PAPER STYLE AVERAGES =====")
         print(f"Average MBSTOI Noisy: {avg_mbstoi_noisy:.4f}")
         print(f"Average MBSTOI Enhanced: {avg_mbstoi:.4f}")
@@ -1367,7 +1489,11 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
         print(f"Average ILD Error Enhanced: {avg_ild:.4f} dB")
         print(f"Average IPD Error Noisy: {avg_ipd_noisy_deg:.2f} deg")
         print(f"Average IPD Error Enhanced: {avg_ipd_deg:.2f} deg")
-        
+        print(f"Average ITD Error Noisy: {avg_itd_noisy:.2f} us")
+        print(f"Average ITD Error Enhanced: {avg_itd:.2f} us")
+        print(f"Average IC Error Noisy: {avg_ic_noisy:.4f}")
+        print(f"Average IC Error Enhanced: {avg_ic:.4f}")
+
         # Save averages
         avg_file = output_file.replace('.csv', '_averages.txt')
         with open(avg_file, 'w') as f:
@@ -1387,6 +1513,10 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
             f.write(f"Average ILD Error Enhanced: {avg_ild:.4f} dB\n")
             f.write(f"Average IPD Error Noisy: {avg_ipd_noisy_deg:.2f} deg\n")
             f.write(f"Average IPD Error Enhanced: {avg_ipd_deg:.2f} deg\n")
+            f.write(f"Average ITD Error Noisy: {avg_itd_noisy:.2f} us\n")
+            f.write(f"Average ITD Error Enhanced: {avg_itd:.2f} us\n")
+            f.write(f"Average IC Error Noisy: {avg_ic_noisy:.4f}\n")
+            f.write(f"Average IC Error Enhanced: {avg_ic:.4f}\n")
 
 
 # 11. Command-line interface

@@ -1,0 +1,30 @@
+//
+// File created by:  ncverilog
+// Do not modify this file
+//
+-XLMODE
+./INCA_libs/irun.lnx8664.15.20.nc
+-RUNMODE
+./TB128.v
+../../01_RTL/FFT/FFT128.sv
+../../01_RTL/FFT/SdfUnit.sv
+../../01_RTL/FFT/SdfUnit2.sv
+../../01_RTL/FFT/Butterfly.sv
+../../01_RTL/FFT/DelayBuffer.sv
+../../01_RTL/FFT/Multiply.sv
+../../01_RTL/FFT/Twiddle128.sv
+-YDIR
+/home/cad/synopsys/synthesis/2021.06-sp2/dw/sim_ver
+-LIBEXT
+.v
+-INCDIR
+/home/cad/synopsys/synthesis/2021.06-sp2/dw/sim_ver
+-CDSLIB
+./INCA_libs/irun.lnx8664.15.20.nc/cdsrun.lib
+-HDLVAR
+./INCA_libs/irun.lnx8664.15.20.nc/hdlrun.var
+-MESSAGES
+-UPDATE
+-XLLIBSTORE
+./INCA_libs/irun.lnx8664.15.20.nc/xllibs
+-ALLOWUNBOUND

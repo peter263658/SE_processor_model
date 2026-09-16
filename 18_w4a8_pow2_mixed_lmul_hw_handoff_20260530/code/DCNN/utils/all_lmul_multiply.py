@@ -555,6 +555,27 @@ def _apot_descale_value(d, min_exp: int = -24, max_exp: int = 0):
     return torch.where(is_zero, torch.zeros_like(q), q)
 
 
+# Per-tensor pre-tree preshift for the 12 FP8-outlier tensors (the re-baked image,
+# preshift_manifest.json). Lands the FP8xFP8 pre-descale partials in fp16 range.
+_OUTLIER_PRESHIFT = {
+    "decoder.model.0.0.pointwise_r_x": -3, "decoder.model.0.0.pointwise_i_x": -4,
+    "decoder.model.0.0.pointwise_r_skip": 0, "decoder.model.0.0.pointwise_i_skip": 0,
+    "decoder.model.3.0.pointwise_r_x": -3, "decoder.model.3.0.pointwise_i_x": -3,
+    "decoder.model.3.0.pointwise_r_skip": -3, "decoder.model.3.0.pointwise_i_skip": -3,
+    "decoder.model.4.0.pointwise_r_x": -3, "decoder.model.4.0.pointwise_i_x": -4,
+    "decoder.model.4.0.pointwise_r_skip": -3, "decoder.model.4.0.pointwise_i_skip": -3,
+}
+
+
+def _outlier_fp16_on():
+    """True if BCCTN_FP16_PPU includes 'outlier' -> run FP8-outlier L-Mul in the
+    fp16 tree (with re-baked preshift), instead of the fp32 bypass (REPLY Q2)."""
+    import os
+    raw = str(os.environ.get("BCCTN_FP16_PPU", "")).strip().lower()
+    toks = {t.strip() for t in raw.replace("+", ",").split(",")}
+    return "outlier" in toks
+
+
 def enable_outlier_fp8_lmul(model: nn.Module, mantissa_bits: int = 4,
                             bit_exact: bool = True) -> nn.Module:
     """L-Mul ONLY the FP8-preserved decoder_pw_outlier conv layers (FP8×FP8 L-Mul).
@@ -614,7 +635,15 @@ def enable_outlier_fp8_lmul(model: nn.Module, mantissa_bits: int = 4,
                         input, code, None, self.stride, padding,
                         self.dilation, self.groups, _m, _be, 0, False,
                     )
-                    out = acc * descale
+                    ps = getattr(self, "_outlier_fp16_ps", None)
+                    if ps is None:
+                        out = acc * descale
+                    else:
+                        # HW: preshift products into fp16 range BEFORE the tree,
+                        # residual descale (= descale * 2^-ps) AFTER. ps<=0 exact pow2
+                        # => identity on value; fp16 only adds benign +-1 ulp.
+                        psf = 2.0 ** ps
+                        out = cl._fp16_sat(acc * psf) * (descale / psf)
                     if self.bias is not None:
                         out = out + self.bias.view(1, -1, 1, 1)
                     return out
@@ -622,6 +651,8 @@ def enable_outlier_fp8_lmul(model: nn.Module, mantissa_bits: int = 4,
                     input, self.weight, self.bias, self.stride, padding,
                     self.dilation, self.groups, _m, _be, 0, False,
                 )
+            if _outlier_fp16_on() and dd:
+                module._outlier_fp16_ps = _OUTLIER_PRESHIFT.get(name, 0)
             module.forward = types.MethodType(forward, module)
             patched.append(name)
         elif isinstance(module, nn.ConvTranspose2d):

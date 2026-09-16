@@ -1,0 +1,1239 @@
+<CWD>/home/r12k41024/Research/00_TB/SoftMax</CWD>
+<ENVVAR>
+	<env name="SPYGLASS_SPYAUTH_FILE">
+		<value>/tmp/spyAuthFileList794411778506794</value>
+	</env>
+	<env name="LD_LIBRARY_PATH">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/tkgui-new:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/policy_data/spyglass/design_read:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/Audits:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/adv_lowpower:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/area:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/auto-verify:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/clock:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/constraints:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/cubic_netlist:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/dft:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/dft_dsm:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/erc:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/latch:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/lint:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/lowpower:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/mbist-dft:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/miscellaneous:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/morelint:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/openmore:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/power_est:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/prof:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/rtl2netlist:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/sec:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/simulation:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/spyglass:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/starc:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/starc2002:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/starc2005:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/starcad-21:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/timing:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/txv:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/tkgui-new/Linux4:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/rme:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/rme/Parser:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/rme/Parser/Linux4:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-perl/lib/5.8.3:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-perl/lib/site_perl/5.8.3:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/tkgui-new/Linux4:/lib64/tls:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-tcl/lib/Linux4:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/python/Linux4/lib:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/tkgui-new/Linux4:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-tcl/lib/Linux4::/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-qt/lib/Linux4:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-nlview/Linux4:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-boost/Linux4:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-thirdparty/Linux4:/depot/gcc-4.8.3-patch/lib64:/usr/lib64:/usr/X11R6/lib64:/usr/local/lib64:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-vcst/vcs-mx/linux64/lib:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/oa/Linux4::://usr/cad/cadence/SSV/SSV_20.10.000/tools/lib/64bit:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/oa/Linux4:/lib64:/usr/cad/cadence/IC/IC_23.10.140/tools/lib:/usr/cad/cadence/IC/IC_23.10.140/tools/lib/64bit:/usr/cad/cadence/IC/IC_23.10.140/tools/lib64:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/lib:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/lib/64bit:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/lib64:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/lib:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/lib/64bit:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/lib64:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/lib:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/lib/64bit:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/lib64:/usr/cad/cadence/SSV/SSV_20.10.000/tools/lib:/usr/cad/cadence/SSV/SSV_20.10.000/tools/lib64:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/lib:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/lib/64bit:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/lib64:/usr/cad/synopsys/verdi/cur/etc/lib/libstdc++/LINUX64/:/usr/cad/synopsys/verdi/cur/share/PLI/IUS/LINUX64/:/usr/cad/synopsys/verdi/cur/share/PLI/VCS/LINUX64:/usr/cad/synopsys/verdi/cur/share/PLI/VCS/linux64:/usr/lib64:/usr/local/lib:/usr/local/lib64::/usr/lib:/lib:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/zebulib</value>
+	</env>
+	<env name="CONDA_SHLVL">
+		<value>1</value>
+	</env>
+	<env name="LC_ALL">
+		<value/>
+	</env>
+	<env name="LS_COLORS">
+		<value>di=34:fi=0:ln=35:pi=33:so=32:bd=93;1:cd=93;1:ex=31;1:*.c=36</value>
+	</env>
+	<env name="CONDA_EXE">
+		<value>/home/r12k41024/miniconda3/bin/conda</value>
+	</env>
+	<env name="HOSTTYPE">
+		<value>x86_64-linux</value>
+	</env>
+	<env name="XILINX_VITIS">
+		<value>/tools/Xilinx/Vitis/2023.2</value>
+	</env>
+	<env name="SSH_CONNECTION">
+		<value>140.112.175.68 53956 192.168.104.12 22</value>
+	</env>
+	<env name="CHESSDIR">
+		<value>/usr/cad/synopsys/asip/cur/linux64/chessdir</value>
+	</env>
+	<env name="SG_HTML_BROWSER">
+		<value>/usr/bin/mozilla</value>
+	</env>
+	<env name="SC_HLPPATH">
+		<value>/usr/cad/synopsys/laker_oa/cur</value>
+	</env>
+	<env name="MODULES_RUN_QUARANTINE">
+		<value>LD_LIBRARY_PATH LD_PRELOAD</value>
+	</env>
+	<env name="CMD_FILE_PATH">
+		<value>/tmp/cmdfile_79441</value>
+	</env>
+	<env name="LANG">
+		<value/>
+	</env>
+	<env name="HISTCONTROL">
+		<value>ignoredups</value>
+	</env>
+	<env name="DISPLAY">
+		<value>localhost:18.0</value>
+	</env>
+	<env name="GUESTFISH_RESTORE">
+		<value>\e[0m</value>
+	</env>
+	<env name="HOSTNAME">
+		<value>dcs-cpu01.dcs.lab</value>
+	</env>
+	<env name="OLDPWD">
+		<value>/home/r12k41024/.claude</value>
+	</env>
+	<env name="EDITOR">
+		<value>/usr/bin/vim</value>
+	</env>
+	<env name="SPG_CMD_PARSE_TO_GET_SCREEN_OUT_SETTING">
+		<value>no</value>
+	</env>
+	<env name="GUESTFISH_INIT">
+		<value>\e[1;34m</value>
+	</env>
+	<env name="SNPSLMD_LICENSE_FILE">
+		<value>26585@lshc</value>
+	</env>
+	<env name="SPYGLASS_PLATFORM">
+		<value>Linux4</value>
+	</env>
+	<env name="CONDA_PREFIX">
+		<value>/home/r12k41024/miniconda3</value>
+	</env>
+	<env name="Laker_TCL_ToolBox">
+		<value>1</value>
+	</env>
+	<env name="SPYGLASS_IPC_SERVER_APP_PID">
+		<value>79661</value>
+	</env>
+	<env name="CHESSROOT">
+		<value>/usr/cad/synopsys/asip/cur</value>
+	</env>
+	<env name="CDS_Netlisting_Mode">
+		<value>Analog</value>
+	</env>
+	<env name="VENDOR">
+		<value>unknown</value>
+	</env>
+	<env name="MACHTYPE">
+		<value>x86_64</value>
+	</env>
+	<env name="SPYGLASS_ENABLE_SYS_IPC_SERVER">
+		<value>yes</value>
+	</env>
+	<env name="MODULES_USE_COMPAT_VERSION">
+		<value>0</value>
+	</env>
+	<env name="SAVE_CATALOG">
+		<value>PATH</value>
+	</env>
+	<env name="S_COLORS">
+		<value>auto</value>
+	</env>
+	<env name="XILINX_VIVADO">
+		<value>/tools/Xilinx/Vivado/2023.2</value>
+	</env>
+	<env name="_CE_M">
+		<value/>
+	</env>
+	<env name="which_declare">
+		<value>declare -f</value>
+	</env>
+	<env name="OSTYPE">
+		<value>linux</value>
+	</env>
+	<env name="XDG_SESSION_ID">
+		<value>9444</value>
+	</env>
+	<env name="SKIP_PLATFORM_CHECK">
+		<value>1</value>
+	</env>
+	<env name="MODULES_CMD">
+		<value>/usr/share/Modules/libexec/modulecmd.tcl</value>
+	</env>
+	<env name="SPYGLASS_DW_PATH">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/dw_support</value>
+	</env>
+	<env name="USER">
+		<value>r12k41024</value>
+	</env>
+	<env name="GUESTFISH_PS1">
+		<value>\[\e[1;32m\]&gt;&lt;fs&gt;\[\e[0;31m\] </value>
+	</env>
+	<env name="SPYGLASS_TCL_SHELL">
+		<value>ok</value>
+	</env>
+	<env name="SELINUX_ROLE_REQUESTED">
+		<value/>
+	</env>
+	<env name="GROUP">
+		<value>dcslab</value>
+	</env>
+	<env name="PWD">
+		<value>/home/r12k41024/Research/00_TB/SoftMax</value>
+	</env>
+	<env name="XILINX_HLS">
+		<value>/tools/Xilinx/Vitis_HLS/2023.2</value>
+	</env>
+	<env name="SSH_ASKPASS">
+		<value>/usr/libexec/openssh/gnome-ssh-askpass</value>
+	</env>
+	<env name="HOME">
+		<value>/home/r12k41024</value>
+	</env>
+	<env name="Laker_TCL_L3">
+		<value>1</value>
+	</env>
+	<env name="CONDA_PYTHON_EXE">
+		<value>/home/r12k41024/miniconda3/bin/python</value>
+	</env>
+	<env name="SPYGLASS_CHECKER_PID_FILE_VAR">
+		<value>/tmp/.SPYGLASS_CHECKER_PID_FILE@@79441794</value>
+	</env>
+	<env name="HOST">
+		<value>dcs-cpu01.dcs.lab</value>
+	</env>
+	<env name="SSH_CLIENT">
+		<value>140.112.175.68 53956 22</value>
+	</env>
+	<env name="MGC_LOCATION_MAP">
+		<value>NO_MAP</value>
+	</env>
+	<env name="TCL_LIBRARY">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-tcl/lib/tcl</value>
+	</env>
+	<env name="SELINUX_LEVEL_REQUESTED">
+		<value/>
+	</env>
+	<env name="VCS_CC">
+		<value>gcc</value>
+	</env>
+	<env name="KRB5CCNAME">
+		<value>KCM:</value>
+	</env>
+	<env name="MGC_HOME">
+		<value>/usr/cad/mentor/calibre/cur</value>
+	</env>
+	<env name="XDG_DATA_DIRS">
+		<value>/home/r12k41024/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share</value>
+	</env>
+	<env name="SHLIB_PATH">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/oa/Linux4::://usr/cad/cadence/SSV/SSV_20.10.000/tools/lib/64bit:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/oa/Linux4:/lib64:/usr/cad/cadence/IC/IC_23.10.140/tools/lib:/usr/cad/cadence/IC/IC_23.10.140/tools/lib/64bit:/usr/cad/cadence/IC/IC_23.10.140/tools/lib64:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/lib:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/lib/64bit:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/lib64:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/lib:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/lib/64bit:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/lib64:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/lib:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/lib/64bit:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/lib64:/usr/cad/cadence/SSV/SSV_20.10.000/tools/lib:/usr/cad/cadence/SSV/SSV_20.10.000/tools/lib64:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/lib:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/lib/64bit:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/lib64:/usr/cad/synopsys/verdi/cur/etc/lib/libstdc++/LINUX64/:/usr/cad/synopsys/verdi/cur/share/PLI/IUS/LINUX64/:/usr/cad/synopsys/verdi/cur/share/PLI/VCS/LINUX64:/usr/cad/synopsys/verdi/cur/share/PLI/VCS/linux64:/usr/lib64:/usr/local/lib:/usr/local/lib64::/usr/lib:/lib</value>
+	</env>
+	<env name="_CE_CONDA">
+		<value/>
+	</env>
+	<env name="CDSHOME">
+		<value>/usr/cad/cadence/IC/IC_23.10.140</value>
+	</env>
+	<env name="SPYGLASS_USE_SNPSMEM">
+		<value>yes</value>
+	</env>
+	<env name="MGC_TMPDIR">
+		<value>/tmp</value>
+	</env>
+	<env name="TMPDIR">
+		<value/>
+	</env>
+	<env name="LOADEDMODULES">
+		<value/>
+	</env>
+	<env name="SPG_RANDOM">
+		<value>79259</value>
+	</env>
+	<env name="CONDA_PROMPT_MODIFIER">
+		<value>(base) </value>
+	</env>
+	<env name="SSH_TTY">
+		<value>/dev/pts/14</value>
+	</env>
+	<env name="SG_SPYGLASS_DW_PATH">
+		<value>1</value>
+	</env>
+	<env name="VC_STATIC_HOME">
+		<value>/usr/cad/synopsys/vc_formal/cur/</value>
+	</env>
+	<env name="MAIL">
+		<value>/var/spool/mail/r12k41024</value>
+	</env>
+	<env name="SYNOPSYS">
+		<value>/usr/cad/synopsys/icc/cur</value>
+	</env>
+	<env name="REMOTEHOST">
+		<value>140.112.175.68</value>
+	</env>
+	<env name="TERM">
+		<value>xterm</value>
+	</env>
+	<env name="SHELL">
+		<value>/bin/bash</value>
+	</env>
+	<env name="SPYGLASS_TMPDIR">
+		<value>/tmp</value>
+	</env>
+	<env name="LM_LICENSE_FILE">
+		<value>1717@lstn:1717@lstc:1717@lshc:26585@lstn:26585@lstc:26585@lshc:5280@lstn:5280@lstc:5280@lshc:</value>
+	</env>
+	<env name="XLOCALEDIR">
+		<value>/usr/cad/synopsys/icc2/cur/etc/locale</value>
+	</env>
+	<env name="SELINUX_USE_CURRENT_RANGE">
+		<value/>
+	</env>
+	<env name="VERDI_HOME">
+		<value>/usr/cad/synopsys/verdi/cur</value>
+	</env>
+	<env name="SHLVL">
+		<value>6</value>
+	</env>
+	<env name="SPYGLASS_LD_PRELOAD">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/libreplacemalloc.so</value>
+	</env>
+	<env name="MANPATH">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/starc/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/power_est/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/morelint/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/lowpower/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/lint/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/latch/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/erc/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/dft/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/constraints/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/clock/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/policies/auto-verify/sgtcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/lib/multi-tcl/man:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/help_doc/man:/usr/share/man::/usr/cad/synopsys/synthesis/cur/doc/syn/man</value>
+	</env>
+	<env name="SPYGLASS_IPC_SERVER_APP_INFO">
+		<value>/tmp/.SPYGLASS_IPC_SERVER_APP_INFO@@794</value>
+	</env>
+	<env name="SG_CONSOLE_SE">
+		<value>1</value>
+	</env>
+	<env name="GDK_BACKEND">
+		<value>x11</value>
+	</env>
+	<env name="MODULEPATH">
+		<value>/etc/scl/modulefiles:/etc/scl/modulefiles:/usr/share/Modules/modulefiles:/etc/modulefiles:/usr/share/modulefiles</value>
+	</env>
+	<env name="SPG_INTRNL_INVCN">
+		<value>1</value>
+	</env>
+	<env name="PRIMETIME">
+		<value>/usr/cad/synopsys/primetime/cur</value>
+	</env>
+	<env name="LOGNAME">
+		<value>r12k41024</value>
+	</env>
+	<env name="DBUS_SESSION_BUS_ADDRESS">
+		<value>unix:abstract=/tmp/dbus-HGg0VBia4f,guid=dc674e90be5a61f1bdab065a6a018bc0</value>
+	</env>
+	<env name="XDG_RUNTIME_DIR">
+		<value>/run/user/2003</value>
+	</env>
+	<env name="MODULEPATH_modshare">
+		<value>/usr/share/Modules/modulefiles:2:/etc/modulefiles:2:/usr/share/modulefiles:2</value>
+	</env>
+	<env name="CHECKERSDIR">
+		<value>/usr/cad/synopsys/asip/cur/linux64/chessdir/checkersdir</value>
+	</env>
+	<env name="PATH">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/../dotty/scripts:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/../dotty/bin/Linux4:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/obj:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/bin::/usr/local/bin:/usr/bin:/bin:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/obj:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/bin::/usr/local/bin:/usr/bin:/bin:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/obj:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/bin::/usr/local/bin:/usr/bin:/bin:/tools/Xilinx/Vitis_HLS/2023.2/bin:/tools/Xilinx/Vivado/2023.2/bin:/tools/Xilinx/Model_Composer/2023.2/bin:/tools/Xilinx/Vitis/2023.2/bin:/tools/Xilinx/Vitis/2023.2/gnu/microblaze/lin/bin:/tools/Xilinx/Vitis/2023.2/gnu/microblaze/linux_toolchain/lin64_le/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch32/lin/gcc-arm-linux-gnueabi/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch64/lin/aarch64-linux/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch64/lin/aarch64-none/bin:/tools/Xilinx/Vitis/2023.2/gnu/armr5/lin/gcc-arm-none-eabi/bin:/tools/Xilinx/Vitis/2023.2/tps/lnx64/cmake-3.3.2/bin:/tools/Xilinx/Vitis/2023.2/aietools/bin:/tools/Xilinx/Vitis/2023.2/gnu/riscv/lin/riscv64-unknown-elf/bin:/tools/Xilinx/DocNav:/usr/cad/mentor/calibre/cur/bin:/usr/cad/synopsys/asip/cur/linux64/bin/LNa64bin:/usr/cad/synopsys/asip/cur/linux64/bin/LNa64bin/llvm/bin:/usr/cad/synopsys/asip/cur/linux64/bin:/usr/cad/synopsys/laker_oa/cur/bin:/usr/cad/synopsys/laker/cur/bin:/usr/cad/synopsys/spyglass/cur/SPYGLASS_HOME/bin:/usr/cad/synopsys/star-rcxt/cur/amd64_starrc/bin:/usr/cad/synopsys/icc2/cur/bin:/usr/cad/synopsys/icc/cur/amd64/syn/bin:/usr/bin/X11:/usr/cad/synopsys/primetime/cur/amd64/syn/bin:/usr/cad/synopsys/vc_formal/cur/bin:/usr/cad/synopsys/vcs/cur/bin:/usr/cad/synopsys/vcs/cur/linux/bin:/usr/cad/synopsys/vcs/cur/linux/util:/usr/cad/synopsys/vcs/cur/linux/flexlm:/usr/cad/synopsys/verdi/cur/bin:/usr/cad/synopsys/verdi/cur/nLint/bin:/usr/bin/X11:/usr/cad/synopsys/coreConsultant/cur/bin:/usr/cad/synopsys/synthesis/cur/amd64/syn/bin:/usr/cad/synopsys/lc/cur/bin:/usr/cad/cadence/SSV/SSV_20.10.000/tools/bin/64bit:/usr/cad/cadence/SSV/SSV_20.10.000/tools/bin:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/bin/64bit:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/bin:/usr/cad/cadence/JASPER/jasper_2021.03/bin:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/bin/64bit:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/bin:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/bin/64bit:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/bin:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/bin/64bit:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/bin:/usr/cad/cadence/IC/IC_23.10.140/tools/bin:/usr/cad/cadence/IC/IC_23.10.140/tools/dracula/bin:/usr/cad/cadence/IC/IC_23.10.140/tools/dfII/bin:/usr/cad/cadence/IC/IC_23.10.140/tools/bin/64bit:/usr/cad/cadence/IC/IC_23.10.140/tools/dracula/bin/64bit:/usr/cad/cadence/IC/IC_23.10.140/tools/dfII/bin/64bit:/home/processor_toolchain/riscv32i/bin:/home/processor_toolchain/riscv32ic/bin:/home/processor_toolchain/gcc-arm-none-eabi/bin:/home/r12k41024/.npm-global/bin:/home/r12k41024/.npm-global/bin:/tools/Xilinx/Vitis_HLS/2023.2/bin:/tools/Xilinx/Vivado/2023.2/bin:/tools/Xilinx/Model_Composer/2023.2/bin:/tools/Xilinx/Vitis/2023.2/bin:/tools/Xilinx/Vitis/2023.2/gnu/microblaze/lin/bin:/tools/Xilinx/Vitis/2023.2/gnu/microblaze/linux_toolchain/lin64_le/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch32/lin/gcc-arm-linux-gnueabi/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch64/lin/aarch64-linux/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch64/lin/aarch64-none/bin:/tools/Xilinx/Vitis/2023.2/gnu/armr5/lin/gcc-arm-none-eabi/bin:/tools/Xilinx/Vitis/2023.2/tps/lnx64/cmake-3.3.2/bin:/tools/Xilinx/Vitis/2023.2/aietools/bin:/tools/Xilinx/Vitis/2023.2/gnu/riscv/lin/riscv64-unknown-elf/bin:/tools/Xilinx/DocNav:/home/r12k41024/miniconda3/bin:/home/r12k41024/miniconda3/condabin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/r12k41024/.local/bin:/home/r12k41024/bin</value>
+	</env>
+	<env name="VCS_HOME">
+		<value>/usr/cad/synopsys/vcs/cur</value>
+	</env>
+	<env name="GUESTFISH_OUTPUT">
+		<value>\e[0m</value>
+	</env>
+	<env name="DEBUGINFOD_URLS">
+		<value>https://debuginfod.centos.org/ </value>
+	</env>
+	<env name="MODULESHOME">
+		<value>/usr/share/Modules</value>
+	</env>
+	<env name="CONDA_DEFAULT_ENV">
+		<value>base</value>
+	</env>
+	<env name="SPYGLASS_LICENSE_QUEUING_INTERVAL">
+		<value>24000 10</value>
+	</env>
+	<env name="SAVE_PATH">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/obj:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/bin::/usr/local/bin:/usr/bin:/bin:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/obj:/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/bin::/usr/local/bin:/usr/bin:/bin:/tools/Xilinx/Vitis_HLS/2023.2/bin:/tools/Xilinx/Vivado/2023.2/bin:/tools/Xilinx/Model_Composer/2023.2/bin:/tools/Xilinx/Vitis/2023.2/bin:/tools/Xilinx/Vitis/2023.2/gnu/microblaze/lin/bin:/tools/Xilinx/Vitis/2023.2/gnu/microblaze/linux_toolchain/lin64_le/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch32/lin/gcc-arm-linux-gnueabi/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch64/lin/aarch64-linux/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch64/lin/aarch64-none/bin:/tools/Xilinx/Vitis/2023.2/gnu/armr5/lin/gcc-arm-none-eabi/bin:/tools/Xilinx/Vitis/2023.2/tps/lnx64/cmake-3.3.2/bin:/tools/Xilinx/Vitis/2023.2/aietools/bin:/tools/Xilinx/Vitis/2023.2/gnu/riscv/lin/riscv64-unknown-elf/bin:/tools/Xilinx/DocNav:/usr/cad/mentor/calibre/cur/bin:/usr/cad/synopsys/asip/cur/linux64/bin/LNa64bin:/usr/cad/synopsys/asip/cur/linux64/bin/LNa64bin/llvm/bin:/usr/cad/synopsys/asip/cur/linux64/bin:/usr/cad/synopsys/laker_oa/cur/bin:/usr/cad/synopsys/laker/cur/bin:/usr/cad/synopsys/spyglass/cur/SPYGLASS_HOME/bin:/usr/cad/synopsys/star-rcxt/cur/amd64_starrc/bin:/usr/cad/synopsys/icc2/cur/bin:/usr/cad/synopsys/icc/cur/amd64/syn/bin:/usr/bin/X11:/usr/cad/synopsys/primetime/cur/amd64/syn/bin:/usr/cad/synopsys/vc_formal/cur/bin:/usr/cad/synopsys/vcs/cur/bin:/usr/cad/synopsys/vcs/cur/linux/bin:/usr/cad/synopsys/vcs/cur/linux/util:/usr/cad/synopsys/vcs/cur/linux/flexlm:/usr/cad/synopsys/verdi/cur/bin:/usr/cad/synopsys/verdi/cur/nLint/bin:/usr/bin/X11:/usr/cad/synopsys/coreConsultant/cur/bin:/usr/cad/synopsys/synthesis/cur/amd64/syn/bin:/usr/cad/synopsys/lc/cur/bin:/usr/cad/cadence/SSV/SSV_20.10.000/tools/bin/64bit:/usr/cad/cadence/SSV/SSV_20.10.000/tools/bin:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/bin/64bit:/usr/cad/cadence/QUANTUS/QUANTUS_20.11.000/tools/bin:/usr/cad/cadence/JASPER/jasper_2021.03/bin:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/bin/64bit:/usr/cad/cadence/INNOVUS/INNOVUS_20.10.000/tools/bin:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/bin/64bit:/usr/cad/cadence/INCISIV/INCISIVE_15.20.084/tools/bin:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/bin/64bit:/usr/cad/cadence/XCELIUM/XCELIUM_20.09.007/tools/bin:/usr/cad/cadence/IC/IC_23.10.140/tools/bin:/usr/cad/cadence/IC/IC_23.10.140/tools/dracula/bin:/usr/cad/cadence/IC/IC_23.10.140/tools/dfII/bin:/usr/cad/cadence/IC/IC_23.10.140/tools/bin/64bit:/usr/cad/cadence/IC/IC_23.10.140/tools/dracula/bin/64bit:/usr/cad/cadence/IC/IC_23.10.140/tools/dfII/bin/64bit:/home/processor_toolchain/riscv32i/bin:/home/processor_toolchain/riscv32ic/bin:/home/processor_toolchain/gcc-arm-none-eabi/bin:/home/r12k41024/.npm-global/bin:/home/r12k41024/.npm-global/bin:/tools/Xilinx/Vitis_HLS/2023.2/bin:/tools/Xilinx/Vivado/2023.2/bin:/tools/Xilinx/Model_Composer/2023.2/bin:/tools/Xilinx/Vitis/2023.2/bin:/tools/Xilinx/Vitis/2023.2/gnu/microblaze/lin/bin:/tools/Xilinx/Vitis/2023.2/gnu/microblaze/linux_toolchain/lin64_le/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch32/lin/gcc-arm-linux-gnueabi/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch32/lin/gcc-arm-none-eabi/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch64/lin/aarch64-linux/bin:/tools/Xilinx/Vitis/2023.2/gnu/aarch64/lin/aarch64-none/bin:/tools/Xilinx/Vitis/2023.2/gnu/armr5/lin/gcc-arm-none-eabi/bin:/tools/Xilinx/Vitis/2023.2/tps/lnx64/cmake-3.3.2/bin:/tools/Xilinx/Vitis/2023.2/aietools/bin:/tools/Xilinx/Vitis/2023.2/gnu/riscv/lin/riscv64-unknown-elf/bin:/tools/Xilinx/DocNav:/home/r12k41024/miniconda3/bin:/home/r12k41024/miniconda3/condabin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/r12k41024/.local/bin:/home/r12k41024/bin</value>
+	</env>
+	<env name="HISTSIZE">
+		<value>1000</value>
+	</env>
+	<env name="LD_PRELOAD">
+		<value/>
+	</env>
+	<env name="SYNTHESIS">
+		<value>/usr/cad/synopsys/synthesis/cur</value>
+	</env>
+	<env name="SPYGLASS_HOME">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME</value>
+	</env>
+	<env name="LESSOPEN">
+		<value>||/usr/bin/lesspipe.sh %s</value>
+	</env>
+	<env name="SYN_MAN_DIR">
+		<value>/usr/cad/synopsys/synthesis/cur/doc/syn/man</value>
+	</env>
+	<env name="BASH_FUNC_which%%">
+		<value>() {  ( alias;
+ eval ${which_declare} ) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@
+}</value>
+	</env>
+	<env name="BASH_FUNC_module%%">
+		<value>() {  _module_raw &quot;$@&quot; 2&gt;&amp;1
+}</value>
+	</env>
+	<env name="BASH_FUNC__module_raw%%">
+		<value>() {  unset _mlshdbg;
+ if [ &quot;${MODULES_SILENT_SHELL_DEBUG:-0}&quot; = &apos;1&apos; ]; then
+ case &quot;$-&quot; in 
+ *v*x*)
+ set +vx;
+ _mlshdbg=&apos;vx&apos;
+ ;;
+ *v*)
+ set +v;
+ _mlshdbg=&apos;v&apos;
+ ;;
+ *x*)
+ set +x;
+ _mlshdbg=&apos;x&apos;
+ ;;
+ *)
+ _mlshdbg=&apos;&apos;
+ ;;
+ esac;
+ fi;
+ unset _mlre _mlIFS;
+ if [ -n &quot;${IFS+x}&quot; ]; then
+ _mlIFS=$IFS;
+ fi;
+ IFS=&apos; &apos;;
+ for _mlv in ${MODULES_RUN_QUARANTINE:-};
+ do
+ if [ &quot;${_mlv}&quot; = &quot;${_mlv##*[!A-Za-z0-9_]}&quot; -a &quot;${_mlv}&quot; = &quot;${_mlv#[0-9]}&quot; ]; then
+ if [ -n &quot;`eval &apos;echo ${&apos;$_mlv&apos;+x}&apos;`&quot; ]; then
+ _mlre=&quot;${_mlre:-}${_mlv}_modquar=&apos;`eval &apos;echo ${&apos;$_mlv&apos;}&apos;`&apos; &quot;;
+ fi;
+ _mlrv=&quot;MODULES_RUNENV_${_mlv}&quot;;
+ _mlre=&quot;${_mlre:-}${_mlv}=&apos;`eval &apos;echo ${&apos;$_mlrv&apos;:-}&apos;`&apos; &quot;;
+ fi;
+ done;
+ if [ -n &quot;${_mlre:-}&quot; ]; then
+ eval `eval ${_mlre} /usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl bash &apos;&quot;$@&quot;&apos;`;
+ else
+ eval `/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl bash &quot;$@&quot;`;
+ fi;
+ _mlstatus=$?;
+ if [ -n &quot;${_mlIFS+x}&quot; ]; then
+ IFS=$_mlIFS;
+ else
+ unset IFS;
+ fi;
+ unset _mlre _mlv _mlrv _mlIFS;
+ if [ -n &quot;${_mlshdbg:-}&quot; ]; then
+ set -$_mlshdbg;
+ fi;
+ unset _mlshdbg;
+ return $_mlstatus
+}</value>
+	</env>
+	<env name="BASH_FUNC_switchml%%">
+		<value>() {  typeset swfound=1;
+ if [ &quot;${MODULES_USE_COMPAT_VERSION:-0}&quot; = &apos;1&apos; ]; then
+ typeset swname=&apos;main&apos;;
+ if [ -e /usr/share/Modules/libexec/modulecmd.tcl ]; then
+ typeset swfound=0;
+ unset MODULES_USE_COMPAT_VERSION;
+ fi;
+ else
+ typeset swname=&apos;compatibility&apos;;
+ if [ -e /usr/share/Modules/libexec/modulecmd-compat ]; then
+ typeset swfound=0;
+ MODULES_USE_COMPAT_VERSION=1;
+ export MODULES_USE_COMPAT_VERSION;
+ fi;
+ fi;
+ if [ $swfound -eq 0 ]; then
+ echo &quot;Switching to Modules $swname version&quot;;
+ source /usr/share/Modules/init/bash;
+ else
+ echo &quot;Cannot switch to Modules $swname version, command not found&quot;;
+ return 1;
+ fi
+}</value>
+	</env>
+	<env name="BASH_FUNC_scl%%">
+		<value>() {  if [ &quot;$1&quot; = &quot;load&quot; -o &quot;$1&quot; = &quot;unload&quot; ]; then
+ eval &quot;module $@&quot;;
+ else
+ /usr/bin/scl &quot;$@&quot;;
+ fi
+}</value>
+	</env>
+	<env name="BASH_FUNC_ml%%">
+		<value>() {  module ml &quot;$@&quot;
+}</value>
+	</env>
+	<env name="_">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/obj/check.Linux4</value>
+	</env>
+	<env name="CONCORDE_HOME">
+		<value>DUMMY_CONCORDE_HOME</value>
+	</env>
+	<env name="FLEXLM_BORROWFILE">
+		<value>/home/r12k41024/.dcs-cpu01.dcs.lab-borrow.txt</value>
+	</env>
+	<env name="METHODOLOGY_HOME">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/GuideWare/latest/block/rtl_handoff</value>
+	</env>
+</ENVVAR>
+<ENVFILE>./spyglass-1/lint/lint_functional_rtl//.sg.env</ENVFILE>
+<SPG_VERSION>SpyGlass_vW-2024.09-SP2</SPG_VERSION>
+<MACHINE name="dcs-cpu01.dcs.lab" version="#1 SMP Tue Mar 3 16:05:15 UTC 2026"/>
+<Options>
+	<Opt name="--template_info">
+		<value>lint/lint_functional_rtl</value>
+	</Opt>
+	<Opt name="-lib">
+		<value>accellera_vlog=&gt;/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/ovl/precompile/Linux4/accellera_verilog</value>
+		<value>accellera=&gt;/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/ovl/precompile/Linux4/accellera_vhdl</value>
+		<value>WORK=&gt;./spyglass-1/WORK</value>
+		<value>accellera_vlog=&gt;/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/ovl/precompile/Linux4/accellera_verilog</value>
+		<value>accellera=&gt;/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/ovl/precompile/Linux4/accellera_vhdl</value>
+		<value>SYNOPSYS=&gt;/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/vhdl_libs/Linux4/SYNOPSYS</value>
+	</Opt>
+	<Opt name="-m">
+		<value>SpyGlass::Compatibility::v2_7_3</value>
+		<value>SpyGlass::Compatibility::v2_7_3</value>
+		<value>SpyGlass::Compatibility::v2_7_3</value>
+	</Opt>
+	<Opt name="-policy">
+		<value>auto-verify</value>
+	</Opt>
+	<Opt name="-report">
+		<value>moresimple</value>
+		<value>runsummary</value>
+	</Opt>
+	<Opt name="-rules">
+		<value>Av_Info_Case_Analysis</value>
+		<value>Av_width_mismatch_assign</value>
+		<value>Av_width_mismatch_case</value>
+		<value>Av_width_mismatch_port</value>
+		<value>Av_width_mismatch_function</value>
+		<value>Av_signed_unsigned_mismatch</value>
+		<value>Av_width_mismatch_expr</value>
+		<value>Av_case_default_missing</value>
+		<value>Av_width_mismatch_expr03</value>
+		<value>Av_width_mismatch_expr02</value>
+		<value>Av_dontcare_mismatch</value>
+		<value>Av_case_default_redundant</value>
+	</Opt>
+	<Opt name="-sgdc">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/auxi/policy_data/auto-verify/verif.sgdc</value>
+	</Opt>
+	<Opt name="-template">
+		<value>lint/lint_functional_rtl</value>
+	</Opt>
+	<Opt name="-verilog_files">
+		<value>../../01_RTL/Define/Param_def.sv</value>
+		<value>../../01_RTL/engine/Softmax/Softmax_v2.sv</value>
+	</Opt>
+	<Opt name="--stime">
+		<value>09:39:54 PM on May 11 2026</value>
+	</Opt>
+	<Opt name="-blackboxdir">
+		<value>inout</value>
+	</Opt>
+	<Opt name="-dbdir">
+		<value>./spyglass-1/.SG_SaveRestoreDB</value>
+	</Opt>
+	<Opt name="-debuglevel">
+		<value>0</value>
+	</Opt>
+	<Opt name="-enable_save_restore_builtin">
+		<value>true</value>
+	</Opt>
+	<Opt name="-gateslibtype">
+		<value>0</value>
+	</Opt>
+	<Opt name="-logfile">
+		<value>./spyglass-1/lint/lint_functional_rtl/spyglass.log</value>
+	</Opt>
+	<Opt name="-mthresh">
+		<value>4096</value>
+	</Opt>
+	<Opt name="-projectwdir">
+		<value>./spyglass-1</value>
+	</Opt>
+	<Opt name="-savedb">
+		<value>./spyglass-1/.SG_SaveRestoreDB</value>
+	</Opt>
+	<Opt name="-sortmethod">
+		<value>du</value>
+	</Opt>
+	<Opt name="-templatedir">
+		<value>/home/cad/synopsys/spyglass/2024.09-sp2/SPYGLASS_HOME/GuideWare/latest/block/rtl_handoff</value>
+	</Opt>
+	<Opt name="-vdbfile">
+		<value>./spyglass-1/lint/lint_functional_rtl/spyglass.vdb</value>
+	</Opt>
+	<Opt name="-wdir">
+		<value>./spyglass-1/lint/lint_functional_rtl</value>
+	</Opt>
+	<Opt name="-work">
+		<value>WORK</value>
+	</Opt>
+	<Opt name="-64bit">
+		<value>yes</value>
+	</Opt>
+	<Opt name="--end_of_user_arg">
+		<value>yes</value>
+	</Opt>
+	<Opt name="-batch">
+		<value>yes</value>
+	</Opt>
+	<Opt name="-enable_save_restore">
+		<value>yes</value>
+	</Opt>
+	<Opt name="-inferblackbox">
+		<value>yes</value>
+	</Opt>
+	<Opt name="-nl">
+		<value>yes</value>
+	</Opt>
+	<Opt name="-sdc2sgdc">
+		<value>yes</value>
+	</Opt>
+	<Opt name="-mixed">
+		<value>yes</value>
+	</Opt>
+</Options>
+<TOP_MODULE/>
+<GOAL_NAME>lint/lint_functional_rtl</GOAL_NAME>
+<FILES/>
+<SPG_LOG>./spyglass-1/lint/lint_functional_rtl/spyglass.log</SPG_LOG>
+<CMD_STRING> -batch -project spyglass-1.prj -goal lint/lint_functional_rtl -64bit</CMD_STRING>
+<BlackBox/>
+<REPORTS>
+	<Report name="moresimple">
+		<value>./spyglass-1/lint/lint_functional_rtl/spyglass_reports/moresimple.rpt</value>
+	</Report>
+	<Report/>
+	<Report name="no_msg_reporting_rules">
+		<value>./spyglass-1/lint/lint_functional_rtl/spyglass_reports/no_msg_reporting_rules.rpt</value>
+	</Report>
+	<Report name="ADV-LINT">
+		<value>./spyglass-1/lint/lint_functional_rtl/spyglass_reports/ADV-LINT.rpt</value>
+	</Report>
+	<Report name="auto_verify">
+		<value>./spyglass-1/lint/lint_functional_rtl/spyglass_reports/auto_verify.rpt</value>
+	</Report>
+</REPORTS>
+<PEAK_MEMORY>3166728</PEAK_MEMORY>
+<Parameters>
+	<Param name="-abstract">
+		<DefaultValue>0</DefaultValue>
+		<Value>0</Value>
+	</Param>
+	<Param name="-allow_clock_on_output_port">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-atime">
+		<DefaultValue>UNDEFINED</DefaultValue>
+		<Value>UNDEFINED</Value>
+	</Param>
+	<Param name="-audit">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-av_flopcount">
+		<DefaultValue>-1</DefaultValue>
+		<Value>-1</Value>
+	</Param>
+	<Param name="-av_seqdepth">
+		<DefaultValue>-1</DefaultValue>
+		<Value>-1</Value>
+	</Param>
+	<Param name="-av_tclfile">
+		<DefaultValue>UNDEFINED</DefaultValue>
+		<Value>UNDEFINED</Value>
+	</Param>
+	<Param name="-check_case_type">
+		<DefaultValue>all</DefaultValue>
+		<Value>all</Value>
+	</Param>
+	<Param name="-check_clock_group_violations">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-check_concat_max_width">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-check_counter_assignment">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-check_pad_concat">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-check_sequential">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-check_sign_extend">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-check_static_value">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-check_unsign_overflow">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-chk_sign_unsign_also">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-control_sig_detection_nf">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-datapath_or_control">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-dccompat">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-debug_proc">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-disable_rtl_deadcode">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-force_genclk_for_txv">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-fv_parallelfile">
+		<DefaultValue>UNDEFINED</DefaultValue>
+		<Value>UNDEFINED</Value>
+	</Param>
+	<Param name="-handle_shift_op">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-ieffort">
+		<DefaultValue>0</DefaultValue>
+		<Value>0</Value>
+	</Param>
+	<Param name="-ignore_bus_clocks">
+		<DefaultValue>1024</DefaultValue>
+		<Value>1024</Value>
+	</Param>
+	<Param name="-ignore_latches">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-ignore_padding">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-ignoreforindex">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-library_gen_clock_naming">
+		<DefaultValue>yes</DefaultValue>
+		<Value>yes</Value>
+	</Param>
+	<Param name="-modulelist">
+		<DefaultValue>UNDEFINED</DefaultValue>
+		<Value>UNDEFINED</Value>
+	</Param>
+	<Param name="-netlist_clock_polarity">
+		<DefaultValue>yes</DefaultValue>
+		<Value>yes</Value>
+	</Param>
+	<Param name="-nocheckoverflow">
+		<DefaultValue>no</DefaultValue>
+		<Value>yes</Value>
+	</Param>
+	<Param name="-passfail">
+		<DefaultValue>both</DefaultValue>
+		<Value>both</Value>
+	</Param>
+	<Param name="-populate_comboelements_for_minmax_in_fromto">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-post_clock_group_population">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-preserve_path">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-propfile">
+		<DefaultValue>UNDEFINED</DefaultValue>
+		<Value>UNDEFINED</Value>
+	</Param>
+	<Param name="-pt">
+		<DefaultValue>yes</DefaultValue>
+		<Value>yes</Value>
+	</Param>
+	<Param name="-report_blackbox_inst">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-reportconstassign">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-scope">
+		<DefaultValue>chip</DefaultValue>
+		<Value>chip</Value>
+	</Param>
+	<Param name="-show_all_sdc_violations">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-show_sdc_progress">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-solvemethod">
+		<DefaultValue>1</DefaultValue>
+		<Value>1</Value>
+	</Param>
+	<Param name="-strict">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-suppress_sdc_violation_in_abstract">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-tc_cache_empty_collections">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-tc_disable_caching">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-tc_disable_ignored_command_dump">
+		<DefaultValue>yes</DefaultValue>
+		<Value>yes</Value>
+	</Param>
+	<Param name="-tc_enable_sdc_393">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-tc_ignored_commands">
+		<DefaultValue>unspecified</DefaultValue>
+		<Value>unspecified</Value>
+	</Param>
+	<Param name="-tc_stop_parsing_ignored_commands">
+		<DefaultValue>yes</DefaultValue>
+		<Value>yes</Value>
+	</Param>
+	<Param name="-truncate_through">
+		<DefaultValue>yes</DefaultValue>
+		<Value>yes</Value>
+	</Param>
+	<Param name="-use_carry_bit">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-use_inferred_clocks">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-use_inferred_resets">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-use_lrm_width">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+	<Param name="-vcdfile">
+		<DefaultValue>UNDEFINED</DefaultValue>
+		<Value>UNDEFINED</Value>
+	</Param>
+	<Param name="-vcdfulltrace">
+		<DefaultValue>usernets</DefaultValue>
+		<Value>usernets</Value>
+	</Param>
+	<Param name="-vcdtime">
+		<DefaultValue>-1</DefaultValue>
+		<Value>-1</Value>
+	</Param>
+	<Param name="-verbose">
+		<DefaultValue>0</DefaultValue>
+		<Value>0</Value>
+	</Param>
+	<Param name="-write_sdc">
+		<DefaultValue>no</DefaultValue>
+		<Value>no</Value>
+	</Param>
+</Parameters>
+<RULES>
+	<Rule name="_avAddSynthNet">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_advLintReport01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_report01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_IpblockTaggedNet">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_PortRetention">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_Info_Case_Analysis">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_formallint_preReq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_case_default_missing_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_case_default_missing">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_case_default_redundant_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_case_default_redundant">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_dontcare_mismatch_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_dontcare_mismatch">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_width_expr03_mismatch_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_width_mismatch_expr03">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_width_expr02_mismatch_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_width_mismatch_expr02">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_width05_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_width_mismatch_expr">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_signunsign01_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_signed_unsigned_mismatch">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_width04_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_width_mismatch_function">
+		<RULE_PARAM name="-nocheckoverflow" value="yes"/>
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_width03_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_width_mismatch_port">
+		<RULE_PARAM name="-nocheckoverflow" value="yes"/>
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_width02_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_width_mismatch_case">
+		<RULE_PARAM name="-nocheckoverflow" value="yes"/>
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_width01_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_width_mismatch_assign">
+		<RULE_PARAM name="-nocheckoverflow" value="yes"/>
+		<Time>0</Time>
+		<Memory>128</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_chk_signed_unsigned_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_staticnetnreq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_dcreq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_dcreq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="veShiftOperatorPreReq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="veOperatorPreReq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="AnalyzeABV">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_dcreq02">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_deadfilter01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_deadreq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_deadreq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_complexity_req02">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_complexity_req01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_complexity_req01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="SGDC_fsm_setup01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_fsm_contr01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_casereq03">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_casereq02">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_casereq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_svasetup01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_rstreq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_rstreq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_fsm03_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_fsmreq02">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_fsmreq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_fsmreq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="InitState">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="InitState">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_formal_anlysis_filter_prereq">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_sanity06">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_multitop01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_multitop01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_sanity02">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_sanity01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_setup_checks01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_license01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_initstate01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="SGDC_av_meta_design_hier01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="_vhAvMeta01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_init01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="Av_initseq01">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>0</Count>
+	</Rule>
+	<Rule name="STX_VE_1360">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>9</Count>
+	</Rule>
+	<Rule name="STX_VE_479">
+		<Time>0</Time>
+		<Memory>0</Memory>
+		<Count>1</Count>
+	</Rule>
+</RULES>
+<RUN_MODE>
+	<Save>1</Save>
+</RUN_MODE>
+<VIOL_SUMMARY>
+	<FATAL>10</FATAL>
+	<ERROR>0</ERROR>
+	<WARNING>0</WARNING>
+	<INFO>0</INFO>
+</VIOL_SUMMARY>
+<Exit_code>6</Exit_code>
+<Total_time>71</Total_time>

@@ -35,7 +35,70 @@ from .complexFunctions import (
 )
 
 
+# ──────────────────────────────────────────────────────────────
+# fp16 conv-PPU numerical model (env-gated)
+# ──────────────────────────────────────────────────────────────
+# Models the RTL conv post-MAC datapath running in fp16 (saturating) instead of
+# the deploy model's fp32 single-quantize. Per REQUEST_FP16_PPU_EVAL_2026-06-10
+# and CE_DATAPATH_DRAFT §1/§3. Segments:
+#   tree  : 32-way fp16 saturating MAC tree + 4->2 complex OACC (apply_complex)
+#   bn    : BN dealer (alpha = APoT 2^a±2^b) + fp16 beta, fp16 saturating add
+#   prelu : PReLU pow2 slope, fp16
+# The e4m3 cast is unchanged (it now rounds an fp16-precision value).
+# Unset/empty/off => fp32 deploy (bit-identical to before; zero baseline impact).
+#   BCCTN_FP16_PPU = comma list of {tree,bn,prelu,all}
+_FP16_MAX = 65504.0
+
+
+def _parse_fp16_ppu(raw):
+    raw = str(raw or "").strip().lower()
+    if not raw or raw in ("0", "off", "false", "none"):
+        return frozenset()
+    toks = {t.strip() for t in raw.replace("+", ",").split(",") if t.strip()}
+    if toks & {"all", "1", "true", "full"}:
+        return frozenset({"tree", "bn", "prelu"})
+    return frozenset(toks & {"tree", "bn", "prelu"})
+
+
+_FP16_PPU = _parse_fp16_ppu(os.environ.get("BCCTN_FP16_PPU"))
+
+
+def set_fp16_ppu(value):
+    """Override the active fp16-PPU segment set (for in-process A/B harnesses)."""
+    global _FP16_PPU
+    _FP16_PPU = value if isinstance(value, frozenset) else _parse_fp16_ppu(value)
+    return _FP16_PPU
+
+
+def get_fp16_ppu():
+    return _FP16_PPU
+
+
+def _fp16_sat(x):
+    """Round to fp16 (RNE) with ±65504 saturating-add semantics.
+
+    Plain cast turns >65504 into +inf; the RTL adder tree saturates, so we map
+    overflow back to the signed fp16 max. INT4 conv is overflow-safe (verified,
+    RTL_FIX_FP16_TREE_PRESHIFT) so this branch is a guard, not a hot path.
+    """
+    q = x.to(torch.float16).to(x.dtype)
+    overflow = torch.isinf(q) & torch.isfinite(x)
+    if overflow.any():
+        q = torch.where(overflow, torch.sign(x) * _FP16_MAX, q)
+    return q
+
+
 def apply_complex(fr, fi, input, dtype=torch.complex64):
+    if "tree" in _FP16_PPU:
+        # Four real-product streams (PEG0..3); each PEG = fp16 saturating tree.
+        # OACC combines 4->2 (re = P0-P1, im = P2+P3) in fp16 (CE_DATAPATH §2).
+        p0 = _fp16_sat(fr(input.real))
+        p1 = _fp16_sat(fi(input.imag))
+        p2 = _fp16_sat(fr(input.imag))
+        p3 = _fp16_sat(fi(input.real))
+        re = _fp16_sat(p0 - p1)
+        im = _fp16_sat(p2 + p3)
+        return re.type(dtype) + 1j * im.type(dtype)
     return (fr(input.real)-fi(input.imag)).type(dtype) \
         + 1j*(fr(input.imag)+fi(input.real)).type(dtype)
 
@@ -217,6 +280,13 @@ def _folded_bn_affine(bn, scale_mode, pow2_min_exp=-8, pow2_max_exp=8):
 def _apply_folded_bn(x, alpha, beta):
     alpha = _view_channel_param(alpha.to(device=x.device, dtype=x.dtype), x)
     beta = _view_channel_param(beta.to(device=x.device, dtype=x.dtype), x)
+    if "bn" in _FP16_PPU:
+        # Dealer: alpha is exact APoT (2^a±2^b), so fp16(x*alpha) == HW's two
+        # exact pow2 shifts summed in fp16. beta = fp16 RNE of the fused bias
+        # (WBUF image). Both adds are fp16 saturating. (request §1, CE §1)
+        xf = _fp16_sat(x)
+        prod = _fp16_sat(xf * alpha)
+        return _fp16_sat(prod + _fp16_sat(beta))
     return x * alpha + beta
 
 
@@ -231,11 +301,16 @@ class ComplexPReLU(Module):
 
     def _apply_prelu(self, x, module):
         if not self.pow2_slope:
-            return module(x)
-        slope = _pow2_quantize_scale(
-            module.weight, self.pow2_min_exp, self.pow2_max_exp
-        )
-        return F.prelu(x, slope)
+            y = module(x)
+        else:
+            slope = _pow2_quantize_scale(
+                module.weight, self.pow2_min_exp, self.pow2_max_exp
+            )
+            # pow2 slope => negative half is one exact shift (request §1).
+            y = F.prelu(x, slope)
+        if "prelu" in _FP16_PPU:
+            y = _fp16_sat(y)
+        return y
 
     def forward(self, input):
         result = self._apply_prelu(input.real, self.r_prelu) \

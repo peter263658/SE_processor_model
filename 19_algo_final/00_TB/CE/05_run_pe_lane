@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# pe_lane — mixed-precision zero-multiplier PE lane unit test
+set -e
+cd "$(dirname "$0")"
+
+# regenerate golden vectors from the real export patterns (fails if INT4
+# independent-vs-mirror disagree)
+python3 tb_pe_lane.py
+
+vcs -f pe_lane_file.f -full64 -R +v2k +notimingcheck -sverilog -timescale=1ns/10ps -debug_access+all \
+    -y /usr/cad/synopsys/synthesis/cur/dw/sim_ver +incdir+/usr/cad/synopsys/synthesis/cur/dw/sim_ver +libext+.v \
+    2>&1 | tee pe_lane_run.log
+
+# belt-and-suspenders for CI: the $fatal(1) on mismatch already exits non-zero,
+# but also require the explicit PASS banner.
+grep -q "\[TB\] ALL PASS" pe_lane_run.log
+echo "[05_run_pe_lane] PASS"

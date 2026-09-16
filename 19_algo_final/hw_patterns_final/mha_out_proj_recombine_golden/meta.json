@@ -1,0 +1,6 @@
+{
+ "beta": "MHA out_proj bias b_o[256] fp16; out_pass=fp16_add_sat(oacc_pass,b_o); SAME both passes; plain add. Net: cancels in real (a-b), doubles in imag (a+b=...+2*b_o) -- automatic.",
+ "recombine": "out_re=a-b, out_im=a+b; a=real-pass, b=imag-pass post-bias out_proj fp16",
+ "outproj_input_cast": "recombine (fp16) -> e4m3 at i_cast_k=+3 (output_proj input block-float k=-3)",
+ "output_proj_output_cast_k": -1
+}

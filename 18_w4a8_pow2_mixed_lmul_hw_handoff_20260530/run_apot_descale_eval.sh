@@ -86,6 +86,11 @@ overrides=(
   model.low_power.prelu_pow2.max_exp="$PRELU_MAX_EXP"
 )
 
+# Override to score a different acoustic condition (e.g. the directional-
+# interferer set in 22_directional_interferer) on the same clean targets.
+VCTK_TEST_DIR="${VCTK_TEST_DIR:-/raid/R12K41024/BCCTN/Dataset/noisy_testset}"
+VCTK_CLEAN_DIR="${VCTK_CLEAN_DIR:-/raid/R12K41024/BCCTN/Dataset/clean_testset}"
+
 timit_args=()
 if [ "$VCTK_ONLY" != "1" ]; then
   timit_args=( --timit_test_dir /raid/R12K41024/BCCTN/Dataset/noisy_testset_timit
@@ -94,8 +99,8 @@ fi
 
 CUDA_VISIBLE_DEVICES="$GPU_ID" conda run --no-capture-output -n bcctn python eval.py \
   --model_checkpoint "$CKPT" \
-  --vctk_test_dir /raid/R12K41024/BCCTN/Dataset/noisy_testset \
-  --vctk_clean_dir /raid/R12K41024/BCCTN/Dataset/clean_testset \
+  --vctk_test_dir "$VCTK_TEST_DIR" \
+  --vctk_clean_dir "$VCTK_CLEAN_DIR" \
   "${timit_args[@]}" \
   --output_dir "$OUT" \
   --paper_style_eval --batch_size "$BATCH_SIZE" --limit_pairs "$LIMIT" \

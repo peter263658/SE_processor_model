@@ -1,0 +1,4 @@
+{
+ "note": "QK reduction = CE adder_tree_fp16 (round every add). Other stages identical to mha_module_io/. Compare head-to-head with mha_module_io/ (fp32-sum).",
+ "qk_accumulate": "fp16_tree"
+}

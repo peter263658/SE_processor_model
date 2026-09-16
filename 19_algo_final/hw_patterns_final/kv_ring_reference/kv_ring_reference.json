@@ -1,0 +1,214 @@
+{
+ "window": {
+  "query_frame": 351,
+  "frames": [
+   320,
+   351
+  ],
+  "ring_frames": 32,
+  "ptr_at_query": 31
+ },
+ "ring_map_frame_slot_localidx": [
+  {
+   "frame": 320,
+   "write_slot": 0,
+   "local_idx": 31,
+   "read_slot_at_q351": 0
+  },
+  {
+   "frame": 321,
+   "write_slot": 1,
+   "local_idx": 30,
+   "read_slot_at_q351": 1
+  },
+  {
+   "frame": 322,
+   "write_slot": 2,
+   "local_idx": 29,
+   "read_slot_at_q351": 2
+  },
+  {
+   "frame": 323,
+   "write_slot": 3,
+   "local_idx": 28,
+   "read_slot_at_q351": 3
+  },
+  {
+   "frame": 324,
+   "write_slot": 4,
+   "local_idx": 27,
+   "read_slot_at_q351": 4
+  },
+  {
+   "frame": 325,
+   "write_slot": 5,
+   "local_idx": 26,
+   "read_slot_at_q351": 5
+  },
+  {
+   "frame": 326,
+   "write_slot": 6,
+   "local_idx": 25,
+   "read_slot_at_q351": 6
+  },
+  {
+   "frame": 327,
+   "write_slot": 7,
+   "local_idx": 24,
+   "read_slot_at_q351": 7
+  },
+  {
+   "frame": 328,
+   "write_slot": 8,
+   "local_idx": 23,
+   "read_slot_at_q351": 8
+  },
+  {
+   "frame": 329,
+   "write_slot": 9,
+   "local_idx": 22,
+   "read_slot_at_q351": 9
+  },
+  {
+   "frame": 330,
+   "write_slot": 10,
+   "local_idx": 21,
+   "read_slot_at_q351": 10
+  },
+  {
+   "frame": 331,
+   "write_slot": 11,
+   "local_idx": 20,
+   "read_slot_at_q351": 11
+  },
+  {
+   "frame": 332,
+   "write_slot": 12,
+   "local_idx": 19,
+   "read_slot_at_q351": 12
+  },
+  {
+   "frame": 333,
+   "write_slot": 13,
+   "local_idx": 18,
+   "read_slot_at_q351": 13
+  },
+  {
+   "frame": 334,
+   "write_slot": 14,
+   "local_idx": 17,
+   "read_slot_at_q351": 14
+  },
+  {
+   "frame": 335,
+   "write_slot": 15,
+   "local_idx": 16,
+   "read_slot_at_q351": 15
+  },
+  {
+   "frame": 336,
+   "write_slot": 16,
+   "local_idx": 15,
+   "read_slot_at_q351": 16
+  },
+  {
+   "frame": 337,
+   "write_slot": 17,
+   "local_idx": 14,
+   "read_slot_at_q351": 17
+  },
+  {
+   "frame": 338,
+   "write_slot": 18,
+   "local_idx": 13,
+   "read_slot_at_q351": 18
+  },
+  {
+   "frame": 339,
+   "write_slot": 19,
+   "local_idx": 12,
+   "read_slot_at_q351": 19
+  },
+  {
+   "frame": 340,
+   "write_slot": 20,
+   "local_idx": 11,
+   "read_slot_at_q351": 20
+  },
+  {
+   "frame": 341,
+   "write_slot": 21,
+   "local_idx": 10,
+   "read_slot_at_q351": 21
+  },
+  {
+   "frame": 342,
+   "write_slot": 22,
+   "local_idx": 9,
+   "read_slot_at_q351": 22
+  },
+  {
+   "frame": 343,
+   "write_slot": 23,
+   "local_idx": 8,
+   "read_slot_at_q351": 23
+  },
+  {
+   "frame": 344,
+   "write_slot": 24,
+   "local_idx": 7,
+   "read_slot_at_q351": 24
+  },
+  {
+   "frame": 345,
+   "write_slot": 25,
+   "local_idx": 6,
+   "read_slot_at_q351": 25
+  },
+  {
+   "frame": 346,
+   "write_slot": 26,
+   "local_idx": 5,
+   "read_slot_at_q351": 26
+  },
+  {
+   "frame": 347,
+   "write_slot": 27,
+   "local_idx": 4,
+   "read_slot_at_q351": 27
+  },
+  {
+   "frame": 348,
+   "write_slot": 28,
+   "local_idx": 3,
+   "read_slot_at_q351": 28
+  },
+  {
+   "frame": 349,
+   "write_slot": 29,
+   "local_idx": 2,
+   "read_slot_at_q351": 29
+  },
+  {
+   "frame": 350,
+   "write_slot": 30,
+   "local_idx": 1,
+   "read_slot_at_q351": 30
+  },
+  {
+   "frame": 351,
+   "write_slot": 31,
+   "local_idx": 0,
+   "read_slot_at_q351": 31
+  }
+ ],
+ "read_formula": "physical_slot = (ptr - local_idx) mod 32 ; local_idx 0 = newest = ptr",
+ "write": "frame f written to slot (f mod 32); ptr advances after each frame",
+ "verified": {
+  "ring_self_consistent": true,
+  "K_block[31-d]==qstar_Kwindow[d]_all_heads": true,
+  "note": "K_block_32x16 = frame/ring order (slot0=f320..slot31=f351); qstar_Kwindow_localidx = local_idx order (d0=f351..d31=f320)"
+ },
+ "dumped": "K_re/V_re head00 e4m3 ring codes (slot order); all 16 heads' fp16 K/V in mha_module_io/02_qk/",
+ "expected_QK": "mha_module_io/real_pass/02_qk/head_HH/qstar_scores_row32_localidx_postscale_* (QK at query 351 over the window, local_idx order)"
+}

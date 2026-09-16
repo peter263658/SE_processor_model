@@ -1,0 +1,50 @@
+Mode: GLAC Output Key
+============================================================
+Transaction #0:
+  Golden Output: (3.4957, -13.8789)
+--------------------
+Transaction #1:
+  Golden Output: (-1.6222, -7.5460)
+--------------------
+Transaction #2:
+  Golden Output: (4.4062, -7.6590)
+--------------------
+Transaction #3:
+  Golden Output: (-3.7202, 10.1704)
+--------------------
+Transaction #4:
+  Golden Output: (-6.2532, -6.2551)
+--------------------
+Transaction #5:
+  Golden Output: (2.3910, 17.0470)
+--------------------
+Transaction #6:
+  Golden Output: (-7.5817, 2.7958)
+--------------------
+Transaction #7:
+  Golden Output: (0.9693, -3.9240)
+--------------------
+Transaction #8:
+  Golden Output: (-2.7019, -0.1646)
+--------------------
+Transaction #9:
+  Golden Output: (11.2234, 3.4227)
+--------------------
+Transaction #10:
+  Golden Output: (6.0421, -2.6161)
+--------------------
+Transaction #11:
+  Golden Output: (13.6933, -3.7538)
+--------------------
+Transaction #12:
+  Golden Output: (-0.2296, 12.8981)
+--------------------
+Transaction #13:
+  Golden Output: (1.7686, 2.4111)
+--------------------
+Transaction #14:
+  Golden Output: (-7.6980, 0.6382)
+--------------------
+Transaction #15:
+  Golden Output: (-22.2501, -0.3875)
+--------------------

@@ -1,0 +1,24 @@
+{
+ "query_abs": 10,
+ "n_valid_keys": 11,
+ "top_k_slots_used": 4,
+ "prob_code": [
+  255,
+  16,
+  16,
+  8
+ ],
+ "local_idx": [
+  0,
+  1,
+  5,
+  2
+ ],
+ "valid_slot": [
+  1,
+  1,
+  1,
+  1
+ ],
+ "nonzero_softmax": 4
+}

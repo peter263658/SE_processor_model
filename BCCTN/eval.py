@@ -401,42 +401,43 @@ def safe_mbstoi(clean_left, clean_right, enhanced_left, enhanced_right, sr=SAMPL
 
 
 # 7. Safe PESQ calculation for binaural signals
-def safe_pesq(clean_left, clean_right, processed_left, processed_right, sr=SAMPLE_RATE):
+def safe_pesq(clean_left, clean_right, processed_left, processed_right, sr=SAMPLE_RATE, mode='wb'):
     """
     Compute PESQ for binaural signals (average of left and right channels)
-    
+
     Args:
         clean_left, clean_right: Clean reference signals
         processed_left, processed_right: Processed signals (noisy or enhanced)
         sr: Sample rate
-        
+        mode: 'wb' wideband PESQ @16kHz (P.862.2) or 'nb' narrowband PESQ @8kHz
+
     Returns:
         PESQ score or None if calculation fails
     """
     try:
         # Try to import pesq
         from pesq import pesq
-        
-        # PESQ requires 16kHz or 8kHz
-        if sr != 16000 and sr != 8000:
-            # Resample to 16kHz
-            clean_left = librosa.resample(clean_left, orig_sr=sr, target_sr=16000)
-            clean_right = librosa.resample(clean_right, orig_sr=sr, target_sr=16000)
-            processed_left = librosa.resample(processed_left, orig_sr=sr, target_sr=16000)
-            processed_right = librosa.resample(processed_right, orig_sr=sr, target_sr=16000)
-            sr = 16000
-        
+
+        # nb-PESQ runs at 8kHz, wb-PESQ at 16kHz (matches 20_pesq_finetune eval.py)
+        target_sr = 8000 if mode == 'nb' else 16000
+        if sr != target_sr:
+            clean_left = librosa.resample(clean_left, orig_sr=sr, target_sr=target_sr)
+            clean_right = librosa.resample(clean_right, orig_sr=sr, target_sr=target_sr)
+            processed_left = librosa.resample(processed_left, orig_sr=sr, target_sr=target_sr)
+            processed_right = librosa.resample(processed_right, orig_sr=sr, target_sr=target_sr)
+            sr = target_sr
+
         # Calculate PESQ for left and right channels
         try:
-            pesq_left = pesq(sr, clean_left, processed_left, 'wb')
+            pesq_left = pesq(sr, clean_left, processed_left, mode)
         except Exception as e:
-            print(f"Error calculating PESQ for left channel: {e}")
+            print(f"Error calculating PESQ ({mode}) for left channel: {e}")
             pesq_left = float('nan')
-            
+
         try:
-            pesq_right = pesq(sr, clean_right, processed_right, 'wb')
+            pesq_right = pesq(sr, clean_right, processed_right, mode)
         except Exception as e:
-            print(f"Error calculating PESQ for right channel: {e}")
+            print(f"Error calculating PESQ ({mode}) for right channel: {e}")
             pesq_right = float('nan')
         
         # Return the average PESQ if at least one channel succeeded
@@ -452,6 +453,40 @@ def safe_pesq(clean_left, clean_right, processed_left, processed_right, sr=SAMPL
     except Exception as e:
         print(f"Error in PESQ calculation: {e}")
         return None
+
+
+# 7b. Safe single-channel STOI (pystoi) for binaural signals
+def safe_stoi(clean_left, clean_right, processed_left, processed_right, sr=SAMPLE_RATE, extended=False):
+    """
+    Compute classic single-channel STOI (pystoi) per ear and return the L/R mean.
+
+    This is the plain monaural STOI that VoiceBank+DEMAND / CHiME SE papers report,
+    as opposed to the binaural MBSTOI above. Mirrors 20_pesq_finetune eval.py.
+    """
+    try:
+        from pystoi import stoi
+    except ImportError:
+        print("STOI calculation skipped: pystoi package not installed. Install with 'pip install pystoi'.")
+        return None
+
+    def _one_ear(clean, proc):
+        # pystoi requires equal-length reference / degraded signals
+        n = min(len(clean), len(proc))
+        if n < sr // 2:  # < 0.5 s -> STOI is unreliable / may error
+            return float('nan')
+        try:
+            return float(stoi(clean[:n], proc[:n], sr, extended=extended))
+        except Exception as e:
+            print(f"Error calculating STOI for one channel: {e}")
+            return float('nan')
+
+    stoi_left = _one_ear(clean_left, processed_left)
+    stoi_right = _one_ear(clean_right, processed_right)
+
+    valid = [s for s in (stoi_left, stoi_right) if not np.isnan(s)]
+    if valid:
+        return float(np.mean(valid))
+    return None
 
 
 # 8. Safe evaluation function that handles errors properly
@@ -555,6 +590,44 @@ def safe_evaluate_file(clean_path, noisy_path, model, device):
                 results['PESQ'] = enhanced_pesq
         except Exception as e:
             print(f"PESQ calculation failed: {e}")
+
+        # Narrowband PESQ (P.862 @ 8kHz) for both noisy and enhanced signals
+        try:
+            noisy_pesq_nb = safe_pesq(
+                clean_data[:, 0], clean_data[:, 1],
+                noisy_data[:, 0], noisy_data[:, 1],
+                sr=c_sr, mode='nb'
+            )
+            enhanced_pesq_nb = safe_pesq(
+                clean_data[:, 0], clean_data[:, 1],
+                enhanced_data[0], enhanced_data[1],
+                sr=c_sr, mode='nb'
+            )
+            if noisy_pesq_nb is not None:
+                results['PESQ_nb_noisy'] = noisy_pesq_nb
+            if enhanced_pesq_nb is not None:
+                results['PESQ_nb'] = enhanced_pesq_nb
+        except Exception as e:
+            print(f"PESQ (nb) calculation failed: {e}")
+
+        # Single-channel STOI (pystoi, L/R mean) for both noisy and enhanced signals
+        try:
+            noisy_stoi = safe_stoi(
+                clean_data[:, 0], clean_data[:, 1],
+                noisy_data[:, 0], noisy_data[:, 1],
+                sr=c_sr
+            )
+            enhanced_stoi = safe_stoi(
+                clean_data[:, 0], clean_data[:, 1],
+                enhanced_data[0], enhanced_data[1],
+                sr=c_sr
+            )
+            if noisy_stoi is not None:
+                results['STOI_noisy'] = noisy_stoi
+            if enhanced_stoi is not None:
+                results['STOI'] = enhanced_stoi
+        except Exception as e:
+            print(f"STOI calculation failed: {e}")
             
         # Segmental SNR for both noisy and enhanced signals
         try:
@@ -739,8 +812,12 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
         'SegSNR_impr_Avg': [],
         'MBSTOI_noisy': [],
         'MBSTOI': [],
+        'STOI_noisy': [],
+        'STOI': [],
         'PESQ_noisy': [],
         'PESQ': [],
+        'PESQ_nb_noisy': [],
+        'PESQ_nb': [],
         'ILD_error_noisy': [],
         'ILD_error': [],
         'IPD_error_noisy': [],
@@ -796,7 +873,9 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
         'Average SegSNR Noisy (R)': np.nanmean(results_df['SegSNR_noisy_R']),
         'Average SegSNR Noisy': np.nanmean(results_df['SegSNR_noisy_Avg']),
         'Average MBSTOI Noisy': np.nanmean(results_df['MBSTOI_noisy']),
+        'Average STOI Noisy': np.nanmean(results_df['STOI_noisy']),
         'Average PESQ Noisy': np.nanmean(results_df['PESQ_noisy']),
+        'Average PESQ (nb) Noisy': np.nanmean(results_df['PESQ_nb_noisy']),
         'Average ILD Error Noisy (dB)': np.nanmean(results_df['ILD_error_noisy']),
         'Average IPD Error Noisy (rad)': np.nanmean(results_df['IPD_error_noisy']),
         'Average IPD Error Noisy (deg)': np.nanmean(results_df['IPD_error_noisy_deg']),
@@ -807,7 +886,9 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
         'Average SegSNR': np.nanmean(results_df['SegSNR_Avg']),
         'Average SegSNR Improvement': np.nanmean(results_df['SegSNR_impr_Avg']),
         'Average MBSTOI': np.nanmean(results_df['MBSTOI']),
+        'Average STOI': np.nanmean(results_df['STOI']),
         'Average PESQ': np.nanmean(results_df['PESQ']),
+        'Average PESQ (nb)': np.nanmean(results_df['PESQ_nb']),
         'Average ILD Error (dB)': np.nanmean(results_df['ILD_error']),
         'Average IPD Error (rad)': np.nanmean(results_df['IPD_error']),
         'Average IPD Error (deg)': np.nanmean(results_df['IPD_error_deg']),
@@ -970,27 +1051,39 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
     
     # Generate paper-style table for noisy and enhanced metrics
     with open(output_file, 'w') as f:
-        # Header
-        f.write("SNR,MBSTOI_noisy,MBSTOI,SegSNR_noisy,SegSNR,SegSNR_impr,L_ILD_noisy,L_ILD,L_IPD_noisy,L_IPD\n")
-        
+        # Header (column layout matches 20_pesq_finetune eval.py)
+        f.write("SNR,MBSTOI_noisy,MBSTOI,STOI_noisy,STOI,PESQ_noisy,PESQ,PESQ_nb_noisy,PESQ_nb,SegSNR_noisy,SegSNR,SegSNR_impr,L_ILD_noisy,L_ILD,L_IPD_noisy,L_IPD\n")
+
         for snr in paper_snrs:
             if snr in results_by_snr:
                 result = results_by_snr[snr]
                 f.write(f"{snr}," +
-                        f"{result.get('Average MBSTOI Noisy', 'N/A'):.4f}," +
-                        f"{result.get('Average MBSTOI', 'N/A'):.4f}," +
-                        f"{result.get('Average SegSNR Noisy', 'N/A'):.2f}," +
-                        f"{result.get('Average SegSNR', 'N/A'):.2f}," +
-                        f"{result.get('Average SegSNR Improvement', 'N/A'):.2f}," +
-                        f"{result.get('Average ILD Error Noisy (dB)', 'N/A'):.4f}," +
-                        f"{result.get('Average ILD Error (dB)', 'N/A'):.4f}," +
-                        f"{result.get('Average IPD Error Noisy (deg)', 'N/A'):.2f}," +
-                        f"{result.get('Average IPD Error (deg)', 'N/A'):.2f}\n")
+                        f"{result.get('Average MBSTOI Noisy', float('nan')):.4f}," +
+                        f"{result.get('Average MBSTOI', float('nan')):.4f}," +
+                        f"{result.get('Average STOI Noisy', float('nan')):.4f}," +
+                        f"{result.get('Average STOI', float('nan')):.4f}," +
+                        f"{result.get('Average PESQ Noisy', float('nan')):.4f}," +
+                        f"{result.get('Average PESQ', float('nan')):.4f}," +
+                        f"{result.get('Average PESQ (nb) Noisy', float('nan')):.4f}," +
+                        f"{result.get('Average PESQ (nb)', float('nan')):.4f}," +
+                        f"{result.get('Average SegSNR Noisy', float('nan')):.2f}," +
+                        f"{result.get('Average SegSNR', float('nan')):.2f}," +
+                        f"{result.get('Average SegSNR Improvement', float('nan')):.2f}," +
+                        f"{result.get('Average ILD Error Noisy (dB)', float('nan')):.4f}," +
+                        f"{result.get('Average ILD Error (dB)', float('nan')):.4f}," +
+                        f"{result.get('Average IPD Error Noisy (deg)', float('nan')):.2f}," +
+                        f"{result.get('Average IPD Error (deg)', float('nan')):.2f}\n")
     
     # Calculate overall averages
     if results_by_snr:
         avg_mbstoi_noisy = np.nanmean([r.get('Average MBSTOI Noisy', 0) for r in results_by_snr.values()])
         avg_mbstoi = np.nanmean([r.get('Average MBSTOI', 0) for r in results_by_snr.values()])
+        avg_stoi_noisy = np.nanmean([r.get('Average STOI Noisy', float('nan')) for r in results_by_snr.values()])
+        avg_stoi = np.nanmean([r.get('Average STOI', float('nan')) for r in results_by_snr.values()])
+        avg_pesq_noisy = np.nanmean([r.get('Average PESQ Noisy', float('nan')) for r in results_by_snr.values()])
+        avg_pesq = np.nanmean([r.get('Average PESQ', float('nan')) for r in results_by_snr.values()])
+        avg_pesq_nb_noisy = np.nanmean([r.get('Average PESQ (nb) Noisy', float('nan')) for r in results_by_snr.values()])
+        avg_pesq_nb = np.nanmean([r.get('Average PESQ (nb)', float('nan')) for r in results_by_snr.values()])
         avg_segsnr_noisy = np.nanmean([r.get('Average SegSNR Noisy', 0) for r in results_by_snr.values()])
         avg_segsnr = np.nanmean([r.get('Average SegSNR', 0) for r in results_by_snr.values()])
         avg_segsnr_impr = np.nanmean([r.get('Average SegSNR Improvement', 0) for r in results_by_snr.values()])
@@ -1002,6 +1095,12 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
         print(f"\n===== {dataset_name} PAPER STYLE AVERAGES =====")
         print(f"Average MBSTOI Noisy: {avg_mbstoi_noisy:.4f}")
         print(f"Average MBSTOI Enhanced: {avg_mbstoi:.4f}")
+        print(f"Average STOI Noisy: {avg_stoi_noisy:.4f}")
+        print(f"Average STOI Enhanced: {avg_stoi:.4f}")
+        print(f"Average PESQ Noisy (wb): {avg_pesq_noisy:.4f}")
+        print(f"Average PESQ Enhanced (wb): {avg_pesq:.4f}")
+        print(f"Average PESQ Noisy (nb): {avg_pesq_nb_noisy:.4f}")
+        print(f"Average PESQ Enhanced (nb): {avg_pesq_nb:.4f}")
         print(f"Average SegSNR Noisy: {avg_segsnr_noisy:.2f}")
         print(f"Average SegSNR Enhanced: {avg_segsnr:.2f}")
         print(f"Average SegSNR Improvement: {avg_segsnr_impr:.2f}")
@@ -1016,6 +1115,12 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
             f.write(f"===== {dataset_name} PAPER STYLE AVERAGES =====\n")
             f.write(f"Average MBSTOI Noisy: {avg_mbstoi_noisy:.4f}\n")
             f.write(f"Average MBSTOI Enhanced: {avg_mbstoi:.4f}\n")
+            f.write(f"Average STOI Noisy: {avg_stoi_noisy:.4f}\n")
+            f.write(f"Average STOI Enhanced: {avg_stoi:.4f}\n")
+            f.write(f"Average PESQ Noisy (wb): {avg_pesq_noisy:.4f}\n")
+            f.write(f"Average PESQ Enhanced (wb): {avg_pesq:.4f}\n")
+            f.write(f"Average PESQ Noisy (nb): {avg_pesq_nb_noisy:.4f}\n")
+            f.write(f"Average PESQ Enhanced (nb): {avg_pesq_nb:.4f}\n")
             f.write(f"Average SegSNR Noisy: {avg_segsnr_noisy:.2f}\n")
             f.write(f"Average SegSNR Enhanced: {avg_segsnr:.2f}\n")
             f.write(f"Average SegSNR Improvement: {avg_segsnr_impr:.2f}\n")

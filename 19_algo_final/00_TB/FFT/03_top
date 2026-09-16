@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# STFT top: tb_stft drives STFT_TOP, checks BOTH the Q1.15 spectrum (golden_fft)
+# and the block-float e4m3 output (golden_fft_e4m3 = cast of the STFT golden, k=9).
+# Pass banner: " [PASS] STFT Test Passed!".
+set -e
+cd "$(dirname "$0")"
+
+# (re)generate patterns (input + golden_fft + golden_fft_e4m3) if missing
+if [ ! -f patterns/golden_fft_e4m3_re.hex ]; then python3 tb_FFT.py; fi
+
+# CAD tools / license (matches the passing 06/07/08 flow on this server)
+export VCS_HOME=/usr/cad/synopsys/vcs/cur
+export PATH=$VCS_HOME/bin:$VCS_HOME/linux/bin:/usr/cad/synopsys/verdi/cur/bin:$PATH
+export LM_LICENSE_FILE=26585@lshc:26585@lstc:26585@lstn
+export SNPSLMD_LICENSE_FILE=$LM_LICENSE_FILE
+
+vcs -f STFT_file.f -full64 -R 2>&1 | tee stft_run.log
+
+grep -q "\[PASS\]" stft_run.log
+echo "[03_top] PASS"

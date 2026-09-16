@@ -1,0 +1,834 @@
+{
+  "model.mattn.input_proj.parametrizations.weight.original.real": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 0.9805,
+    "cross_variance": 0.00096871,
+    "dynamic_range_ratio": 337565.31
+  },
+  "model.mattn.input_proj.parametrizations.weight.original.imag": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 0.9899,
+    "cross_variance": 0.00123744,
+    "dynamic_range_ratio": 246395.68
+  },
+  "model.mattn.mattn.MultiheadAttention_re.out_proj.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.0703,
+    "cross_variance": 0.00059625,
+    "dynamic_range_ratio": 478893.5
+  },
+  "model.mattn.mattn.MultiheadAttention_re.parametrizations.in_proj_weight.original.Q": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 0.8968,
+    "cross_variance": 0.00082757,
+    "dynamic_range_ratio": 346267.78
+  },
+  "model.mattn.mattn.MultiheadAttention_re.parametrizations.in_proj_weight.original.K": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.0986,
+    "cross_variance": 0.00119931,
+    "dynamic_range_ratio": 277322.85
+  },
+  "model.mattn.mattn.MultiheadAttention_re.parametrizations.in_proj_weight.original.V": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 0.968,
+    "cross_variance": 0.00045287,
+    "dynamic_range_ratio": 292892.94
+  },
+  "model.mattn.mattn.MultiheadAttention_im.out_proj.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 64,
+    "kurtosis": 1.7665,
+    "cross_variance": 0.00258104,
+    "dynamic_range_ratio": 190479.65
+  },
+  "model.mattn.mattn.MultiheadAttention_im.parametrizations.in_proj_weight.original.Q": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.0333,
+    "cross_variance": 0.00135512,
+    "dynamic_range_ratio": 168038.98
+  },
+  "model.mattn.mattn.MultiheadAttention_im.parametrizations.in_proj_weight.original.K": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.0249,
+    "cross_variance": 0.00166994,
+    "dynamic_range_ratio": 354921.8
+  },
+  "model.mattn.mattn.MultiheadAttention_im.parametrizations.in_proj_weight.original.V": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.5306,
+    "cross_variance": 0.00409826,
+    "dynamic_range_ratio": 350831.46
+  },
+  "model.mattn.output_proj.parametrizations.weight.original.real": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.6071,
+    "cross_variance": 0.00162901,
+    "dynamic_range_ratio": 235826.1
+  },
+  "model.mattn.output_proj.parametrizations.weight.original.imag": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.6962,
+    "cross_variance": 0.00559877,
+    "dynamic_range_ratio": 199386.23
+  },
+  "model.encoder.model.0.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -1.5712,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 10.83
+  },
+  "model.encoder.model.0.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -1.6578,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 17.95
+  },
+  "model.encoder.model.0.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.0711,
+    "cross_variance": 0.49444776,
+    "dynamic_range_ratio": 14.17
+  },
+  "model.encoder.model.0.0.pointwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.3661,
+    "cross_variance": 0.52637282,
+    "dynamic_range_ratio": 8.97
+  },
+  "model.encoder.model.0.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -1.4991,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.22
+  },
+  "model.encoder.model.0.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.9648,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.2
+  },
+  "model.encoder.model.0.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.0.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.1.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.518,
+    "cross_variance": 0.05504615,
+    "dynamic_range_ratio": 153.38
+  },
+  "model.encoder.model.1.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.7849,
+    "cross_variance": 0.04792124,
+    "dynamic_range_ratio": 26.94
+  },
+  "model.encoder.model.1.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.2297,
+    "cross_variance": 0.00402453,
+    "dynamic_range_ratio": 768.16
+  },
+  "model.encoder.model.1.0.pointwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.8358,
+    "cross_variance": 0.00779397,
+    "dynamic_range_ratio": 337.87
+  },
+  "model.encoder.model.1.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.1584,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.86
+  },
+  "model.encoder.model.1.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 2.1205,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 3.04
+  },
+  "model.encoder.model.1.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.1.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.2.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.1077,
+    "cross_variance": 0.0289642,
+    "dynamic_range_ratio": 2493.17
+  },
+  "model.encoder.model.2.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 64,
+    "kurtosis": 0.2428,
+    "cross_variance": 0.067377,
+    "dynamic_range_ratio": 534.65
+  },
+  "model.encoder.model.2.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.2629,
+    "cross_variance": 0.00523407,
+    "dynamic_range_ratio": 25167.81
+  },
+  "model.encoder.model.2.0.pointwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.1503,
+    "cross_variance": 0.00610884,
+    "dynamic_range_ratio": 2262.73
+  },
+  "model.encoder.model.2.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.2402,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 3.48
+  },
+  "model.encoder.model.2.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.1804,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 3.16
+  },
+  "model.encoder.model.2.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.2.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.3.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.2587,
+    "cross_variance": 0.03520249,
+    "dynamic_range_ratio": 2341.36
+  },
+  "model.encoder.model.3.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.0908,
+    "cross_variance": 0.02404515,
+    "dynamic_range_ratio": 812.37
+  },
+  "model.encoder.model.3.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 0.7536,
+    "cross_variance": 0.00345817,
+    "dynamic_range_ratio": 2549.64
+  },
+  "model.encoder.model.3.0.pointwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 0.8477,
+    "cross_variance": 0.00223053,
+    "dynamic_range_ratio": 11147.58
+  },
+  "model.encoder.model.3.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.1187,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.22
+  },
+  "model.encoder.model.3.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.2743,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.11
+  },
+  "model.encoder.model.3.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.3.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.4.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.0745,
+    "cross_variance": 0.0269213,
+    "dynamic_range_ratio": 764.8
+  },
+  "model.encoder.model.4.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.3612,
+    "cross_variance": 0.03549569,
+    "dynamic_range_ratio": 541.05
+  },
+  "model.encoder.model.4.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 0.8927,
+    "cross_variance": 0.00271826,
+    "dynamic_range_ratio": 12759.55
+  },
+  "model.encoder.model.4.0.pointwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.0217,
+    "cross_variance": 0.00261561,
+    "dynamic_range_ratio": 32596.29
+  },
+  "model.encoder.model.4.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.1449,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.0
+  },
+  "model.encoder.model.4.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.131,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.07
+  },
+  "model.encoder.model.4.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.4.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.5.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.7794,
+    "cross_variance": 0.01431723,
+    "dynamic_range_ratio": 1616.08
+  },
+  "model.encoder.model.5.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.7781,
+    "cross_variance": 0.02571928,
+    "dynamic_range_ratio": 4774.83
+  },
+  "model.encoder.model.5.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.0878,
+    "cross_variance": 0.00219251,
+    "dynamic_range_ratio": 238430.3
+  },
+  "model.encoder.model.5.0.pointwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": 1.2274,
+    "cross_variance": 0.00279806,
+    "dynamic_range_ratio": 45147.41
+  },
+  "model.encoder.model.5.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.0343,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.3
+  },
+  "model.encoder.model.5.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.1722,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.66
+  },
+  "model.encoder.model.5.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.encoder.model.5.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.0.0.pointwise_r.parametrizations.weight.original": {
+    "format": "FP",
+    "scale_granularity": "N/A",
+    "group_size": "N/A",
+    "kurtosis": 6.3801,
+    "cross_variance": 0.02489989,
+    "dynamic_range_ratio": 96248.7
+  },
+  "model.decoder.model.0.0.pointwise_i.parametrizations.weight.original": {
+    "format": "FP",
+    "scale_granularity": "N/A",
+    "group_size": "N/A",
+    "kurtosis": 7.3275,
+    "cross_variance": 0.03002435,
+    "dynamic_range_ratio": 403096.46
+  },
+  "model.decoder.model.0.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -1.1004,
+    "cross_variance": 0.01764146,
+    "dynamic_range_ratio": 5745.39
+  },
+  "model.decoder.model.0.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.9587,
+    "cross_variance": 0.01796089,
+    "dynamic_range_ratio": 1133.96
+  },
+  "model.decoder.model.0.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.75,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.82
+  },
+  "model.decoder.model.0.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.4112,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.76
+  },
+  "model.decoder.model.0.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.0.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.1.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 64,
+    "kurtosis": 3.4582,
+    "cross_variance": 0.0049916,
+    "dynamic_range_ratio": 90986.8
+  },
+  "model.decoder.model.1.0.pointwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 64,
+    "kurtosis": 4.1665,
+    "cross_variance": 0.00323484,
+    "dynamic_range_ratio": 145436.04
+  },
+  "model.decoder.model.1.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.2121,
+    "cross_variance": 0.02972059,
+    "dynamic_range_ratio": 353.47
+  },
+  "model.decoder.model.1.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": -0.8489,
+    "cross_variance": 0.02740322,
+    "dynamic_range_ratio": 1020.49
+  },
+  "model.decoder.model.1.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.5831,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.22
+  },
+  "model.decoder.model.1.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.3875,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 2.38
+  },
+  "model.decoder.model.1.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.1.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.2.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 64,
+    "kurtosis": 2.7907,
+    "cross_variance": 0.005603,
+    "dynamic_range_ratio": 8009.9
+  },
+  "model.decoder.model.2.0.pointwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 64,
+    "kurtosis": 3.8332,
+    "cross_variance": 0.00404126,
+    "dynamic_range_ratio": 325759.4
+  },
+  "model.decoder.model.2.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 128,
+    "kurtosis": -0.1418,
+    "cross_variance": 0.03336885,
+    "dynamic_range_ratio": 293.34
+  },
+  "model.decoder.model.2.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.0803,
+    "cross_variance": 0.03472127,
+    "dynamic_range_ratio": 160.23
+  },
+  "model.decoder.model.2.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 0.1758,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 3.7
+  },
+  "model.decoder.model.2.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.0256,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 3.4
+  },
+  "model.decoder.model.2.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.2.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.3.0.pointwise_r.parametrizations.weight.original": {
+    "format": "FP",
+    "scale_granularity": "N/A",
+    "group_size": "N/A",
+    "kurtosis": 8.459,
+    "cross_variance": 0.01898606,
+    "dynamic_range_ratio": 3995.97
+  },
+  "model.decoder.model.3.0.pointwise_i.parametrizations.weight.original": {
+    "format": "FP",
+    "scale_granularity": "N/A",
+    "group_size": "N/A",
+    "kurtosis": 12.3232,
+    "cross_variance": 0.01771266,
+    "dynamic_range_ratio": 10499.84
+  },
+  "model.decoder.model.3.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.2308,
+    "cross_variance": 0.03158429,
+    "dynamic_range_ratio": 168.23
+  },
+  "model.decoder.model.3.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 64,
+    "kurtosis": 0.9194,
+    "cross_variance": 0.03823382,
+    "dynamic_range_ratio": 788.18
+  },
+  "model.decoder.model.3.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.5578,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 3.36
+  },
+  "model.decoder.model.3.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": 2.0825,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 4.38
+  },
+  "model.decoder.model.3.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.3.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.4.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 32,
+    "kurtosis": 1.9257,
+    "cross_variance": 0.016581,
+    "dynamic_range_ratio": 5726.86
+  },
+  "model.decoder.model.4.0.pointwise_i.parametrizations.weight.original": {
+    "format": "FP",
+    "scale_granularity": "N/A",
+    "group_size": "N/A",
+    "kurtosis": 9.362,
+    "cross_variance": 0.02250762,
+    "dynamic_range_ratio": 32918.05
+  },
+  "model.decoder.model.4.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.8493,
+    "cross_variance": 0.05380532,
+    "dynamic_range_ratio": 80.22
+  },
+  "model.decoder.model.4.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": 0.563,
+    "cross_variance": 0.04588624,
+    "dynamic_range_ratio": 40.6
+  },
+  "model.decoder.model.4.1.bn_r.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.3151,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 5.23
+  },
+  "model.decoder.model.4.1.bn_i.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.2177,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 13.22
+  },
+  "model.decoder.model.4.2.r_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.4.2.i_prelu.weight": {
+    "format": "INT4",
+    "scale_granularity": "per-channel/per-group",
+    "group_size": 256,
+    "kurtosis": NaN,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 1.0
+  },
+  "model.decoder.model.5.0.pointwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.8201,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 336.33
+  },
+  "model.decoder.model.5.0.pointwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.2776,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 71.08
+  },
+  "model.decoder.model.5.0.depthwise_r.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.8053,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 4.59
+  },
+  "model.decoder.model.5.0.depthwise_i.parametrizations.weight.original": {
+    "format": "INT4",
+    "scale_granularity": "per-tensor",
+    "group_size": "N/A",
+    "kurtosis": -0.8581,
+    "cross_variance": 0.0,
+    "dynamic_range_ratio": 4.12
+  }
+}

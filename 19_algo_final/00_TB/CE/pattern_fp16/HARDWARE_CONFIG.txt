@@ -1,0 +1,66 @@
+================================================================================
+Hardware Configuration for Binaural Conv Encoder (IEEE FP16)
+================================================================================
+
+數值格式:
+  Format: IEEE 754 Half Precision (FP16)
+  Total bits: 16
+  WXP (Exponent): 5 bits (bias=15)
+  FRAC (Fraction): 10 bits
+  Bit layout: [sign(1)][exp(5)][frac(10)]
+  Range: ~6e-5 to ~6.5e4
+  Precision: ~3 decimal digits
+
+架構特性:
+  - 左右耳共用同一組 Encoder/Decoder 權重
+  - STFT Output: 64 complex frequency bins
+  - Kernel Size: (5, 1) - 頻率維度卷積
+  - Stride: (2, 1), Padding: (2, 0)
+  - Total MACs: 256 Real = 64 Complex
+
+處理策略:
+  Option 1: 循序處理 (Sequential)
+    - 先處理左耳，再處理右耳
+    - 總延遲: ~1585 cycles/frame
+    - 硬體需求: 1 組 PEG (256 MACs)
+    - 優點: 最小面積
+
+  Option 2: 並行處理 (Parallel)
+    - 同時處理左右耳
+    - 總延遲: ~792 cycles/frame
+    - 硬體需求: 2 組 PEG (512 MACs)
+    - 優點: 最低延遲
+
+推薦配置 (循序處理):
+  MAC Units: 256 Real MACs = 64 Complex MACs (FP16)
+  SRAM: 8 Banks × 32-bit × 20 depth
+    - Total: 5,120 bits (160 complex weights)
+    - Bandwidth: 256 bits/cycle
+    - Format: [imag_fp16(16)][real_fp16(16)]
+
+Weight 存取策略:
+  共用權重:
+    - Depthwise: 5 weights per channel
+    - Pointwise: varies by layer
+    - 左右耳重用同一組 SRAM weights
+
+  Bank Interleaving:
+    Depthwise: W[0]→Bank0, W[1]→Bank1, ..., W[4]→Bank4
+    Pointwise: 按 output channel 分組
+
+性能估算 (@ 16kHz, hop=80 samples):
+  Frame interval: 5ms = 80,000 cycles @ 16MHz
+  Processing time: 1585 cycles (循序)
+  Utilization: 1.98%
+  結論: 256 MACs 綽綽有餘
+
+FP16 vs BFloat16 比較:
+  FP16 優勢:
+    - 更高精度 (10-bit frac vs 7-bit frac)
+    - 更適合音訊處理的動態範圍
+    - IEEE 標準，工具鏈支援完整
+  BFloat16 優勢:
+    - 更大數值範圍 (8-bit exp vs 5-bit exp)
+    - 與 FP32 轉換簡單 (直接截斷)
+
+================================================================================

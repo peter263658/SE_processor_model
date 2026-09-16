@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# PROJ full PPU output (β-add + e4m3 cast) unit test — drives the VERIFIED oacc golden into
+# ppu_fma with the proj PPU config and checks o_re/o_im (e4m3) bit-exact vs the fp16 model.
+# Regenerate golden first if patterns changed (t*=351 enables the deploy cross-check for input):
+#     python3 ../../10_algo/scripts/gen_golden_proj.py mattn.input_proj  30 351
+#     python3 ../../10_algo/scripts/gen_golden_proj.py mattn.output_proj 35 0
+# Usage: ./14_run_ppu_proj [input|output]   (default input)
+set -e
+cd "$(dirname "$0")"
+
+export VCS_HOME=/usr/cad/synopsys/vcs/cur
+export PATH=$VCS_HOME/bin:$VCS_HOME/linux/bin:/usr/cad/synopsys/verdi/cur/bin:$PATH
+export LM_LICENSE_FILE=26585@lshc:26585@lstc:26585@lstn
+export SNPSLMD_LICENSE_FILE=$LM_LICENSE_FILE
+
+WHICH=${1:-input}
+if [ "$WHICH" = "output" ]; then
+    SLICE=mattn_output_proj__0; DOT=mattn.output_proj; SUB=35; T0=0
+else
+    SLICE=mattn_input_proj__0;  DOT=mattn.input_proj;  SUB=30; T0=351
+fi
+G=../../10_algo/hw_patterns_final/sram_images/golden/$SLICE
+if [ ! -f $G/out_re_code.hex ]; then
+    echo "[14_run] golden missing -> generating"
+    python3 ../../10_algo/scripts/gen_golden_proj.py $DOT $SUB $T0
+fi
+
+vcs -f ppu_proj_file.f -full64 -R +v2k +notimingcheck -sverilog -timescale=1ns/10ps -debug_access+all \
+    -y /usr/cad/synopsys/synthesis/cur/dw/sim_ver +incdir+/usr/cad/synopsys/synthesis/cur/dw/sim_ver +libext+.v \
+    +GDIR=$G/ \
+    2>&1 | tee ppu_proj_${WHICH}_run.log
+
+echo "[14_run_ppu_proj $WHICH] done — see PASS/FAIL above."

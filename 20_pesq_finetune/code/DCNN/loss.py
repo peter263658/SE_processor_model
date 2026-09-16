@@ -15,7 +15,7 @@ class BinauralLoss(Module):
     def __init__(self, win_len=400,
                  win_inc=100, fft_len=512, sr=16000,
                  ild_weight=1, ipd_weight=10, stoi_weight=10,
-                  snr_loss_weight=1, pesq_weight=0):
+                  snr_loss_weight=1, pesq_weight=0, snr_loss_mode="snr"):
 
         super().__init__()
         self.stft = Stft(fft_len, win_inc, win_len)
@@ -28,6 +28,12 @@ class BinauralLoss(Module):
         self.stoi_weight = stoi_weight
         self.snr_loss_weight = snr_loss_weight
         self.pesq_weight = pesq_weight
+        # "snr" (default, scale-DEPENDENT, protects per-ear level -> ILD) or
+        # "sisdr_tied": SI-SDR with ONE shared scale for both ears. Per-ear
+        # SI-SDR would let the model rescale L/R independently and destroy ILD
+        # (the BiTasNet failure mode); tying the scale keeps the SI stability
+        # benefit while leaving interaural level differences fully penalised.
+        self.snr_loss_mode = snr_loss_mode
 
         # Differentiable wideband-PESQ loss (torch_pesq). Constructed only when
         # weighted in, so stoi-only runs keep working without torch_pesq.
@@ -63,14 +69,15 @@ class BinauralLoss(Module):
 
         loss = 0
         if self.snr_loss_weight > 0:
-            
-            snr_l = snr_loss(model_output[:, 0], targets[:, 0])
-            snr_r = snr_loss(model_output[:, 1], targets[:, 1])
-          
-            snr_loss_lr = - (snr_l + snr_r)/2
-           
+            if self.snr_loss_mode == "sisdr_tied":
+                snr_loss_lr = - sisdr_tied_loss(model_output, targets)
+            else:
+                snr_l = snr_loss(model_output[:, 0], targets[:, 0])
+                snr_r = snr_loss(model_output[:, 1], targets[:, 1])
+                snr_loss_lr = - (snr_l + snr_r)/2
+
             bin_snr_loss = self.snr_loss_weight*snr_loss_lr
-            
+
             # print('\n SNR Loss = ', bin_snr_loss)
             loss += bin_snr_loss
         
@@ -169,6 +176,23 @@ class Loss(Module):
 def l2_norm(s1, s2):
     norm = torch.sum(s1 * s2, -1, keepdim=True)
     return norm
+
+
+def sisdr_tied_loss(output, target, eps=EPS):
+    """Binaural scale-tied SI-SDR (dB, higher better).
+
+    One projection scale alpha is computed on the CONCATENATED L/R pair, so the
+    loss is invariant to overall gain but fully sensitive to interaural level
+    differences (per-ear SI-SDR would be ILD-blind).
+    output/target: (B, 2, N) waveforms.
+    """
+    o = output.reshape(output.shape[0], -1)
+    t = target.reshape(target.shape[0], -1)
+    alpha = (o * t).sum(dim=-1, keepdim=True) / ((t * t).sum(dim=-1, keepdim=True) + eps)
+    proj = alpha * t
+    noise = o - proj
+    ratio = (proj * proj).sum(dim=-1) / ((noise * noise).sum(dim=-1) + eps)
+    return torch.mean(10 * torch.log10(ratio + eps))
 
 
 def snr_loss(s1, s_target, eps=EPS, reduce_mean=True):

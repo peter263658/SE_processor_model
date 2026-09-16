@@ -1,0 +1,22 @@
+BCCTN Mixed-Precision Quantisation Evaluation
+============================================================
+
+FP8 baseline              SI-SNR=  7.429±2.18  ILD= 4.451±1.15  IPD= 29.90±10.10  MBSTOI=N/A
+  Memory: 0.0 KB  (FP8 baseline: 0.0 KB, savings: 0.0%)
+
+Uniform INT8              SI-SNR=  7.379±2.15  ILD= 4.468±1.18  IPD= 30.02±10.11  MBSTOI=N/A
+  Memory: 804.7 KB  (FP8 baseline: 804.7 KB, savings: 0.0%)
+
+Uniform INT4              SI-SNR=  7.053±2.14  ILD= 4.651±1.22  IPD= 30.47±10.18  MBSTOI=N/A
+  Memory: 402.3 KB  (FP8 baseline: 804.7 KB, savings: 50.0%)
+
+Uniform INT3              SI-SNR=  3.066±1.58  ILD= 5.371±1.64  IPD= 31.96±10.40  MBSTOI=N/A
+  Memory: 301.7 KB  (FP8 baseline: 804.7 KB, savings: 62.5%)
+
+Mixed-precision           SI-SNR=  5.123±1.90  ILD= 5.047±1.31  IPD= 31.40±10.31  MBSTOI=N/A
+  Memory: 309.7 KB  (FP8 baseline: 804.7 KB, savings: 61.5%)
+
+Deltas (Mixed-precision − FP8 baseline):
+  ΔSI-SNR: -2.306 dB
+  ΔILD   : +0.596 dB
+  ΔIPD   : +1.49°

@@ -1,0 +1,84 @@
+Magic 271485
+Revision Verdi_W-2024.09-SP2
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 8 31 1920 1009 200 220
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/r12k41024/Research/00_TB/WBUF/tb_wbuf.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 0.000000 3945312.500000
+cursor 108600000.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 0
+; marker line index
+markerPos 9
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/r12k41024/Research/00_TB/WBUF/tb_wbuf.fsdb"
+addSignal -h 15 /tb_wbuf/u_wbuf_top/i_clk
+addSignal -h 15 -holdScope i_rst_n
+addSignal -h 15 -UNSIGNED -holdScope i_ae_mode[2:0]
+addSignal -h 15 -UNSIGNED -holdScope i_ce_layer[2:0]
+addSignal -h 15 -UNSIGNED -holdScope i_ce_mode[1:0]
+addSignal -h 15 -UNSIGNED -holdScope i_exec_mode[2:0]
+addSignal -h 15 -UNSIGNED -HEX -holdScope i_top_data[127:0]
+addSignal -h 15 -holdScope i_top_valid
+addSignal -h 15 -holdScope o_top_ready
+addGroup "G2"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+activeDirFile "" "/home/r12k41024/Research/00_TB/WBUF/tb_wbuf.fsdb"
+
+GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
+getSignalForm close
+
+"/Mem_def"
+"/tb_wbuf"
+"/tb_wbuf/u_wbuf_top"
+
+SCOPE_LIST_BEGIN
+"/Mem_def"
+"/tb_wbuf"
+"/tb_wbuf/u_wbuf_top"
+"/tb_wbuf/Unnamed_$tb_wbuf_sv_160"
+"/tb_wbuf/Unnamed_$tb_wbuf_sv_105"
+"/tb_wbuf/u_wbuf_top/u_wbuf_ctrl_inst"
+"/tb_wbuf/u_wbuf_top/u_wbuf_sram_inst"
+SCOPE_LIST_END
+
+GETSIGNALFORM_SCOPE_HIERARCHY_END
+
+

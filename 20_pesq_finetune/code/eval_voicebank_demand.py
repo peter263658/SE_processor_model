@@ -78,6 +78,38 @@ def _pe_sisdr(ref2, deg2):
         return float("nan")
 
 
+def _pe_mbstoi(ref2, deg2):
+    """Binaural MBSTOI (mirrors eval.py:safe_mbstoi prep: trim to common len, pad
+    to a >=4096 multiple of 256, per-channel demean + peak-normalize).
+    NOTE: meaningful only when the render carries real interaural cues (e.g. az=70);
+    on az=0 / mono_dup L~=R so MBSTOI collapses to ~monaural STOI."""
+    import math
+    from MBSTOI.mbstoi import mbstoi
+    cl, cr, el, er = ref2[0], ref2[1], deg2[0], deg2[1]
+    min_len = min(len(cl), len(cr), len(el), len(er))
+    if min_len < 256:
+        return float("nan")
+    target_len = max(4096, 256 * math.ceil(min_len / 256))
+
+    def _prep(s):
+        s = np.asarray(s, dtype=np.float64)[:min_len].copy()
+        if len(s) < target_len:
+            s = np.pad(s, (0, target_len - len(s)))
+        s = s - np.mean(s)
+        mx = np.max(np.abs(s))
+        if mx > 0:
+            s = s / mx
+        return s
+
+    try:
+        score = mbstoi(_prep(cl), _prep(cr), _prep(el), _prep(er), gridcoarseness=1)
+        if np.isnan(score) or np.isinf(score) or score < 0 or score > 1:
+            return float("nan")
+        return float(score)
+    except Exception:
+        return float("nan")
+
+
 def compute_metrics_row(payload):
     """CPU metric worker. payload = (name, clean_c, noisy_c, enh) -> row dict."""
     name, clean_c, noisy_c, enh = payload
@@ -93,6 +125,8 @@ def compute_metrics_row(payload):
         "ESTOI_enh":   _pe_stoi(clean_c, enh, True),
         "SISDR_noisy": _pe_sisdr(clean_c, noisy_c),
         "SISDR_enh":   _pe_sisdr(clean_c, enh),
+        "MBSTOI_noisy": _pe_mbstoi(clean_c, noisy_c),
+        "MBSTOI_enh":   _pe_mbstoi(clean_c, enh),
     }
 
 
@@ -246,7 +280,7 @@ def main():
     print(f"\n===== VoiceBank+DEMAND (input_mode={args.input_mode}, per-ear) ZERO-SHOT =====")
     print(f"files: {len(rows)}")
     lines = [f"VoiceBank+DEMAND input_mode={args.input_mode} per-ear zero-shot", f"files: {len(rows)}"]
-    for metric in ["PESQ_nb", "PESQ_wb", "STOI", "ESTOI", "SISDR"]:
+    for metric in ["PESQ_nb", "PESQ_wb", "STOI", "ESTOI", "SISDR", "MBSTOI"]:
         no, en = avg(metric + "_noisy"), avg(metric + "_enh")
         msg = f"{metric:8s}: noisy={no:.4f}  enh={en:.4f}  delta={en - no:+.4f}"
         print(msg)

@@ -1,0 +1,3 @@
+layer,real_mean,imag_mean,real_std,imag_std,real_kurtosis,imag_kurtosis,real_dynamic_range,imag_dynamic_range,std_ratio,kurtosis_diff,distributions_similar
+model.mattn.input_proj.parametrizations.weight.original,0.063696,0.064878,0.048194,0.048764,0.9805,0.9899,337565.31,246395.68,0.9883,0.0095,True
+model.mattn.output_proj.parametrizations.weight.original,0.087776,0.087694,0.068144,0.067932,1.6071,1.6962,235826.1,199386.23,1.0031,0.0891,True

@@ -483,6 +483,143 @@ def safe_pesq(clean_left, clean_right, processed_left, processed_right,
         return None
 
 
+# 7b. Safe single-channel STOI (pystoi) for binaural signals
+def safe_stoi(clean_left, clean_right, processed_left, processed_right, sr=SAMPLE_RATE, extended=False):
+    """
+    Compute classic single-channel STOI (pystoi) per ear and return the L/R mean.
+
+    This is the plain monaural STOI that VoiceBank+DEMAND / CHiME SE papers report
+    (e.g. competitor target STOI 95.1), as opposed to the binaural MBSTOI logged
+    above. pystoi internally resamples to 10 kHz and needs equal-length ref/deg.
+
+    Args:
+        clean_left, clean_right: Clean reference signals
+        processed_left, processed_right: Processed signals (noisy or enhanced)
+        sr: Sample rate
+        extended: False = classic STOI (default), True = ESTOI
+
+    Returns:
+        Mean STOI over the two ears (0..1), or None if calculation fails
+    """
+    try:
+        from pystoi import stoi
+    except ImportError:
+        print("STOI calculation skipped: pystoi package not installed. Install with 'pip install pystoi'.")
+        return None
+
+    def _one_ear(clean, proc):
+        # pystoi requires equal-length reference / degraded signals
+        n = min(len(clean), len(proc))
+        if n < sr // 2:  # < 0.5 s -> STOI is unreliable / may error
+            return float('nan')
+        try:
+            return float(stoi(clean[:n], proc[:n], sr, extended=extended))
+        except Exception as e:
+            print(f"Error calculating STOI for one channel: {e}")
+            return float('nan')
+
+    stoi_left = _one_ear(clean_left, processed_left)
+    stoi_right = _one_ear(clean_right, processed_right)
+
+    valid = [s for s in (stoi_left, stoi_right) if not np.isnan(s)]
+    if valid:
+        return float(np.mean(valid))
+    return None
+
+
+# 7c. Safe per-ear SI-SDR (dB) for binaural signals
+def safe_sisdr(clean_left, clean_right, processed_left, processed_right):
+    """
+    Standard scale-invariant SDR per ear, L/R mean (dB, higher better) -- the
+    reporting convention of mono SE papers (e.g. competitor SDR 14.0 axis).
+    """
+    def _one_ear(ref, deg):
+        n = min(len(ref), len(deg))
+        ref, deg = np.asarray(ref[:n], dtype=np.float64), np.asarray(deg[:n], dtype=np.float64)
+        denom = float(np.dot(ref, ref)) + 1e-12
+        alpha = float(np.dot(deg, ref)) / denom
+        proj = alpha * ref
+        noise = deg - proj
+        num = float(np.dot(proj, proj))
+        den = float(np.dot(noise, noise)) + 1e-12
+        if num <= 0:
+            return float("nan")
+        return 10.0 * np.log10(num / den)
+
+    vals = [_one_ear(clean_left, processed_left), _one_ear(clean_right, processed_right)]
+    vals = [v for v in vals if not np.isnan(v)]
+    return float(np.mean(vals)) if vals else None
+
+
+def compute_itd_error(clean_left, clean_right, proc_left, proc_right,
+                      sr=SAMPLE_RATE, max_lag_ms=1.0):
+    """
+    ITD error in microseconds: |ITD_clean - ITD_processed|, where ITD is the
+    interaural time delay estimated by GCC-PHAT with parabolic sub-sample peak
+    interpolation. ITD is the dominant low-frequency localization cue and
+    complements IPD (per-bin phase, which wraps) with a single, perceptually
+    interpretable time-delay number.
+    """
+    def _gcc_phat_delay(x, y, max_lag):
+        n = 1
+        while n < len(x) + len(y):
+            n <<= 1
+        X = np.fft.rfft(x, n=n)
+        Y = np.fft.rfft(y, n=n)
+        R = X * np.conj(Y)
+        R /= (np.abs(R) + 1e-12)          # PHAT weighting
+        cc = np.fft.irfft(R, n=n)
+        # re-center to lags [-max_lag, +max_lag]; index max_lag == zero lag
+        cc = np.concatenate((cc[-max_lag:], cc[:max_lag + 1]))
+        k = int(np.argmax(cc))
+        if 0 < k < len(cc) - 1:            # parabolic sub-sample refinement
+            y0, y1, y2 = cc[k - 1], cc[k], cc[k + 1]
+            denom = y0 - 2 * y1 + y2
+            delta = 0.5 * (y0 - y2) / denom if abs(denom) > 1e-12 else 0.0
+        else:
+            delta = 0.0
+        lag = (k - max_lag) + delta
+        return lag / sr * 1e6              # microseconds
+
+    max_lag = max(1, int(max_lag_ms * 1e-3 * sr))
+    try:
+        itd_clean = _gcc_phat_delay(np.asarray(clean_left, np.float64),
+                                    np.asarray(clean_right, np.float64), max_lag)
+        itd_proc = _gcc_phat_delay(np.asarray(proc_left, np.float64),
+                                   np.asarray(proc_right, np.float64), max_lag)
+        return abs(itd_clean - itd_proc)
+    except Exception:
+        return float("nan")
+
+
+def compute_ic_error(clean_left, clean_right, proc_left, proc_right,
+                     sr=SAMPLE_RATE, f_max=1500):
+    """
+    Interaural coherence (MSC) error: |IC_clean - IC_processed|, magnitude-
+    squared coherence averaged over the <= f_max band. IC captures diffuse-
+    field / spatial-width preservation, an axis orthogonal to ILD/IPD/ITD.
+    Referenced against clean (a denoiser is expected to change coherence vs the
+    noisy input, so clean is the correct reference).
+    """
+    n_fft, hop, win = 512, 100, 400
+
+    def _ic(l, r):
+        L = librosa.stft(np.asarray(l, np.float64), n_fft=n_fft, hop_length=hop, win_length=win)
+        R = librosa.stft(np.asarray(r, np.float64), n_fft=n_fft, hop_length=hop, win_length=win)
+        max_bin = int(f_max / (sr / n_fft))
+        L, R = L[:max_bin + 1], R[:max_bin + 1]
+        Slr = np.mean(L * np.conj(R), axis=1)
+        Sll = np.mean(np.abs(L) ** 2, axis=1)
+        Srr = np.mean(np.abs(R) ** 2, axis=1)
+        msc = (np.abs(Slr) ** 2) / (Sll * Srr + 1e-12)
+        return float(np.mean(msc))
+
+    try:
+        return abs(_ic(clean_left, clean_right) - _ic(proc_left, proc_right))
+    except Exception:
+        return float("nan")
+
+
 # 8. Safe evaluation function that handles errors properly
 def _worker_init():
     """Limit BLAS/OpenMP fan-out inside metric worker processes."""
@@ -681,6 +818,74 @@ def compute_metrics_for_pair(pair_payload):
             results["PESQ"] = float("nan")
             results["PESQ_nb_noisy"] = float("nan")
             results["PESQ_nb"] = float("nan")
+
+        # Single-channel STOI (pystoi, L/R mean) for both noisy and enhanced.
+        # Classic monaural STOI used by VoiceBank+DEMAND / CHiME papers
+        # (competitor target 95.1), distinct from the binaural MBSTOI above.
+        try:
+            noisy_stoi = safe_stoi(
+                clean_data[:, 0], clean_data[:, 1],
+                noisy_data[:, 0], noisy_data[:, 1],
+                sr=c_sr
+            )
+            enhanced_stoi = safe_stoi(
+                clean_data[:, 0], clean_data[:, 1],
+                enhanced_data[0], enhanced_data[1],
+                sr=c_sr
+            )
+
+            if noisy_stoi is not None:
+                results["STOI_noisy"] = noisy_stoi
+            if enhanced_stoi is not None:
+                results["STOI"] = enhanced_stoi
+        except Exception as e:
+            print(f"STOI calculation failed for {filename}: {e}")
+            results["STOI_noisy"] = float("nan")
+            results["STOI"] = float("nan")
+
+        # Per-ear SI-SDR (dB), L/R mean, for noisy and enhanced
+        try:
+            noisy_sisdr = safe_sisdr(
+                clean_data[:, 0], clean_data[:, 1],
+                noisy_data[:, 0], noisy_data[:, 1])
+            enhanced_sisdr = safe_sisdr(
+                clean_data[:, 0], clean_data[:, 1],
+                enhanced_data[0], enhanced_data[1])
+            if noisy_sisdr is not None:
+                results["SISDR_noisy"] = noisy_sisdr
+            if enhanced_sisdr is not None:
+                results["SISDR"] = enhanced_sisdr
+        except Exception as e:
+            print(f"SI-SDR calculation failed for {filename}: {e}")
+            results["SISDR_noisy"] = float("nan")
+            results["SISDR"] = float("nan")
+
+        # ITD error (us): interaural time-delay fidelity, dominant low-freq
+        # localization cue; complements IPD (per-bin phase).
+        try:
+            results["ITD_error_noisy"] = compute_itd_error(
+                clean_data[:, 0], clean_data[:, 1],
+                noisy_data[:, 0], noisy_data[:, 1], sr=c_sr)
+            results["ITD_error"] = compute_itd_error(
+                clean_data[:, 0], clean_data[:, 1],
+                enhanced_data[0], enhanced_data[1], sr=c_sr)
+        except Exception as e:
+            print(f"ITD calculation failed for {filename}: {e}")
+            results["ITD_error_noisy"] = float("nan")
+            results["ITD_error"] = float("nan")
+
+        # Interaural coherence (MSC) error: diffuse-field / spatial-width axis
+        try:
+            results["IC_error_noisy"] = compute_ic_error(
+                clean_data[:, 0], clean_data[:, 1],
+                noisy_data[:, 0], noisy_data[:, 1], sr=c_sr)
+            results["IC_error"] = compute_ic_error(
+                clean_data[:, 0], clean_data[:, 1],
+                enhanced_data[0], enhanced_data[1], sr=c_sr)
+        except Exception as e:
+            print(f"IC calculation failed for {filename}: {e}")
+            results["IC_error_noisy"] = float("nan")
+            results["IC_error"] = float("nan")
 
         # Segmental SNR for both noisy and enhanced signals
         try:
@@ -931,12 +1136,16 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
     # (the PESQ-finetuned ckpts carry loss.pesq_loss.*, older ckpts do not), so
     # filtering + strict=False keeps load robust across train recipes while
     # still surfacing any genuine model.* weight mismatch.
+    # Non-generator submodule prefixes to ignore: the training loss (loss.*),
+    # and MetricGAN's PESQ critic (disc.*) + its anchor loss (base_loss.*) —
+    # none are part of the deploy model and none are used at eval.
+    _IGNORE = ("loss.", "disc.", "base_loss.")
     checkpoint = torch.load(model_checkpoint, map_location=device)
     state_dict = {k: v for k, v in checkpoint["state_dict"].items()
-                  if not k.startswith("loss.")}
+                  if not k.startswith(_IGNORE)}
     missing, unexpected = model.load_state_dict(state_dict, strict=False)
-    model_missing = [k for k in missing if not k.startswith("loss.")]
-    model_unexpected = [k for k in unexpected if not k.startswith("loss.")]
+    model_missing = [k for k in missing if not k.startswith(_IGNORE)]
+    model_unexpected = [k for k in unexpected if not k.startswith(_IGNORE)]
     if model_missing or model_unexpected:
         raise RuntimeError(
             f"model weight mismatch loading {model_checkpoint}:\n"
@@ -1010,6 +1219,10 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
         'SegSNR_impr_Avg': [],
         'MBSTOI_noisy': [],
         'MBSTOI': [],
+        'STOI_noisy': [],
+        'STOI': [],
+        'SISDR_noisy': [],
+        'SISDR': [],
         'PESQ_noisy': [],
         'PESQ': [],
         'PESQ_nb_noisy': [],
@@ -1019,7 +1232,11 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
         'IPD_error_noisy': [],
         'IPD_error': [],
         'IPD_error_noisy_deg': [],
-        'IPD_error_deg': []
+        'IPD_error_deg': [],
+        'ITD_error_noisy': [],
+        'ITD_error': [],
+        'IC_error_noisy': [],
+        'IC_error': []
     }
     
     metric_workers = max(1, int(metric_workers or 1))
@@ -1062,24 +1279,32 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
         'Average SegSNR Noisy (R)': np.nanmean(results_df['SegSNR_noisy_R']),
         'Average SegSNR Noisy': np.nanmean(results_df['SegSNR_noisy_Avg']),
         'Average MBSTOI Noisy': np.nanmean(results_df['MBSTOI_noisy']),
+        'Average STOI Noisy': np.nanmean(results_df['STOI_noisy']) if 'STOI_noisy' in results_df else float('nan'),
+        'Average SISDR Noisy': np.nanmean(results_df['SISDR_noisy']) if 'SISDR_noisy' in results_df else float('nan'),
         'Average PESQ Noisy': np.nanmean(results_df['PESQ_noisy']),
         'Average PESQ (nb) Noisy': np.nanmean(results_df['PESQ_nb_noisy']),
         'Average ILD Error Noisy (dB)': np.nanmean(results_df['ILD_error_noisy']),
         'Average IPD Error Noisy (rad)': np.nanmean(results_df['IPD_error_noisy']),
         'Average IPD Error Noisy (deg)': np.nanmean(results_df['IPD_error_noisy_deg']),
-        
+        'Average ITD Error Noisy (us)': np.nanmean(results_df['ITD_error_noisy']) if 'ITD_error_noisy' in results_df else float('nan'),
+        'Average IC Error Noisy': np.nanmean(results_df['IC_error_noisy']) if 'IC_error_noisy' in results_df else float('nan'),
+
         # Enhanced signal metrics
         'Average SegSNR (L)': np.nanmean(results_df['SegSNR_L']),
         'Average SegSNR (R)': np.nanmean(results_df['SegSNR_R']),
         'Average SegSNR': np.nanmean(results_df['SegSNR_Avg']),
         'Average SegSNR Improvement': np.nanmean(results_df['SegSNR_impr_Avg']),
         'Average MBSTOI': np.nanmean(results_df['MBSTOI']),
+        'Average STOI': np.nanmean(results_df['STOI']) if 'STOI' in results_df else float('nan'),
+        'Average SISDR': np.nanmean(results_df['SISDR']) if 'SISDR' in results_df else float('nan'),
         'Average PESQ': np.nanmean(results_df['PESQ']),
         'Average PESQ (nb)': np.nanmean(results_df['PESQ_nb']),
         'Average ILD Error (dB)': np.nanmean(results_df['ILD_error']),
         'Average IPD Error (rad)': np.nanmean(results_df['IPD_error']),
         'Average IPD Error (deg)': np.nanmean(results_df['IPD_error_deg']),
-        
+        'Average ITD Error (us)': np.nanmean(results_df['ITD_error']) if 'ITD_error' in results_df else float('nan'),
+        'Average IC Error': np.nanmean(results_df['IC_error']) if 'IC_error' in results_df else float('nan'),
+
         # Processing stats
         'Files Processed': len(results_df),
         'Total Files': total_pairs,
@@ -1245,7 +1470,7 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
     with open(output_file, 'w') as f:
         # Header
         f.write(
-            "SNR,MBSTOI_noisy,MBSTOI,PESQ_noisy,PESQ,PESQ_nb_noisy,PESQ_nb,"
+            "SNR,MBSTOI_noisy,MBSTOI,STOI_noisy,STOI,SISDR_noisy,SISDR,PESQ_noisy,PESQ,PESQ_nb_noisy,PESQ_nb,"
             "SegSNR_noisy,SegSNR,SegSNR_impr,"
             "L_ILD_noisy,L_ILD,L_IPD_noisy,L_IPD\n"
         )
@@ -1256,6 +1481,10 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
                 f.write(f"{snr}," +
                         f"{result.get('Average MBSTOI Noisy', 'N/A'):.4f}," +
                         f"{result.get('Average MBSTOI', 'N/A'):.4f}," +
+                        f"{result.get('Average STOI Noisy', float('nan')):.4f}," +
+                        f"{result.get('Average STOI', float('nan')):.4f}," +
+                        f"{result.get('Average SISDR Noisy', float('nan')):.2f}," +
+                        f"{result.get('Average SISDR', float('nan')):.2f}," +
                         f"{result.get('Average PESQ Noisy', 'N/A'):.4f}," +
                         f"{result.get('Average PESQ', 'N/A'):.4f}," +
                         f"{result.get('Average PESQ (nb) Noisy', 'N/A'):.4f}," +
@@ -1272,6 +1501,8 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
     if results_by_snr:
         avg_mbstoi_noisy = np.nanmean([r.get('Average MBSTOI Noisy', 0) for r in results_by_snr.values()])
         avg_mbstoi = np.nanmean([r.get('Average MBSTOI', 0) for r in results_by_snr.values()])
+        avg_stoi_noisy = np.nanmean([r.get('Average STOI Noisy', np.nan) for r in results_by_snr.values()])
+        avg_stoi = np.nanmean([r.get('Average STOI', np.nan) for r in results_by_snr.values()])
         avg_pesq_noisy = np.nanmean([r.get('Average PESQ Noisy', np.nan) for r in results_by_snr.values()])
         avg_pesq = np.nanmean([r.get('Average PESQ', np.nan) for r in results_by_snr.values()])
         avg_pesq_nb_noisy = np.nanmean([r.get('Average PESQ (nb) Noisy', np.nan) for r in results_by_snr.values()])
@@ -1283,10 +1514,16 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
         avg_ild = np.nanmean([r.get('Average ILD Error (dB)', 0) for r in results_by_snr.values()])
         avg_ipd_noisy_deg = np.nanmean([r.get('Average IPD Error Noisy (deg)', 0) for r in results_by_snr.values()])
         avg_ipd_deg = np.nanmean([r.get('Average IPD Error (deg)', 0) for r in results_by_snr.values()])
-        
+        avg_itd_noisy = np.nanmean([r.get('Average ITD Error Noisy (us)', np.nan) for r in results_by_snr.values()])
+        avg_itd = np.nanmean([r.get('Average ITD Error (us)', np.nan) for r in results_by_snr.values()])
+        avg_ic_noisy = np.nanmean([r.get('Average IC Error Noisy', np.nan) for r in results_by_snr.values()])
+        avg_ic = np.nanmean([r.get('Average IC Error', np.nan) for r in results_by_snr.values()])
+
         print(f"\n===== {dataset_name} PAPER STYLE AVERAGES =====")
         print(f"Average MBSTOI Noisy: {avg_mbstoi_noisy:.4f}")
         print(f"Average MBSTOI Enhanced: {avg_mbstoi:.4f}")
+        print(f"Average STOI Noisy: {avg_stoi_noisy:.4f}")
+        print(f"Average STOI Enhanced: {avg_stoi:.4f}")
         print(f"Average PESQ Noisy (wb): {avg_pesq_noisy:.4f}")
         print(f"Average PESQ Enhanced (wb): {avg_pesq:.4f}")
         print(f"Average PESQ Noisy (nb): {avg_pesq_nb_noisy:.4f}")
@@ -1298,13 +1535,19 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
         print(f"Average ILD Error Enhanced: {avg_ild:.4f} dB")
         print(f"Average IPD Error Noisy: {avg_ipd_noisy_deg:.2f} deg")
         print(f"Average IPD Error Enhanced: {avg_ipd_deg:.2f} deg")
-        
+        print(f"Average ITD Error Noisy: {avg_itd_noisy:.2f} us")
+        print(f"Average ITD Error Enhanced: {avg_itd:.2f} us")
+        print(f"Average IC Error Noisy: {avg_ic_noisy:.4f}")
+        print(f"Average IC Error Enhanced: {avg_ic:.4f}")
+
         # Save averages
         avg_file = output_file.replace('.csv', '_averages.txt')
         with open(avg_file, 'w') as f:
             f.write(f"===== {dataset_name} PAPER STYLE AVERAGES =====\n")
             f.write(f"Average MBSTOI Noisy: {avg_mbstoi_noisy:.4f}\n")
             f.write(f"Average MBSTOI Enhanced: {avg_mbstoi:.4f}\n")
+            f.write(f"Average STOI Noisy: {avg_stoi_noisy:.4f}\n")
+            f.write(f"Average STOI Enhanced: {avg_stoi:.4f}\n")
             f.write(f"Average PESQ Noisy (wb): {avg_pesq_noisy:.4f}\n")
             f.write(f"Average PESQ Enhanced (wb): {avg_pesq:.4f}\n")
             f.write(f"Average PESQ Noisy (nb): {avg_pesq_nb_noisy:.4f}\n")
@@ -1316,6 +1559,10 @@ def generate_paper_style_table(results_by_snr, output_file, dataset_name):
             f.write(f"Average ILD Error Enhanced: {avg_ild:.4f} dB\n")
             f.write(f"Average IPD Error Noisy: {avg_ipd_noisy_deg:.2f} deg\n")
             f.write(f"Average IPD Error Enhanced: {avg_ipd_deg:.2f} deg\n")
+            f.write(f"Average ITD Error Noisy: {avg_itd_noisy:.2f} us\n")
+            f.write(f"Average ITD Error Enhanced: {avg_itd:.2f} us\n")
+            f.write(f"Average IC Error Noisy: {avg_ic_noisy:.4f}\n")
+            f.write(f"Average IC Error Enhanced: {avg_ic:.4f}\n")
 
 
 # 11. Command-line interface

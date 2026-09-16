@@ -1,0 +1,167 @@
+Magic 271485
+Revision Verdi_S-2021.09
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 1080 392 1920 1009 289 229
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/r12k41024/Research/00_TB/CE/tb_AT.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 5
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 1320.000000 32320.000000
+cursor 11500.000000
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 54
+; marker line index
+markerPos 96
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByChange
+
+
+addGroup "G1"
+activeDirFile "" "/home/r12k41024/Research/00_TB/CE/tb_AT.fsdb"
+addSignal -h 15 /tb_AT/u_CE_AT/i_clk
+addSignal -h 15 -holdScope i_AT_mode[0:0]
+addSignal -h 15 -UNSIGNED -holdScope state_r[1:0]
+addSignal -h 15 -holdScope i_data_last
+addSignal -h 15 -holdScope i_AT_valid
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope AT_dat0_imag[63:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope AT_dat0_real[63:0]
+addGroup "G2"
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 /tb_AT/u_CE_AT/debug_result_imag[63:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope o_add_imag[63:0]
+addSignal -expanded -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[63:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[63][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[62][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[61][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[60][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[59][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[58][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[57][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[56][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[55][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[54][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[53][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[52][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[51][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[50][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[49][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[48][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[47][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[46][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[45][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[44][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[43][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[42][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[41][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[40][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[39][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[38][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[37][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[36][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[35][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[34][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[33][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[32][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[31][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[30][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[29][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[28][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[27][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[26][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[25][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[24][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[23][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[22][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[21][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[20][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[19][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[18][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[17][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[16][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[15][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[14][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[13][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[12][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[11][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[10][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[9][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[8][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[7][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[6][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[5][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[4][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[3][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[2][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[1][15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_result_real[0][15:0]
+addGroup "G3"
+addSignal -h 15 /tb_AT/u_CE_AT/o_AT_last
+addGroup "G4"
+addSignal -h 15 /tb_AT/u_CE_AT/last_pipe[6:0]
+addGroup "G5"
+addGroup "G6"
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 /tb_AT/u_CE_AT/debug_imag_num[15:0]
+addSignal -h 15 -UNSIGNED -IEEE754_FP16 -holdScope debug_real_num[15:0]
+addSignal -h 15 -holdScope o_AT_valid
+addSignal -h 15 -UNSIGNED -UDEC /tb_AT/chunk_idx[31:0]
+addSignal -h 15 -UNSIGNED -UDEC -holdScope dump_cnt[31:0]
+addSignal -expanded -h 15 -UNSIGNED -HEX /tb_AT/u_CE_AT/valid_pipe[6:0]
+addSignal -h 15 -holdScope valid_pipe[6]
+addSignal -h 15 -holdScope valid_pipe[5]
+addSignal -h 15 -holdScope valid_pipe[4]
+addSignal -h 15 -holdScope valid_pipe[3]
+addSignal -h 15 -holdScope valid_pipe[2]
+addSignal -h 15 -holdScope valid_pipe[1]
+addSignal -h 15 -holdScope valid_pipe[0]
+addSignal -h 15 -holdScope i_AT_valid
+addSignal -h 15 -UNSIGNED -holdScope state_r[1:0]
+addGroup "G7"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+activeDirFile "" "/home/r12k41024/Research/00_TB/CE/tb_AT.fsdb"
+
+GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
+getSignalForm close
+
+"/DW_fp_addsub_inst"
+"/tb_AT"
+"/tb_AT/u_CE_AT"
+
+SCOPE_LIST_BEGIN
+"/DW_fp_addsub_inst"
+"/tb_AT"
+"/tb_AT/u_CE_AT"
+SCOPE_LIST_END
+
+GETSIGNALFORM_SCOPE_HIERARCHY_END
+
+

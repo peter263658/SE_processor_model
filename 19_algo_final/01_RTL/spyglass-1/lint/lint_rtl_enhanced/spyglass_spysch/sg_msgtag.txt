@@ -1,0 +1,44 @@
+-1 "CMD_overloadrule01" 2
+"RULEGROUP"
+["Command-line read"]
+"BUILTIN"
+"1"
+-1 "ReserveName" 3
+"TEMPLATE"
+["lint/lint_rtl_enhanced"]
+"RULE_ORDER"
+[29]
+"RULEGROUP"
+["openmore/Basic_Coding_Practices"]
+-1 "ReserveNameSystemVerilog-ML" 3
+"TEMPLATE"
+["lint/lint_rtl_enhanced"]
+"RULE_ORDER"
+[30]
+"RULEGROUP"
+["morelint"]
+-1 "STX_VE_1360" 2
+"RULEGROUP"
+["Design Read"]
+"BUILTIN"
+"1"
+-1 "STX_VE_479" 2
+"RULEGROUP"
+["Design Read"]
+"BUILTIN"
+"1"
+-1 "STX_VE_481" 2
+"RULEGROUP"
+["Design Read"]
+"BUILTIN"
+"1"
+-1 "STX_VE_485" 2
+"RULEGROUP"
+["Design Read"]
+"BUILTIN"
+"1"
+-1 "STX_VE_606" 2
+"RULEGROUP"
+["Design Read"]
+"BUILTIN"
+"1"

@@ -1,0 +1,193 @@
+{
+  "enc_dw_0": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 10
+  },
+  "enc_pw_0": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 16
+  },
+  "enc_dw_1": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 80
+  },
+  "enc_pw_1": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 256
+  },
+  "enc_dw_2": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 160
+  },
+  "enc_pw_2": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 1024
+  },
+  "enc_dw_3": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 320
+  },
+  "enc_pw_3": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 4096
+  },
+  "enc_dw_4": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 640
+  },
+  "enc_pw_4": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 16384
+  },
+  "enc_dw_5": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 1280
+  },
+  "enc_pw_5": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 32768
+  },
+  "dec_dw_0": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 1280
+  },
+  "dec_pw_0": {
+    "tier": "B",
+    "bits": 4,
+    "format": "INT",
+    "num_params": 65536
+  },
+  "dec_dw_1": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 640
+  },
+  "dec_pw_1": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 32768
+  },
+  "dec_dw_2": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 320
+  },
+  "dec_pw_2": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 8192
+  },
+  "dec_dw_3": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 160
+  },
+  "dec_pw_3": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 2048
+  },
+  "dec_dw_4": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 80
+  },
+  "dec_pw_4": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 512
+  },
+  "dec_dw_5": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 10
+  },
+  "dec_pw_5": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 32
+  },
+  "mattn_input_proj": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 65536
+  },
+  "mattn_in_proj_re": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 196608
+  },
+  "mattn_in_proj_im": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 196608
+  },
+  "mattn_out_proj_re": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 65536
+  },
+  "mattn_out_proj_im": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 65536
+  },
+  "mattn_output_proj": {
+    "tier": "C",
+    "bits": 3,
+    "format": "INT",
+    "num_params": 65536
+  },
+  "_summary": {
+    "fp8_baseline_bytes": 823972,
+    "mixed_precision_bytes": 317180,
+    "savings_bytes": 506792,
+    "savings_pct": 61.5,
+    "tier_counts": {
+      "A_w8": 0,
+      "B_w4": 1,
+      "C_w3": 29
+    }
+  }
+}

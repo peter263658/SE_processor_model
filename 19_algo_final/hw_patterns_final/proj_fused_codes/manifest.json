@@ -1,0 +1,100 @@
+{
+  "note": "act-k-fused per-head APoT codes + PPU bias (\u03b2) for the outer complex projections. PEG map: P0=fc_r\u00b7x_real(kreal) P1=fc_i\u00b7x_imag(kimag) P2=fc_r\u00b7x_imag(kimag) P3=fc_i\u00b7x_real(kreal). fuse=(a+k,b+k); has_second/res_sign unchanged. bias direct (beta_re=b_r, beta_im=b_i). Files also dropped additively into tb_pattern/weights/<layer>/.",
+  "apot6a_code": "[11:7]=a+24 [6:2]=b+24 [1]=has_second [0]=res_sign(1=minus)",
+  "layers": [
+    {
+      "layer": "mattn.input_proj",
+      "k_real": -7,
+      "k_imag": -6,
+      "R2": 0.9999999992984282,
+      "alpha_identity_code_hex": "0xC60",
+      "fused_a_exp": {
+        "fc_r_kreal": -11,
+        "fc_r_kimag": -10,
+        "fc_i_kreal": -11,
+        "fc_i_kimag": -10
+      }
+    },
+    {
+      "layer": "mattn.output_proj",
+      "k_real": -3,
+      "k_imag": -3,
+      "R2": 1.0000000000000684,
+      "alpha_identity_code_hex": "0xC60",
+      "fused_a_exp": {
+        "fc_r_kreal": [
+          -7,
+          -7,
+          -6,
+          -6,
+          -7,
+          -7,
+          -6,
+          -6,
+          -6,
+          -7,
+          -7,
+          -7,
+          -6,
+          -7,
+          -6,
+          -6
+        ],
+        "fc_r_kimag": [
+          -7,
+          -7,
+          -6,
+          -6,
+          -7,
+          -7,
+          -6,
+          -6,
+          -6,
+          -7,
+          -7,
+          -7,
+          -6,
+          -7,
+          -6,
+          -6
+        ],
+        "fc_i_kreal": [
+          -7,
+          -7,
+          -7,
+          -6,
+          -7,
+          -6,
+          -6,
+          -6,
+          -7,
+          -7,
+          -7,
+          -7,
+          -6,
+          -7,
+          -7,
+          -7
+        ],
+        "fc_i_kimag": [
+          -7,
+          -7,
+          -7,
+          -6,
+          -7,
+          -6,
+          -6,
+          -6,
+          -7,
+          -7,
+          -7,
+          -7,
+          -6,
+          -7,
+          -7,
+          -7
+        ]
+      }
+    }
+  ]
+}

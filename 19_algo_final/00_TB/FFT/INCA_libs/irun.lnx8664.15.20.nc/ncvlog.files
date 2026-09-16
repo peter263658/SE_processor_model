@@ -1,0 +1,12 @@
+//
+// File created by:  ncverilog
+// Do not modify this file
+//
+/home/r12k41024/Research/00_TB/FFT/TB128.v
+/home/r12k41024/Research/01_RTL/FFT/FFT128.sv
+/home/r12k41024/Research/01_RTL/FFT/SdfUnit.sv
+/home/r12k41024/Research/01_RTL/FFT/SdfUnit2.sv
+/home/r12k41024/Research/01_RTL/FFT/Butterfly.sv
+/home/r12k41024/Research/01_RTL/FFT/DelayBuffer.sv
+/home/r12k41024/Research/01_RTL/FFT/Multiply.sv
+/home/r12k41024/Research/01_RTL/FFT/Twiddle128.sv

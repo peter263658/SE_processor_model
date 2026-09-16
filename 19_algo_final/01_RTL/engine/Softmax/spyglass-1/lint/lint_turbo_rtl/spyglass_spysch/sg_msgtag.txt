@@ -1,0 +1,15 @@
+-1 "STX_VE_1360" 2
+"RULEGROUP"
+["Design Read"]
+"BUILTIN"
+"1"
+-1 "STX_VE_479" 2
+"RULEGROUP"
+["Design Read"]
+"BUILTIN"
+"1"
+-1 "TurboModeStatus" 2
+"RULEGROUP"
+["Design Read"]
+"BUILTIN"
+"1"

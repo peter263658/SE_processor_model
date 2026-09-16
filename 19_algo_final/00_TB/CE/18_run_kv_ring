@@ -1,0 +1,2 @@
+vcs -f kv_ring_file.f -full64 -R +define+BEHAV +v2k +notimingcheck -sverilog -timescale=1ns/10ps -debug_access+all \
+    -y /usr/cad/synopsys/synthesis/cur/dw/sim_ver +incdir+/usr/cad/synopsys/synthesis/cur/dw/sim_ver +libext+.v

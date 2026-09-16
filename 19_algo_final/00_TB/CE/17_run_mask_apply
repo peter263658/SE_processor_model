@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# mask_apply (output-stage mode-C complex multiply) vs mask_apply_golden. +SIDE=L|R.
+set -e
+cd "$(dirname "$0")"
+export VCS_HOME=/usr/cad/synopsys/vcs/cur
+export PATH=$VCS_HOME/bin:$VCS_HOME/linux/bin:/usr/cad/synopsys/verdi/cur/bin:$PATH
+export LM_LICENSE_FILE=26585@lshc:26585@lstc:26585@lstn
+export SNPSLMD_LICENSE_FILE=$LM_LICENSE_FILE
+SIDE=${1:-L}
+vcs -f mask_apply_file.f -full64 -R +v2k +notimingcheck -sverilog -timescale=1ns/10ps -debug_access+all \
+    -y /usr/cad/synopsys/synthesis/cur/dw/sim_ver +incdir+/usr/cad/synopsys/synthesis/cur/dw/sim_ver +libext+.v \
+    +SIDE=$SIDE 2>&1 | tee mask_apply_run.log

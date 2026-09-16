@@ -1680,10 +1680,51 @@ class _LmulMatmulExactSTE(torch.autograd.Function):
         return grad_a, grad_b, None, None
 
 
-def _lmul_matmul(a, b, mantissa_bits=4, bit_exact=False, ste_mode=None):
+_FP16_MAX_NORMAL = 65504.0
+
+
+def _fp16_add_sat(a, b):
+    """FP16 round-to-nearest-even add, overflow saturated to +/- max-normal.
+
+    Bit-exact model of RTL `fp16_add_sat` (DesignWare DW_fp_add, rnd=RNE,
+    ieee_compliance=1, Inf clamped to 0x7BFF/0xFBFF). Inputs are fp16; the add
+    is evaluated in fp16 (PyTorch upcasts to fp32, rounds back RNE).
+    """
+    z = a.to(torch.float16) + b.to(torch.float16)
+    inf = torch.isinf(z)
+    if inf.any():
+        z = torch.where(inf, torch.sign(z).to(torch.float16) * _FP16_MAX_NORMAL, z)
+    return z
+
+
+def _fp16_tree_reduce(products, dim):
+    """Fixed paired balanced binary tree over `dim`, fp16 saturating add at every
+    node — bit-exact model of the CE 32-way `adder_tree_fp16` (PEG / MODE_LMUL_ATTN).
+
+    The hardware tree is 32-way with the unused upper lanes fed 0; a 16-element
+    dot product therefore reduces as a clean adjacent-pair binary tree (the +0
+    levels are exact no-ops). We zero-pad `dim` up to a power of two and fold
+    adjacent pairs (i, i+1) bottom-up, rounding to fp16 after each add.
+    """
+    x = products.to(torch.float16).transpose(dim, -1).contiguous()
+    n = x.shape[-1]
+    p2 = 1 << (n - 1).bit_length() if n > 1 else 1
+    if p2 != n:
+        pad = torch.zeros(*x.shape[:-1], p2 - n, dtype=x.dtype, device=x.device)
+        x = torch.cat([x, pad], dim=-1)
+    while x.shape[-1] > 1:
+        x = _fp16_add_sat(x[..., 0::2], x[..., 1::2])
+    return x.squeeze(-1)
+
+
+def _lmul_matmul(a, b, mantissa_bits=4, bit_exact=False, ste_mode=None,
+                 reduce_mode="sum"):
     if not (torch.is_grad_enabled() and (a.requires_grad or b.requires_grad)):
         multiply = _lmul_multiply_bit_exact if bit_exact else _lmul_multiply
         products = multiply(a.unsqueeze(-1), b.unsqueeze(-3), mantissa_bits)
+        if reduce_mode == "fp16_tree":
+            # HW datapath: fp16 saturating adder tree (round every add).
+            return _fp16_tree_reduce(products, dim=-2)
         return products.sum(dim=-2)
     mode = _resolve_ste_mode(ste_mode)
     if mode == "real":
@@ -1844,12 +1885,13 @@ def _infer_causal_window_from_mask(attn_mask, q_len, key_len):
 
 
 def _lmul_windowed_qk_matmul(q, k_t, window_width, mantissa_bits=4,
-                             bit_exact=False, chunk_size=32):
+                             bit_exact=False, chunk_size=32, reduce_mode="sum"):
     q_len = q.size(-2)
     key_len = k_t.size(-1)
     if window_width is None or window_width >= key_len:
         return _lmul_matmul(
-            q, k_t, mantissa_bits=mantissa_bits, bit_exact=bit_exact
+            q, k_t, mantissa_bits=mantissa_bits, bit_exact=bit_exact,
+            reduce_mode=reduce_mode,
         )
 
     chunk_size = max(1, int(chunk_size))
@@ -1866,6 +1908,7 @@ def _lmul_windowed_qk_matmul(q, k_t, window_width, mantissa_bits=4,
             k_t[..., :, key_start:key_end],
             mantissa_bits=mantissa_bits,
             bit_exact=bit_exact,
+            reduce_mode=reduce_mode,
         )
         rows = torch.arange(q_start, q_end, device=q.device).view(-1, 1)
         keys = torch.arange(key_start, key_end, device=q.device).view(1, -1)
@@ -2142,6 +2185,14 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
         v = v.to(torch.float16)
 
     # QK^T / sqrt(D). Hardware datapath: fp16 accumulator when enabled.
+    # qk_accumulate: "fp32" (PyTorch sum, round once — deploy default) or
+    # "fp16_tree" (CE adder_tree_fp16 — round every add; bit-exact to HW).
+    qk_reduce_mode = (
+        "fp16_tree"
+        if str(_attention_datapath_value(
+            attention_datapath, "qk_accumulate", "fp32")).lower() in ("fp16_tree", "fp16tree", "tree")
+        else "sum"
+    )
     if _lmul_target_enabled(attention_datapath, "qk"):
         k_t = k.transpose(-2, -1)
         qk_force_dense = bool(_attention_datapath_value(
@@ -2160,12 +2211,14 @@ def _mha_attention_forward(mha, x, attn_mask, top_k, activation_quantizer=None,
                 mantissa_bits=lmul_bits,
                 bit_exact=lmul_bit_exact,
                 chunk_size=qk_chunk_size,
+                reduce_mode=qk_reduce_mode,
             )
         else:
             qk_scores = _lmul_matmul(
                 q, k_t,
                 mantissa_bits=lmul_bits,
                 bit_exact=lmul_bit_exact,
+                reduce_mode=qk_reduce_mode,
             )
     else:
         qk_scores = torch.matmul(q, k.transpose(-2, -1))

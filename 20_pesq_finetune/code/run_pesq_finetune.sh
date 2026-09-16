@@ -77,11 +77,12 @@ echo "[pesq-ft] warm-start=$START_CKPT"
 overrides=(
   # --- new PESQ loss term ---
   model.pesq_weight="$PESQ_WEIGHT"
+  +model.snr_loss_mode="${SNR_MODE:-snr}"
   # --- keep MBSTOI + spatial terms (unchanged from deploy) ---
-  model.stoi_weight=10
-  model.ipd_weight=10
-  model.ild_weight=1
-  model.snr_loss_weight=1
+  model.stoi_weight="${STOI_W:-10}"
+  model.ipd_weight="${IPD_W:-10}"
+  model.ild_weight="${ILD_W:-1}"
+  model.snr_loss_weight="${SNR_W:-1}"
   # --- deploy W4A8 hardware stack (verbatim from strict-core, so ckpt loads) ---
   training.qat_scope=full
   training.top_k_attention=4

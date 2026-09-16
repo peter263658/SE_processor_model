@@ -1,0 +1,77 @@
+============================================================
+Layer Configuration: Layer3_32to64
+============================================================
+
+Number Format:
+  Type: IEEE 754 Half Precision (FP16)
+  Total bits: 16
+  WXP (Exponent): 5 bits
+  FRAC (Fraction): 10 bits
+  Exponent bias: 15
+  Bit layout: [sign(1)][exp(5)][frac(10)]
+
+Architecture:
+  Type: Shared Weights (左右耳共用)
+  Description: 左右聲道使用相同的 Encoder/Decoder 權重
+
+Layer Dimensions:
+  in_channels:  32 (complex)
+  out_channels: 64 (complex)
+  freq_in:      8
+  freq_out:     4
+
+Convolution Parameters:
+  kernel_size: (5, 1)
+  stride:      (2, 1)
+  padding:     (2, 0)
+
+Data Files:
+  input.dat:
+    - Shape: [32, 8]
+    - Size: 256 complex numbers
+    - Description: 輸入特徵 (單聲道等效)
+    - Format: [imag_fp16][real_fp16] per line (32-bit)
+
+  dw_weight.dat:
+    - Shape: [32, 5]
+    - Size: 160 complex numbers
+    - Description: Depthwise 卷積權重 (左右耳共用)
+    - Format: [imag_fp16][real_fp16] per line (32-bit)
+
+  pw_weight.dat:
+    - Shape: [64, 32]
+    - Size: 2048 complex numbers
+    - Description: Pointwise 卷積權重 (左右耳共用)
+    - Format: [imag_fp16][real_fp16] per line (32-bit)
+
+  dw_output.dat:
+    - Shape: [32, 4]
+    - Size: 128 complex numbers
+    - Description: Depthwise 輸出 (中間驗證用)
+    - Format: [imag_fp16][real_fp16] per line (32-bit)
+
+  final_output.dat:
+    - Shape: [64, 4]
+    - Size: 256 complex numbers
+    - Description: 最終輸出 (Golden reference)
+    - Format: [imag_fp16][real_fp16] per line (32-bit)
+
+Computational Complexity (per time frame, 單聲道):
+  Depthwise:
+    - Complex MACs: 640
+    - Real MACs:    2560
+  Pointwise:
+    - Complex MACs: 8192
+    - Real MACs:    32768
+  Total:
+    - Complex MACs: 8832
+    - Real MACs:    35328
+    - Cycles @ 256 Real MACs: 138
+
+Binaural Processing:
+  - 左右耳使用相同權重
+  - 可循序處理 (L→R) 或並行處理
+  - 循序處理: 138 cycles/channel
+  - 並行處理: 138 cycles/frame (需2組PEG)
+
+============================================================

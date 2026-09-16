@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# CE W4A8 per-layer GOLDEN numeric sim (task 4/9).
+# Runs the full ce_engine on the REAL deploy WBUF image + real act, compares the descaled
+# OACC accumulate for encoder.model.0.0.pointwise (sub-op 1) against the fp32-reference-derived
+# golden (golden_enc0_pwr_preBN_t0.hex).  Regenerate the golden first if patterns changed:
+#     python3 ../../10_algo/scripts/gen_golden_enc0_pw.py
+# PASS = even oc (0,2,4,6) match (validates gather->CSD->FP16 tree->dealer->OACC vs real golden).
+# Odd-oc FAIL = the documented ic=1 nibble-addressing gap (see CE_GOLDEN_SIM_2026-06-08.md).
+set -e
+cd "$(dirname "$0")"
+
+# CAD tools / license (csh-only profiles don't reach bash)
+export VCS_HOME=/usr/cad/synopsys/vcs/cur
+export PATH=$VCS_HOME/bin:$VCS_HOME/linux/bin:/usr/cad/synopsys/verdi/cur/bin:$PATH
+export LM_LICENSE_FILE=26585@lshc:26585@lstc:26585@lstn
+export SNPSLMD_LICENSE_FILE=$LM_LICENSE_FILE
+
+# ensure the golden vectors exist (general generator; defaults in the TB target enc0 pw)
+G=../../10_algo/hw_patterns_final/sram_images/golden/encoder_model_0_0_pointwise_r__0
+if [ ! -f $G/golden_preBN_t0.hex ]; then
+    echo "[12_run] golden vectors missing -> generating"
+    python3 ../../10_algo/scripts/gen_golden_conv.py encoder.model.0.0.pointwise 1
+fi
+
+vcs -f tb_ce_engine_golden_file.f -full64 -R +v2k +notimingcheck -sverilog -timescale=1ns/10ps -debug_access+all \
+    -y /usr/cad/synopsys/synthesis/cur/dw/sim_ver +incdir+/usr/cad/synopsys/synthesis/cur/dw/sim_ver +libext+.v \
+    +SUBOP=1 +IC=1 +OC=8 +ACT=$G/act_t0.hex +GOLD=$G/golden_preBN_t0.hex \
+    2>&1 | tee ce_engine_golden_run.log
+
+echo "[12_run_ce_engine_golden] sim done — see table above (per-oc OACC vs golden)."

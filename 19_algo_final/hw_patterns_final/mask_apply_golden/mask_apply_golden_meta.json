@@ -1,0 +1,12 @@
+{
+ "side": "L",
+ "layout": "[bin 0..63][frame 0..398] bin-major (64x399)",
+ "formula": "masked_re=sr*mr-si*mi, masked_im=sr*mi+si*mr ; DC bin0=0 (pad) -> 65 bins to iSTFT",
+ "spec_format": "Q2.14 int16 (step 2^-14, range [-2,2))",
+ "mask_format": "fp16",
+ "masked_format": "Q2.14 int16",
+ "rounding": "round-half-to-EVEN (RNE) to Q2.14, single round after the full-precision products+add",
+ "accumulator_note": "products sr*mr etc. + the subtract/add evaluated >= Q2.14+guard (fp32/wide); fp16-accumulate would NOT match this golden bit-exactly",
+ "dc": "masked bin 0 = 0; spec/mask bins 0..63 -> masked bins 1..64",
+ "prereq": "decoder.model.5.0.pointwise_x (sub-ops 28/29) MUST emit fp16-PASS (no e4m3 cast); e4m3 mask -> 1.9% RMS"
+}

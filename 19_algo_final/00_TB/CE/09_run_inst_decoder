@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# inst_decoder (Step 2-2) compile + self-checking smoke: walk all 68 sub-ops,
+# check descriptor==ROM / oacc_en / oacc_clr / reach DONE. Pass: "[TB] ALL PASS".
+# (No DesignWare needed — inst_decoder uses no DW primitives.)
+set -e
+cd "$(dirname "$0")"
+
+# CAD tools / license (csh-only profiles don't reach bash)
+export VCS_HOME=/usr/cad/synopsys/vcs/cur
+export PATH=$VCS_HOME/bin:$VCS_HOME/linux/bin:/usr/cad/synopsys/verdi/cur/bin:$PATH
+export LM_LICENSE_FILE=26585@lshc:26585@lstc:26585@lstn
+export SNPSLMD_LICENSE_FILE=$LM_LICENSE_FILE
+
+vcs -f inst_decoder_file.f -full64 -R +v2k +notimingcheck -sverilog -timescale=1ns/10ps -debug_access+all \
+    2>&1 | tee inst_decoder_run.log
+
+# belt-and-suspenders: $fatal(1) already exits non-zero, but also require the banner
+grep -q "\[TB\] ALL PASS" inst_decoder_run.log
+echo "[09_run_inst_decoder] PASS"

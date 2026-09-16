@@ -1,0 +1,34 @@
+{
+  "model_config": {
+    "embed_dim": 256,
+    "num_heads": 16,
+    "head_dim": 16,
+    "attn_win": 31
+  },
+  "recommended_precision": {
+    "Wq_Wk_Wv_Wo_weights": "fp16",
+    "Q_K_V_activations": "fp16",
+    "QKT_accumulator": "int16",
+    "score_x_V_output": "fp16",
+    "proj_in_proj_out": "fp16"
+  },
+  "recommended_sparse_attention": {
+    "top_k": 4,
+    "density_reduction_pct": 87.1,
+    "window_size": 31,
+    "sharp_heads": 12,
+    "flat_heads": 4,
+    "mean_entropy_bits": 1.29
+  },
+  "hardware_savings_estimate": {
+    "MAC_area_ratio_vs_fp32": 0.25,
+    "weight_memory_reduction_x": 2.0,
+    "attn_compute_reduction_pct": 87.1,
+    "combined_area_savings_pct": 75.0
+  },
+  "mse_thresholds_used": {
+    "headroom_factor": 1.5,
+    "abs_floor": 0.0001
+  },
+  "sensitivity_fp32_baseline_mse": 0.6580487579107285
+}

@@ -1,5 +1,7 @@
 # Fusions Applied by `ckpt2hwdat.py`
 
+> **ERRATUM (2026-07-07)**：本文 F 項寫的 STFT/iSTFT window「Hann」有誤——訓練與 deploy 實際使用 **Hamming**（07 handoff 起即為 Hamming；RTL 亦以 Hamming 實作並 bit-exact 對過 deploy，見 19_algo_final T4 spec 511/512）。引用本文件時以 Hamming 為準；原文保留不改（append-only 慣例）。
+
 本文件列出匯出硬體 bin 時，`ckpt2hwdat.py` 幫忙折掉的常數（fuse）以及**沒有 fuse、要由硬體 pipeline 處理**的運算，好讓硬體端清楚知道匯出資料的語意。
 
 ---

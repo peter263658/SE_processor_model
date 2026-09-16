@@ -1,0 +1,5 @@
+INPUT@@/home/r12k41024/Research/01_RTL/spyglass-1/lint/lint_abstract/spyglass_reports@@/home/r12k41024/Research/01_RTL/spyglass-1/html_reports/data_files/@@@@lint-lint_abstract@@
+COPY@@/home/r12k41024/Research/01_RTL/spyglass-1/lint/lint_abstract/spyglass_reports/moresimple.rpt@@data_files/_lint-lint_abstract_moresimple.rpt@@
+COPY@@/home/r12k41024/Research/01_RTL/spyglass-1/lint/lint_abstract/spyglass_reports/no_msg_reporting_rules.rpt@@data_files/_lint-lint_abstract_no_msg_reporting_rules.rpt@@
+PROCESS@@Audits@@area@@morelint@@openmore@@starc@@timing@@erc@@lowpower@@clock-reset@@dft@@dft_dsm@@power_est@@starc2005@@simulation@@starc2002@@miscellaneous@@latch@@lint@@SpyGlass
+COPY@@/home/r12k41024/Research/01_RTL/spyglass-1/lint/lint_abstract/spyglass.log@@data_files/_lint-lint_abstract_spyglass.log@@

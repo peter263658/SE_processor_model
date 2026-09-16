@@ -79,6 +79,8 @@ class DCNNLightningModule(BaseLightningModule):
                 snr_loss_weight=self.config["model"]["snr_loss_weight"],
 
                 pesq_weight=self.config["model"].get("pesq_weight", 0),
+
+                snr_loss_mode=self.config["model"].get("snr_loss_mode", "snr"),
                 )
         else:    
             model = DCNN(**self.config["model"])

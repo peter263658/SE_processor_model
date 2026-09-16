@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# ISTFT directed test: STFT_TOP (i_stft_mode=ISTFT), 1 shared FFT128 used as IFFT
+# + conj_sym_feeder + istft_reorder. Pass: "[TB] ALL PASS".
+set -e
+cd "$(dirname "$0")"
+
+if [ ! -f patterns/istft_golden.hex ]; then python3 gen_istft_patterns.py; fi
+
+export VCS_HOME=/usr/cad/synopsys/vcs/cur
+export PATH=$VCS_HOME/bin:$VCS_HOME/linux/bin:/usr/cad/synopsys/verdi/cur/bin:$PATH
+export LM_LICENSE_FILE=26585@lshc:26585@lstc:26585@lstn
+export SNPSLMD_LICENSE_FILE=$LM_LICENSE_FILE
+
+vcs -f istft_file.f -full64 -R 2>&1 | tee istft_run.log
+
+grep -q "\[TB\] ALL PASS" istft_run.log
+echo "[09_run_istft] PASS"

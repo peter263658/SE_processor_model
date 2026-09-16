@@ -1,0 +1,33 @@
+{
+  "config": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/strict_core_deploy_config.yaml",
+  "dims": {
+    "attn_window": 32,
+    "block_size": 32,
+    "block_start_T0": 320,
+    "embed_dim": 256,
+    "head_dim": 16,
+    "num_heads": 16,
+    "rep_query_abs": 351,
+    "rep_query_local_in_block": 31,
+    "seq_len_T": 399
+  },
+  "files": {},
+  "input_wav": "/raid/R12K41024/BCCTN/Dataset/noisy_testset/snr_0dB/p225_p225_009_az-40_snr+0.0.wav",
+  "kv_cache_layout": "[head][frame][head_dim]; q/k/v captured as (H,T,D). KV value dtype = block-float e4m3 (per-tensor pow2 shared exponent) held in fp16.",
+  "lmul": {
+    "qk": "L-Mul m8 (bit_exact)",
+    "score_v": "L-Mul m8 via q0.8 packet (bit_exact)"
+  },
+  "packet": {
+    "local_idx_bits": 5,
+    "prob_bits": 8,
+    "prob_max_code": 255,
+    "prob_scale": 256,
+    "score_v_mode": "lmul",
+    "top_k": 4
+  },
+  "qk_scale": "x 2^-2  (pow2: 1/sqrt(D)=1/sqrt(16)=1/4=2^-2)",
+  "softmax_mode": "shift_topk_pow2_clamp8_nomantissa",
+  "source_ckpt": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/ckpt/strict_core_pow2_blockfloat_deploy_ep3_vctk0.8357_timit0.7898.ckpt",
+  "tied_complex": "tied MHA: same weights M run on x.real (real_pass) and x.imag (imag_pass). ComplexMHA(x)=(a-b)+i(a+b), a=M(x.real), b=M(x.imag)."
+}

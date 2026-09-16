@@ -1,0 +1,28 @@
+{
+ "emit_order": "topk_descending_prob",
+ "prob_code": [
+  128,
+  64,
+  64,
+  32
+ ],
+ "local_idx": [
+  0,
+  13,
+  24,
+  25
+ ],
+ "abs_key_frame": [
+  351,
+  338,
+  327,
+  326
+ ],
+ "valid_slot": [
+  1,
+  1,
+  1,
+  1
+ ],
+ "prob_scale": 256
+}
