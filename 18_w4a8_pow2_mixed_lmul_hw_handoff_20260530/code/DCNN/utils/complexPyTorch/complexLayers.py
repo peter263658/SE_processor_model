@@ -10,6 +10,7 @@ Based on https://openreview.net/forum?id=H1T2hmZAb
 """
 
 import math
+import os
 
 import torch
 import torch.nn.functional as F
@@ -206,6 +207,10 @@ def _folded_bn_affine(bn, scale_mode, pow2_min_exp=-8, pow2_max_exp=8):
         alpha, scale_mode, pow2_min_exp, pow2_max_exp
     )
     beta_fold = beta - alpha_q * bn.running_mean
+    # HW storage study: store the folded BN bias as fp16 instead of fp32.
+    # Env-gated so the default (fp32) eval is untouched. round-trip fp16->fp32.
+    if os.environ.get("BCCTN_BN_BIAS_FP16", "0") == "1":
+        beta_fold = beta_fold.to(torch.float16).to(beta_fold.dtype)
     return alpha_q, beta_fold
 
 

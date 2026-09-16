@@ -1,0 +1,2167 @@
+{
+  "regions": {
+    "weight_code": {
+      "start": 0,
+      "end": 241603,
+      "bytes": 241603
+    },
+    "weight_apot_scale": {
+      "start": 241664,
+      "end": 247216,
+      "bytes": 5552
+    },
+    "bn_prelu": {
+      "start": 247216,
+      "end": 251624,
+      "bytes": 4408
+    },
+    "constants": {
+      "start": 241664,
+      "end": 251677,
+      "bytes": 10013
+    }
+  },
+  "tensors": [
+    {
+      "dotted": "encoder.model.0.0.depthwise_r",
+      "kind": "int4",
+      "offset": 0,
+      "length": 3,
+      "src": "weights/encoder.model.0.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.0.0.depthwise_i",
+      "kind": "int4",
+      "offset": 64,
+      "length": 3,
+      "src": "weights/encoder.model.0.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.0.0.pointwise_r",
+      "kind": "int4",
+      "offset": 128,
+      "length": 4,
+      "src": "weights/encoder.model.0.0.pointwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.0.0.pointwise_i",
+      "kind": "int4",
+      "offset": 192,
+      "length": 4,
+      "src": "weights/encoder.model.0.0.pointwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.1.0.depthwise_r",
+      "kind": "int4",
+      "offset": 256,
+      "length": 20,
+      "src": "weights/encoder.model.1.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.1.0.depthwise_i",
+      "kind": "int4",
+      "offset": 320,
+      "length": 20,
+      "src": "weights/encoder.model.1.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.1.0.pointwise_r",
+      "kind": "int4",
+      "offset": 384,
+      "length": 64,
+      "src": "weights/encoder.model.1.0.pointwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.1.0.pointwise_i",
+      "kind": "int4",
+      "offset": 448,
+      "length": 64,
+      "src": "weights/encoder.model.1.0.pointwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.2.0.depthwise_r",
+      "kind": "int4",
+      "offset": 512,
+      "length": 40,
+      "src": "weights/encoder.model.2.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.2.0.depthwise_i",
+      "kind": "int4",
+      "offset": 576,
+      "length": 40,
+      "src": "weights/encoder.model.2.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.2.0.pointwise_r",
+      "kind": "int4",
+      "offset": 640,
+      "length": 256,
+      "src": "weights/encoder.model.2.0.pointwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.2.0.pointwise_i",
+      "kind": "int4",
+      "offset": 896,
+      "length": 256,
+      "src": "weights/encoder.model.2.0.pointwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.3.0.depthwise_r",
+      "kind": "int4",
+      "offset": 1152,
+      "length": 80,
+      "src": "weights/encoder.model.3.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.3.0.depthwise_i",
+      "kind": "int4",
+      "offset": 1280,
+      "length": 80,
+      "src": "weights/encoder.model.3.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.3.0.pointwise_r",
+      "kind": "int4",
+      "offset": 1408,
+      "length": 1024,
+      "src": "weights/encoder.model.3.0.pointwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.3.0.pointwise_i",
+      "kind": "int4",
+      "offset": 2432,
+      "length": 1024,
+      "src": "weights/encoder.model.3.0.pointwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.4.0.depthwise_r",
+      "kind": "int4",
+      "offset": 3456,
+      "length": 160,
+      "src": "weights/encoder.model.4.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.4.0.depthwise_i",
+      "kind": "int4",
+      "offset": 3648,
+      "length": 160,
+      "src": "weights/encoder.model.4.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.4.0.pointwise_r",
+      "kind": "int4",
+      "offset": 3840,
+      "length": 4096,
+      "src": "weights/encoder.model.4.0.pointwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.4.0.pointwise_i",
+      "kind": "int4",
+      "offset": 7936,
+      "length": 4096,
+      "src": "weights/encoder.model.4.0.pointwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.5.0.depthwise_r",
+      "kind": "int4",
+      "offset": 12032,
+      "length": 320,
+      "src": "weights/encoder.model.5.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.5.0.depthwise_i",
+      "kind": "int4",
+      "offset": 12352,
+      "length": 320,
+      "src": "weights/encoder.model.5.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.5.0.pointwise_r",
+      "kind": "int4",
+      "offset": 12672,
+      "length": 8192,
+      "src": "weights/encoder.model.5.0.pointwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "encoder.model.5.0.pointwise_i",
+      "kind": "int4",
+      "offset": 20864,
+      "length": 8192,
+      "src": "weights/encoder.model.5.0.pointwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "mattn.input_proj/fc_r",
+      "kind": "int4",
+      "offset": 29056,
+      "length": 32768,
+      "src": "weights/mattn.input_proj/fc_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "mattn.input_proj/fc_i",
+      "kind": "int4",
+      "offset": 61824,
+      "length": 32768,
+      "src": "weights/mattn.input_proj/fc_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "mattn.mattn.MultiheadAttention_re/in_proj_weight",
+      "kind": "int4_blocks",
+      "offset": 94592,
+      "length": 24576,
+      "src": "weights/mattn.mattn.MultiheadAttention_re/in_proj_weight/w_int4.blocks.packed.bin"
+    },
+    {
+      "dotted": "mattn.mattn.MultiheadAttention_re/out_proj",
+      "kind": "int4",
+      "offset": 119168,
+      "length": 32768,
+      "src": "weights/mattn.mattn.MultiheadAttention_re/out_proj/w_int4.packed.bin"
+    },
+    {
+      "dotted": "mattn.output_proj/fc_r",
+      "kind": "int4",
+      "offset": 151936,
+      "length": 32768,
+      "src": "weights/mattn.output_proj/fc_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "mattn.output_proj/fc_i",
+      "kind": "int4",
+      "offset": 184704,
+      "length": 32768,
+      "src": "weights/mattn.output_proj/fc_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_r_x",
+      "kind": "fp8",
+      "offset": 217472,
+      "length": 4096,
+      "src": "weights/decoder.model.0.0.pointwise_r_x/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_i_x",
+      "kind": "fp8",
+      "offset": 221568,
+      "length": 4096,
+      "src": "weights/decoder.model.0.0.pointwise_i_x/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_r_skip",
+      "kind": "fp8",
+      "offset": 225664,
+      "length": 4096,
+      "src": "weights/decoder.model.0.0.pointwise_r_skip/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_i_skip",
+      "kind": "fp8",
+      "offset": 229760,
+      "length": 4096,
+      "src": "weights/decoder.model.0.0.pointwise_i_skip/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.0.0.depthwise_r",
+      "kind": "int4",
+      "offset": 233856,
+      "length": 320,
+      "src": "weights/decoder.model.0.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.0.0.depthwise_i",
+      "kind": "int4",
+      "offset": 234176,
+      "length": 320,
+      "src": "weights/decoder.model.0.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_r_x",
+      "kind": "int4",
+      "offset": 234496,
+      "length": 1024,
+      "src": "weights/decoder.model.1.0.pointwise_r_x/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_i_x",
+      "kind": "int4",
+      "offset": 235520,
+      "length": 1024,
+      "src": "weights/decoder.model.1.0.pointwise_i_x/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_r_skip",
+      "kind": "int4",
+      "offset": 236544,
+      "length": 1024,
+      "src": "weights/decoder.model.1.0.pointwise_r_skip/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_i_skip",
+      "kind": "int4",
+      "offset": 237568,
+      "length": 1024,
+      "src": "weights/decoder.model.1.0.pointwise_i_skip/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.1.0.depthwise_r",
+      "kind": "int4",
+      "offset": 238592,
+      "length": 160,
+      "src": "weights/decoder.model.1.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.1.0.depthwise_i",
+      "kind": "int4",
+      "offset": 238784,
+      "length": 160,
+      "src": "weights/decoder.model.1.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_r_x",
+      "kind": "int4",
+      "offset": 238976,
+      "length": 256,
+      "src": "weights/decoder.model.2.0.pointwise_r_x/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_i_x",
+      "kind": "int4",
+      "offset": 239232,
+      "length": 256,
+      "src": "weights/decoder.model.2.0.pointwise_i_x/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_r_skip",
+      "kind": "int4",
+      "offset": 239488,
+      "length": 256,
+      "src": "weights/decoder.model.2.0.pointwise_r_skip/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_i_skip",
+      "kind": "int4",
+      "offset": 239744,
+      "length": 256,
+      "src": "weights/decoder.model.2.0.pointwise_i_skip/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.2.0.depthwise_r",
+      "kind": "int4",
+      "offset": 240000,
+      "length": 80,
+      "src": "weights/decoder.model.2.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.2.0.depthwise_i",
+      "kind": "int4",
+      "offset": 240128,
+      "length": 80,
+      "src": "weights/decoder.model.2.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_r_x",
+      "kind": "fp8",
+      "offset": 240256,
+      "length": 128,
+      "src": "weights/decoder.model.3.0.pointwise_r_x/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_i_x",
+      "kind": "fp8",
+      "offset": 240384,
+      "length": 128,
+      "src": "weights/decoder.model.3.0.pointwise_i_x/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_r_skip",
+      "kind": "fp8",
+      "offset": 240512,
+      "length": 128,
+      "src": "weights/decoder.model.3.0.pointwise_r_skip/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_i_skip",
+      "kind": "fp8",
+      "offset": 240640,
+      "length": 128,
+      "src": "weights/decoder.model.3.0.pointwise_i_skip/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.3.0.depthwise_r",
+      "kind": "int4",
+      "offset": 240768,
+      "length": 40,
+      "src": "weights/decoder.model.3.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.3.0.depthwise_i",
+      "kind": "int4",
+      "offset": 240832,
+      "length": 40,
+      "src": "weights/decoder.model.3.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_r_x",
+      "kind": "fp8",
+      "offset": 240896,
+      "length": 32,
+      "src": "weights/decoder.model.4.0.pointwise_r_x/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_i_x",
+      "kind": "fp8",
+      "offset": 240960,
+      "length": 32,
+      "src": "weights/decoder.model.4.0.pointwise_i_x/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_r_skip",
+      "kind": "fp8",
+      "offset": 241024,
+      "length": 32,
+      "src": "weights/decoder.model.4.0.pointwise_r_skip/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_i_skip",
+      "kind": "fp8",
+      "offset": 241088,
+      "length": 32,
+      "src": "weights/decoder.model.4.0.pointwise_i_skip/w_fp8.e4m3.bin"
+    },
+    {
+      "dotted": "decoder.model.4.0.depthwise_r",
+      "kind": "int4",
+      "offset": 241152,
+      "length": 20,
+      "src": "weights/decoder.model.4.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.4.0.depthwise_i",
+      "kind": "int4",
+      "offset": 241216,
+      "length": 20,
+      "src": "weights/decoder.model.4.0.depthwise_i/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_r_x",
+      "kind": "int4",
+      "offset": 241280,
+      "length": 4,
+      "src": "weights/decoder.model.5.0.pointwise_r_x/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_i_x",
+      "kind": "int4",
+      "offset": 241344,
+      "length": 4,
+      "src": "weights/decoder.model.5.0.pointwise_i_x/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_r_skip",
+      "kind": "int4",
+      "offset": 241408,
+      "length": 2,
+      "src": "weights/decoder.model.5.0.pointwise_r_skip/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_i_skip",
+      "kind": "int4",
+      "offset": 241472,
+      "length": 2,
+      "src": "weights/decoder.model.5.0.pointwise_i_skip/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.5.0.depthwise_r",
+      "kind": "int4",
+      "offset": 241536,
+      "length": 3,
+      "src": "weights/decoder.model.5.0.depthwise_r/w_int4.packed.bin"
+    },
+    {
+      "dotted": "decoder.model.5.0.depthwise_i",
+      "kind": "int4",
+      "offset": 241600,
+      "length": 3,
+      "src": "weights/decoder.model.5.0.depthwise_i/w_int4.packed.bin"
+    }
+  ],
+  "const_blocks": [
+    {
+      "dotted": "encoder.model.0.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 1,
+      "pack": "12bit",
+      "wbuf_offset": 241664,
+      "wbuf_bytes": 2
+    },
+    {
+      "dotted": "encoder.model.0.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 1,
+      "pack": "12bit",
+      "wbuf_offset": 241666,
+      "wbuf_bytes": 2
+    },
+    {
+      "dotted": "encoder.model.0.0.pointwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 8,
+      "pack": "12bit",
+      "wbuf_offset": 241668,
+      "wbuf_bytes": 12
+    },
+    {
+      "dotted": "encoder.model.0.0.pointwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 8,
+      "pack": "12bit",
+      "wbuf_offset": 241680,
+      "wbuf_bytes": 12
+    },
+    {
+      "dotted": "encoder.model.1.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 8,
+      "pack": "12bit",
+      "wbuf_offset": 241692,
+      "wbuf_bytes": 12
+    },
+    {
+      "dotted": "encoder.model.1.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 8,
+      "pack": "12bit",
+      "wbuf_offset": 241704,
+      "wbuf_bytes": 12
+    },
+    {
+      "dotted": "encoder.model.1.0.pointwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 241716,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "encoder.model.1.0.pointwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 241740,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "encoder.model.2.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 241764,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "encoder.model.2.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 241788,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "encoder.model.2.0.pointwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 32,
+      "pack": "12bit",
+      "wbuf_offset": 241812,
+      "wbuf_bytes": 48
+    },
+    {
+      "dotted": "encoder.model.2.0.pointwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 32,
+      "pack": "12bit",
+      "wbuf_offset": 241860,
+      "wbuf_bytes": 48
+    },
+    {
+      "dotted": "encoder.model.3.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 32,
+      "pack": "12bit",
+      "wbuf_offset": 241908,
+      "wbuf_bytes": 48
+    },
+    {
+      "dotted": "encoder.model.3.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 32,
+      "pack": "12bit",
+      "wbuf_offset": 241956,
+      "wbuf_bytes": 48
+    },
+    {
+      "dotted": "encoder.model.3.0.pointwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 242004,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "encoder.model.3.0.pointwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 242100,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "encoder.model.4.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 242196,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "encoder.model.4.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 242292,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "encoder.model.4.0.pointwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 256,
+      "pack": "12bit",
+      "wbuf_offset": 242388,
+      "wbuf_bytes": 384
+    },
+    {
+      "dotted": "encoder.model.4.0.pointwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 256,
+      "pack": "12bit",
+      "wbuf_offset": 242772,
+      "wbuf_bytes": 384
+    },
+    {
+      "dotted": "encoder.model.5.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 243156,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "encoder.model.5.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 243348,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "encoder.model.5.0.pointwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 512,
+      "pack": "12bit",
+      "wbuf_offset": 243540,
+      "wbuf_bytes": 768
+    },
+    {
+      "dotted": "encoder.model.5.0.pointwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 512,
+      "pack": "12bit",
+      "wbuf_offset": 244308,
+      "wbuf_bytes": 768
+    },
+    {
+      "dotted": "mattn.input_proj/fc_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 245076,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "mattn.input_proj/fc_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 245100,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "mattn.mattn.MultiheadAttention_re/in_proj_weight",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 48,
+      "pack": "12bit",
+      "wbuf_offset": 245124,
+      "wbuf_bytes": 72
+    },
+    {
+      "dotted": "mattn.mattn.MultiheadAttention_re/out_proj",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 245196,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "mattn.output_proj/fc_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 245220,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "mattn.output_proj/fc_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 245244,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_r_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 245268,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_i_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 245271,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_r_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 245274,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.0.0.pointwise_i_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 245277,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.0.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 245280,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "decoder.model.0.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 245472,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_r_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 245664,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_i_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 245856,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_r_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 246048,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "decoder.model.1.0.pointwise_i_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 246240,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "decoder.model.1.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 246432,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "decoder.model.1.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 246528,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_r_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 246624,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_i_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 246720,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_r_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 246816,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "decoder.model.2.0.pointwise_i_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 246912,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "decoder.model.2.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 32,
+      "pack": "12bit",
+      "wbuf_offset": 247008,
+      "wbuf_bytes": 48
+    },
+    {
+      "dotted": "decoder.model.2.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 32,
+      "pack": "12bit",
+      "wbuf_offset": 247056,
+      "wbuf_bytes": 48
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_r_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247104,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_i_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247107,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_r_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247110,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.3.0.pointwise_i_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247113,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.3.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 247116,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "decoder.model.3.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 247140,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_r_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247164,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_i_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247167,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_r_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247170,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.4.0.pointwise_i_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247173,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.4.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 8,
+      "pack": "12bit",
+      "wbuf_offset": 247176,
+      "wbuf_bytes": 12
+    },
+    {
+      "dotted": "decoder.model.4.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 8,
+      "pack": "12bit",
+      "wbuf_offset": 247188,
+      "wbuf_bytes": 12
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_r_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247200,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_i_x",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247203,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_r_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247206,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.5.0.pointwise_i_skip",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247209,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.5.0.depthwise_r",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 1,
+      "pack": "12bit",
+      "wbuf_offset": 247212,
+      "wbuf_bytes": 2
+    },
+    {
+      "dotted": "decoder.model.5.0.depthwise_i",
+      "kind": "weight_scale",
+      "region": "R2",
+      "decode": "apot_6a",
+      "n_codes": 1,
+      "pack": "12bit",
+      "wbuf_offset": 247214,
+      "wbuf_bytes": 2
+    },
+    {
+      "dotted": "encoder.model.0.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 247216,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "encoder.model.0.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 16,
+      "wbuf_offset": 247240,
+      "wbuf_bytes": 32
+    },
+    {
+      "dotted": "encoder.model.0.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247272,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "encoder.model.1.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 32,
+      "pack": "12bit",
+      "wbuf_offset": 247275,
+      "wbuf_bytes": 48
+    },
+    {
+      "dotted": "encoder.model.1.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 32,
+      "wbuf_offset": 247323,
+      "wbuf_bytes": 64
+    },
+    {
+      "dotted": "encoder.model.1.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247387,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "encoder.model.2.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 247390,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "encoder.model.2.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 64,
+      "wbuf_offset": 247486,
+      "wbuf_bytes": 128
+    },
+    {
+      "dotted": "encoder.model.2.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 247614,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "encoder.model.3.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 247617,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "encoder.model.3.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 128,
+      "wbuf_offset": 247809,
+      "wbuf_bytes": 256
+    },
+    {
+      "dotted": "encoder.model.3.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 248065,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "encoder.model.4.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 256,
+      "pack": "12bit",
+      "wbuf_offset": 248068,
+      "wbuf_bytes": 384
+    },
+    {
+      "dotted": "encoder.model.4.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 256,
+      "wbuf_offset": 248452,
+      "wbuf_bytes": 512
+    },
+    {
+      "dotted": "encoder.model.4.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 248964,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "encoder.model.5.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 256,
+      "pack": "12bit",
+      "wbuf_offset": 248967,
+      "wbuf_bytes": 384
+    },
+    {
+      "dotted": "encoder.model.5.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 256,
+      "wbuf_offset": 249351,
+      "wbuf_bytes": 512
+    },
+    {
+      "dotted": "encoder.model.5.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 249863,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.0.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 256,
+      "pack": "12bit",
+      "wbuf_offset": 249866,
+      "wbuf_bytes": 384
+    },
+    {
+      "dotted": "decoder.model.0.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 256,
+      "wbuf_offset": 250250,
+      "wbuf_bytes": 512
+    },
+    {
+      "dotted": "decoder.model.0.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 250762,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.1.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 128,
+      "pack": "12bit",
+      "wbuf_offset": 250765,
+      "wbuf_bytes": 192
+    },
+    {
+      "dotted": "decoder.model.1.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 128,
+      "wbuf_offset": 250957,
+      "wbuf_bytes": 256
+    },
+    {
+      "dotted": "decoder.model.1.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 251213,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.2.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 64,
+      "pack": "12bit",
+      "wbuf_offset": 251216,
+      "wbuf_bytes": 96
+    },
+    {
+      "dotted": "decoder.model.2.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 64,
+      "wbuf_offset": 251312,
+      "wbuf_bytes": 128
+    },
+    {
+      "dotted": "decoder.model.2.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 251440,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.3.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 32,
+      "pack": "12bit",
+      "wbuf_offset": 251443,
+      "wbuf_bytes": 48
+    },
+    {
+      "dotted": "decoder.model.3.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 32,
+      "wbuf_offset": 251491,
+      "wbuf_bytes": 64
+    },
+    {
+      "dotted": "decoder.model.3.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 251555,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.4.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 16,
+      "pack": "12bit",
+      "wbuf_offset": 251558,
+      "wbuf_bytes": 24
+    },
+    {
+      "dotted": "decoder.model.4.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 16,
+      "wbuf_offset": 251582,
+      "wbuf_bytes": 32
+    },
+    {
+      "dotted": "decoder.model.4.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 251614,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.5.0",
+      "kind": "bn_scale",
+      "region": "R3",
+      "decode": "apot_6a",
+      "n_codes": 2,
+      "pack": "12bit",
+      "wbuf_offset": 251617,
+      "wbuf_bytes": 3
+    },
+    {
+      "dotted": "decoder.model.5.0",
+      "kind": "bn_bias",
+      "region": "R4",
+      "decode": "fp16",
+      "n_elems": 2,
+      "wbuf_offset": 251620,
+      "wbuf_bytes": 4
+    },
+    {
+      "dotted": "decoder.model.5.0",
+      "kind": "prelu",
+      "region": "R5",
+      "decode": "apot_6b",
+      "n_codes": 0,
+      "pack": "12bit",
+      "wbuf_offset": 251624,
+      "wbuf_bytes": 0
+    },
+    {
+      "dotted": "activation_k",
+      "kind": "activation_k",
+      "region": "R5b",
+      "decode": "u8_plus32",
+      "n_elems": 53,
+      "wbuf_offset": 251624,
+      "wbuf_bytes": 53
+    }
+  ],
+  "config": {
+    "WBUF": {
+      "banks": 16,
+      "width": 64,
+      "depth": 2048
+    },
+    "KVBUF": {
+      "banks": 4,
+      "width": 64,
+      "depth": 1024
+    },
+    "UFBUF": {
+      "banks": 8,
+      "width": 64,
+      "depth": 128
+    },
+    "SKIPBUF": {
+      "banks": 4,
+      "width": 64,
+      "depth": 128
+    }
+  },
+  "wbuf_const_base_row": 1888,
+  "const_prefetch": [
+    {
+      "unit": "encoder.model.0.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 241664,
+      "bytes": 2,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.0.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 241666,
+      "bytes": 2,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.0.0.pointwise_r:weight_scale",
+      "src_wbuf_offset": 241668,
+      "bytes": 12,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.0.0.pointwise_i:weight_scale",
+      "src_wbuf_offset": 241680,
+      "bytes": 12,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.1.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 241692,
+      "bytes": 12,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.1.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 241704,
+      "bytes": 12,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.1.0.pointwise_r:weight_scale",
+      "src_wbuf_offset": 241716,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.1.0.pointwise_i:weight_scale",
+      "src_wbuf_offset": 241740,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.2.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 241764,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.2.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 241788,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.2.0.pointwise_r:weight_scale",
+      "src_wbuf_offset": 241812,
+      "bytes": 48,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.2.0.pointwise_i:weight_scale",
+      "src_wbuf_offset": 241860,
+      "bytes": 48,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.3.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 241908,
+      "bytes": 48,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.3.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 241956,
+      "bytes": 48,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.3.0.pointwise_r:weight_scale",
+      "src_wbuf_offset": 242004,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.3.0.pointwise_i:weight_scale",
+      "src_wbuf_offset": 242100,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.4.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 242196,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.4.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 242292,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.4.0.pointwise_r:weight_scale",
+      "src_wbuf_offset": 242388,
+      "bytes": 384,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.4.0.pointwise_i:weight_scale",
+      "src_wbuf_offset": 242772,
+      "bytes": 384,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.5.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 243156,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.5.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 243348,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.5.0.pointwise_r:weight_scale",
+      "src_wbuf_offset": 243540,
+      "bytes": 768,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.5.0.pointwise_i:weight_scale",
+      "src_wbuf_offset": 244308,
+      "bytes": 768,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "mattn.input_proj/fc_r:weight_scale",
+      "src_wbuf_offset": 245076,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "mattn.input_proj/fc_i:weight_scale",
+      "src_wbuf_offset": 245100,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "mattn.mattn.MultiheadAttention_re/in_proj_weight:weight_scale",
+      "src_wbuf_offset": 245124,
+      "bytes": 72,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "mattn.mattn.MultiheadAttention_re/out_proj:weight_scale",
+      "src_wbuf_offset": 245196,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "mattn.output_proj/fc_r:weight_scale",
+      "src_wbuf_offset": 245220,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "mattn.output_proj/fc_i:weight_scale",
+      "src_wbuf_offset": 245244,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.0.0.pointwise_r_x:weight_scale",
+      "src_wbuf_offset": 245268,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.0.0.pointwise_i_x:weight_scale",
+      "src_wbuf_offset": 245271,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.0.0.pointwise_r_skip:weight_scale",
+      "src_wbuf_offset": 245274,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.0.0.pointwise_i_skip:weight_scale",
+      "src_wbuf_offset": 245277,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.0.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 245280,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.0.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 245472,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.1.0.pointwise_r_x:weight_scale",
+      "src_wbuf_offset": 245664,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.1.0.pointwise_i_x:weight_scale",
+      "src_wbuf_offset": 245856,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.1.0.pointwise_r_skip:weight_scale",
+      "src_wbuf_offset": 246048,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.1.0.pointwise_i_skip:weight_scale",
+      "src_wbuf_offset": 246240,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.1.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 246432,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.1.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 246528,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.2.0.pointwise_r_x:weight_scale",
+      "src_wbuf_offset": 246624,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.2.0.pointwise_i_x:weight_scale",
+      "src_wbuf_offset": 246720,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.2.0.pointwise_r_skip:weight_scale",
+      "src_wbuf_offset": 246816,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.2.0.pointwise_i_skip:weight_scale",
+      "src_wbuf_offset": 246912,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.2.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 247008,
+      "bytes": 48,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.2.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 247056,
+      "bytes": 48,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.3.0.pointwise_r_x:weight_scale",
+      "src_wbuf_offset": 247104,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.3.0.pointwise_i_x:weight_scale",
+      "src_wbuf_offset": 247107,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.3.0.pointwise_r_skip:weight_scale",
+      "src_wbuf_offset": 247110,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.3.0.pointwise_i_skip:weight_scale",
+      "src_wbuf_offset": 247113,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.3.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 247116,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.3.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 247140,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.4.0.pointwise_r_x:weight_scale",
+      "src_wbuf_offset": 247164,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.4.0.pointwise_i_x:weight_scale",
+      "src_wbuf_offset": 247167,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.4.0.pointwise_r_skip:weight_scale",
+      "src_wbuf_offset": 247170,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.4.0.pointwise_i_skip:weight_scale",
+      "src_wbuf_offset": 247173,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.4.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 247176,
+      "bytes": 12,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.4.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 247188,
+      "bytes": 12,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.5.0.pointwise_r_x:weight_scale",
+      "src_wbuf_offset": 247200,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.5.0.pointwise_i_x:weight_scale",
+      "src_wbuf_offset": 247203,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.5.0.pointwise_r_skip:weight_scale",
+      "src_wbuf_offset": 247206,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.5.0.pointwise_i_skip:weight_scale",
+      "src_wbuf_offset": 247209,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.5.0.depthwise_r:weight_scale",
+      "src_wbuf_offset": 247212,
+      "bytes": 2,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.5.0.depthwise_i:weight_scale",
+      "src_wbuf_offset": 247214,
+      "bytes": 2,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.0.0:bn_scale",
+      "src_wbuf_offset": 247216,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.0.0:bn_bias",
+      "src_wbuf_offset": 247240,
+      "bytes": 32,
+      "decode": "fp16"
+    },
+    {
+      "unit": "encoder.model.0.0:prelu",
+      "src_wbuf_offset": 247272,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "encoder.model.1.0:bn_scale",
+      "src_wbuf_offset": 247275,
+      "bytes": 48,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.1.0:bn_bias",
+      "src_wbuf_offset": 247323,
+      "bytes": 64,
+      "decode": "fp16"
+    },
+    {
+      "unit": "encoder.model.1.0:prelu",
+      "src_wbuf_offset": 247387,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "encoder.model.2.0:bn_scale",
+      "src_wbuf_offset": 247390,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.2.0:bn_bias",
+      "src_wbuf_offset": 247486,
+      "bytes": 128,
+      "decode": "fp16"
+    },
+    {
+      "unit": "encoder.model.2.0:prelu",
+      "src_wbuf_offset": 247614,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "encoder.model.3.0:bn_scale",
+      "src_wbuf_offset": 247617,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.3.0:bn_bias",
+      "src_wbuf_offset": 247809,
+      "bytes": 256,
+      "decode": "fp16"
+    },
+    {
+      "unit": "encoder.model.3.0:prelu",
+      "src_wbuf_offset": 248065,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "encoder.model.4.0:bn_scale",
+      "src_wbuf_offset": 248068,
+      "bytes": 384,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.4.0:bn_bias",
+      "src_wbuf_offset": 248452,
+      "bytes": 512,
+      "decode": "fp16"
+    },
+    {
+      "unit": "encoder.model.4.0:prelu",
+      "src_wbuf_offset": 248964,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "encoder.model.5.0:bn_scale",
+      "src_wbuf_offset": 248967,
+      "bytes": 384,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "encoder.model.5.0:bn_bias",
+      "src_wbuf_offset": 249351,
+      "bytes": 512,
+      "decode": "fp16"
+    },
+    {
+      "unit": "encoder.model.5.0:prelu",
+      "src_wbuf_offset": 249863,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "decoder.model.0.0:bn_scale",
+      "src_wbuf_offset": 249866,
+      "bytes": 384,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.0.0:bn_bias",
+      "src_wbuf_offset": 250250,
+      "bytes": 512,
+      "decode": "fp16"
+    },
+    {
+      "unit": "decoder.model.0.0:prelu",
+      "src_wbuf_offset": 250762,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "decoder.model.1.0:bn_scale",
+      "src_wbuf_offset": 250765,
+      "bytes": 192,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.1.0:bn_bias",
+      "src_wbuf_offset": 250957,
+      "bytes": 256,
+      "decode": "fp16"
+    },
+    {
+      "unit": "decoder.model.1.0:prelu",
+      "src_wbuf_offset": 251213,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "decoder.model.2.0:bn_scale",
+      "src_wbuf_offset": 251216,
+      "bytes": 96,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.2.0:bn_bias",
+      "src_wbuf_offset": 251312,
+      "bytes": 128,
+      "decode": "fp16"
+    },
+    {
+      "unit": "decoder.model.2.0:prelu",
+      "src_wbuf_offset": 251440,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "decoder.model.3.0:bn_scale",
+      "src_wbuf_offset": 251443,
+      "bytes": 48,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.3.0:bn_bias",
+      "src_wbuf_offset": 251491,
+      "bytes": 64,
+      "decode": "fp16"
+    },
+    {
+      "unit": "decoder.model.3.0:prelu",
+      "src_wbuf_offset": 251555,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "decoder.model.4.0:bn_scale",
+      "src_wbuf_offset": 251558,
+      "bytes": 24,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.4.0:bn_bias",
+      "src_wbuf_offset": 251582,
+      "bytes": 32,
+      "decode": "fp16"
+    },
+    {
+      "unit": "decoder.model.4.0:prelu",
+      "src_wbuf_offset": 251614,
+      "bytes": 3,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "decoder.model.5.0:bn_scale",
+      "src_wbuf_offset": 251617,
+      "bytes": 3,
+      "decode": "apot_6a"
+    },
+    {
+      "unit": "decoder.model.5.0:bn_bias",
+      "src_wbuf_offset": 251620,
+      "bytes": 4,
+      "decode": "fp16"
+    },
+    {
+      "unit": "decoder.model.5.0:prelu",
+      "src_wbuf_offset": 251624,
+      "bytes": 0,
+      "decode": "apot_6b"
+    },
+    {
+      "unit": "activation_k:activation_k",
+      "src_wbuf_offset": 251624,
+      "bytes": 53,
+      "decode": "u8_plus32"
+    }
+  ],
+  "prefetch": {
+    "granularity": "subop",
+    "max_prefetch_unit_bytes": 768,
+    "recommended_cache_bytes": 2048,
+    "double_buffer_cache_bytes": 4096
+  },
+  "counts": {
+    "weight_scale_codes": 3700,
+    "bn_codes": 1250,
+    "bn_bias_bytes": 2500,
+    "prelu_codes": 22,
+    "act_k": 53,
+    "n_weight_tensors": 66
+  },
+  "wbuf_used_bytes": 251677,
+  "wbuf_capacity_bytes": 262144,
+  "wbuf_slack_bytes": 10467
+}

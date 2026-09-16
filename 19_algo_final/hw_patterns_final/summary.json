@@ -1,0 +1,988 @@
+{
+  "activation_mode": "calibrated_pow2_e4m3",
+  "capture": {
+    "input_shape": [
+      1,
+      2,
+      32000
+    ],
+    "input_wav": "/raid/R12K41024/BCCTN/Dataset/noisy_testset/snr_0dB/p225_p225_009_az-40_snr+0.0.wav",
+    "layer_calls": 246,
+    "output_shape": [
+      1,
+      2,
+      31968
+    ],
+    "sample_rate": 16000
+  },
+  "debug_copy_counts": {
+    "_note": "stale 18-build copy log; the 19 slim package keeps only .hex in layer_io_fp32 (.bin/.dec removed), so the on-disk file count is lower than this former 2151."
+  },
+  "debug_reference": "hw_patterns_final/debug_reference",
+  "fused_weight_descale": {
+    "fused": {
+      "decoder.model.0.0.depthwise_i": {
+        "activation_pow2_exp": -2,
+        "boundary_key": "decoder.model.0.0.depthwise_i",
+        "fused_exp_offset": 2,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.0.0.depthwise_r": {
+        "activation_pow2_exp": -2,
+        "boundary_key": "decoder.model.0.0.depthwise_r",
+        "fused_exp_offset": 2,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.0.0.pointwise_i_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.0.0.split_pointwise_cat.imag",
+          "real": "decoder.model.0.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": -1
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": -1
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.0.0.pointwise_i_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.0.0.split_pointwise_cat.imag",
+          "real": "decoder.model.0.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": -1
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": -1
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.0.0.pointwise_r_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.0.0.split_pointwise_cat.imag",
+          "real": "decoder.model.0.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": -1
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": -1
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.0.0.pointwise_r_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.0.0.split_pointwise_cat.imag",
+          "real": "decoder.model.0.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": -1
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": -1
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.1.0.depthwise_i": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "decoder.model.1.0.depthwise_i",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.1.0.depthwise_r": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "decoder.model.1.0.depthwise_r",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.1.0.pointwise_i_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.1.0.split_pointwise_cat.imag",
+          "real": "decoder.model.1.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.1.0.pointwise_i_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.1.0.split_pointwise_cat.imag",
+          "real": "decoder.model.1.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.1.0.pointwise_r_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.1.0.split_pointwise_cat.imag",
+          "real": "decoder.model.1.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.1.0.pointwise_r_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.1.0.split_pointwise_cat.imag",
+          "real": "decoder.model.1.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.2.0.depthwise_i": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "decoder.model.2.0.depthwise_i",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.2.0.depthwise_r": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "decoder.model.2.0.depthwise_r",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.2.0.pointwise_i_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.2.0.split_pointwise_cat.imag",
+          "real": "decoder.model.2.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.2.0.pointwise_i_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.2.0.split_pointwise_cat.imag",
+          "real": "decoder.model.2.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.2.0.pointwise_r_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.2.0.split_pointwise_cat.imag",
+          "real": "decoder.model.2.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.2.0.pointwise_r_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.2.0.split_pointwise_cat.imag",
+          "real": "decoder.model.2.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.3.0.depthwise_i": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "decoder.model.3.0.depthwise_i",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.3.0.depthwise_r": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "decoder.model.3.0.depthwise_r",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.3.0.pointwise_i_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.3.0.split_pointwise_cat.imag",
+          "real": "decoder.model.3.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 5
+          }
+        },
+        "branches_collapse": false,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.3.0.pointwise_i_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.3.0.split_pointwise_cat.imag",
+          "real": "decoder.model.3.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 5
+          }
+        },
+        "branches_collapse": false,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.3.0.pointwise_r_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.3.0.split_pointwise_cat.imag",
+          "real": "decoder.model.3.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 5
+          }
+        },
+        "branches_collapse": false,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.3.0.pointwise_r_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.3.0.split_pointwise_cat.imag",
+          "real": "decoder.model.3.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 5
+          }
+        },
+        "branches_collapse": false,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.4.0.depthwise_i": {
+        "activation_pow2_exp": 4,
+        "boundary_key": "decoder.model.4.0.depthwise_i",
+        "fused_exp_offset": -4,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.4.0.depthwise_r": {
+        "activation_pow2_exp": 4,
+        "boundary_key": "decoder.model.4.0.depthwise_r",
+        "fused_exp_offset": -4,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.4.0.pointwise_i_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.4.0.split_pointwise_cat.imag",
+          "real": "decoder.model.4.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 5
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 5
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.4.0.pointwise_i_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.4.0.split_pointwise_cat.imag",
+          "real": "decoder.model.4.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 5
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 5
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.4.0.pointwise_r_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.4.0.split_pointwise_cat.imag",
+          "real": "decoder.model.4.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 5
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 5
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.4.0.pointwise_r_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.4.0.split_pointwise_cat.imag",
+          "real": "decoder.model.4.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kimag.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 5
+          },
+          "act_real": {
+            "fused_files": [
+              "fp8_descale_apot_a_exp_fused_act_kreal.int16.bin",
+              "fp8_descale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 5
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.5.0.depthwise_i": {
+        "activation_pow2_exp": 7,
+        "boundary_key": "decoder.model.5.0.depthwise_i",
+        "fused_exp_offset": -7,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.5.0.depthwise_r": {
+        "activation_pow2_exp": 7,
+        "boundary_key": "decoder.model.5.0.depthwise_r",
+        "fused_exp_offset": -7,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "decoder.model.5.0.pointwise_i_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.5.0.split_pointwise_cat.imag",
+          "real": "decoder.model.5.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.5.0.pointwise_i_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.5.0.split_pointwise_cat.imag",
+          "real": "decoder.model.5.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.5.0.pointwise_r_skip": {
+        "boundary_keys": {
+          "imag": "decoder.model.5.0.split_pointwise_cat.imag",
+          "real": "decoder.model.5.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "decoder.model.5.0.pointwise_r_x": {
+        "boundary_keys": {
+          "imag": "decoder.model.5.0.split_pointwise_cat.imag",
+          "real": "decoder.model.5.0.split_pointwise_cat.real"
+        },
+        "branches": {
+          "act_imag": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kimag.int16.bin",
+              "scale_apot_b_exp_fused_act_kimag.int16.bin"
+            ],
+            "k": 6
+          },
+          "act_real": {
+            "fused_files": [
+              "scale_apot_a_exp_fused_act_kreal.int16.bin",
+              "scale_apot_b_exp_fused_act_kreal.int16.bin"
+            ],
+            "k": 6
+          }
+        },
+        "branches_collapse": true,
+        "type": "per_branch_complex_pointwise"
+      },
+      "encoder.model.0.0.depthwise_i": {
+        "activation_pow2_exp": 9,
+        "boundary_key": "encoder.model.0.0.depthwise_i",
+        "fused_exp_offset": -9,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.0.0.depthwise_r": {
+        "activation_pow2_exp": 9,
+        "boundary_key": "encoder.model.0.0.depthwise_r",
+        "fused_exp_offset": -9,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.0.0.pointwise_i": {
+        "activation_pow2_exp": 8,
+        "boundary_key": "encoder.model.0.0.pointwise_i",
+        "fused_exp_offset": -8,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.0.0.pointwise_r": {
+        "activation_pow2_exp": 8,
+        "boundary_key": "encoder.model.0.0.pointwise_r",
+        "fused_exp_offset": -8,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.1.0.depthwise_i": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.1.0.depthwise_i",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.1.0.depthwise_r": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.1.0.depthwise_r",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.1.0.pointwise_i": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "encoder.model.1.0.pointwise_i",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.1.0.pointwise_r": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "encoder.model.1.0.pointwise_r",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.2.0.depthwise_i": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "encoder.model.2.0.depthwise_i",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.2.0.depthwise_r": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "encoder.model.2.0.depthwise_r",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.2.0.pointwise_i": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "encoder.model.2.0.pointwise_i",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.2.0.pointwise_r": {
+        "activation_pow2_exp": 5,
+        "boundary_key": "encoder.model.2.0.pointwise_r",
+        "fused_exp_offset": -5,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.3.0.depthwise_i": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.3.0.depthwise_i",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.3.0.depthwise_r": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.3.0.depthwise_r",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.3.0.pointwise_i": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.3.0.pointwise_i",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.3.0.pointwise_r": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.3.0.pointwise_r",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.4.0.depthwise_i": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.4.0.depthwise_i",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.4.0.depthwise_r": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.4.0.depthwise_r",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.4.0.pointwise_i": {
+        "activation_pow2_exp": 7,
+        "boundary_key": "encoder.model.4.0.pointwise_i",
+        "fused_exp_offset": -7,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.4.0.pointwise_r": {
+        "activation_pow2_exp": 7,
+        "boundary_key": "encoder.model.4.0.pointwise_r",
+        "fused_exp_offset": -7,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.5.0.depthwise_i": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.5.0.depthwise_i",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.5.0.depthwise_r": {
+        "activation_pow2_exp": 6,
+        "boundary_key": "encoder.model.5.0.depthwise_r",
+        "fused_exp_offset": -6,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.5.0.pointwise_i": {
+        "activation_pow2_exp": 7,
+        "boundary_key": "encoder.model.5.0.pointwise_i",
+        "fused_exp_offset": -7,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      },
+      "encoder.model.5.0.pointwise_r": {
+        "activation_pow2_exp": 7,
+        "boundary_key": "encoder.model.5.0.pointwise_r",
+        "fused_exp_offset": -7,
+        "fused_files": [
+          "scale_apot_a_exp_fused.int16.bin",
+          "scale_apot_b_exp_fused.int16.bin"
+        ],
+        "type": "single"
+      }
+    },
+    "fused_exp_range": [
+      -23,
+      -1
+    ],
+    "fused_layers": 36,
+    "not_fused_note": "MHA in/out projections and internal MHA keep the separate activation pow2 exponent (real/imag boundaries differ; out_proj is W4A16). QK/score\u00d7V are activation\u00d7activation (no weight to fuse into).",
+    "per_branch_layers": 24,
+    "rule": "fused_a/b_exp = weight_APoT_a/b_exp - activation_pow2_exp(k); has_second/residual_sign unchanged. Activation = raw e4m3 code (no descale). Decoder split-pointwise emits TWO variants (_fused_act_kreal / _fused_act_kimag) because apply_complex multiplies each weight by both real- and imag-slice activations; HW picks the branch matching the activation slice. Other layers: one fused descale.",
+    "skipped": [
+      "mattn.input_proj (no APoT exp files)",
+      "mattn.input_proj/fc_i",
+      "mattn.input_proj/fc_r",
+      "mattn.mattn.MultiheadAttention_re/out_proj",
+      "mattn.mattn.MultiheadAttention_re/in_proj_weight",
+      "mattn.output_proj (no APoT exp files)",
+      "mattn.output_proj/fc_i",
+      "mattn.output_proj/fc_r"
+    ],
+    "skipped_layers": 8
+  },
+  "out_root": "hw_patterns_final",
+  "removed_old_patterns": [],
+  "source_export_root": "/raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/export_out_strict18",
+  "tb_copy_counts": {
+    "_note": "stale 18-build copy log removed (weight_dirs/files did not match on-disk). Authoritative layer index: tb_pattern/manifest.json + tb_pattern/layer_config.json. On disk: weight_dirs=63 (top-level), block_dirs=12, skip_stages=6."
+  },
+  "tb_pattern": "hw_patterns_final/tb_pattern"
+}
