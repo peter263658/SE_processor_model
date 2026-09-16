@@ -66,16 +66,18 @@ def main() -> None:
     if missing:
         print("WARNING: no result yet for:", missing)
     x = np.array([p[1] for p in pts], float)
-    fig, ax = plt.subplots(figsize=(4.6, 3.1))
+    fig = plt.figure(figsize=(6.4, 3.2))
+    ax = fig.add_axes([0.09, 0.15, 0.56, 0.80])
     for key, color, name, idx in (("VCTK", C1_BLUE, "VCTK (matched)", 2), ("TIMIT", C2_ORANGE, "TIMIT (unmatched)", 3)):
         y = np.array([p[idx] for p in pts], float)
         ax.plot(x, y, color=color, linewidth=1.6, marker="o", markersize=5.5, markerfacecolor="white",
-                markeredgecolor=color, markeredgewidth=1.6, zorder=3, label=f"{name}")
-    # direct labels on the VCTK series (one per step; alternate above/below to avoid collisions)
+                markeredgecolor=color, markeredgewidth=1.6, zorder=3, label=name)
+    # numbered points (both series); the key on the right names each step
+    offsets = [(0, 8), (0, 8), (-7, 7), (0, -13), (0, 8), (0, 8), (0, -13), (-7, -13), (5, 8)]
     for i, p in enumerate(pts):
-        dy = 9 if i % 2 == 0 else -13
-        ax.annotate(p[0], (p[1], p[2]), textcoords="offset points", xytext=(0, dy), ha="center",
-                    fontsize=5.6, color=INK2, zorder=4)
+        for idx in (2, 3):
+            ax.annotate(str(i), (p[1], p[idx]), textcoords="offset points", xytext=offsets[i],
+                        ha="center", fontsize=6.5, color=INK, weight="bold", zorder=4)
     ax.set_xscale("log")
     ax.invert_xaxis()  # simplification proceeds left -> right
     ax.set_xlabel("Parameters", color=INK)
@@ -83,13 +85,14 @@ def main() -> None:
     ax.set_xticks([4e6, 2e6, 1e6, 5e5, 3e5], ["4 M", "2 M", "1 M", "500 K", "300 K"])
     ax.grid(True, which="major", color=GRID, linewidth=0.6, zorder=0)
     ax.set_axisbelow(True)
-    for s in ("top", "right"):
-        ax.spines[s].set_visible(False)
-    for s in ("left", "bottom"):
-        ax.spines[s].set_color(BASE)
+    for s_ in ("top", "right"):
+        ax.spines[s_].set_visible(False)
+    for s_ in ("left", "bottom"):
+        ax.spines[s_].set_color(BASE)
     ax.tick_params(colors=MUTED)
-    ax.legend(frameon=False, loc="lower left")
-    plt.tight_layout()
+    ax.legend(frameon=False, loc="center left", bbox_to_anchor=(0.0, 0.42))
+    key = "\n".join(f"{i}  {p[0].replace(chr(10), ' ')}   {p[1]/1e6:.2f} M" for i, p in enumerate(pts))
+    fig.text(0.67, 0.93, key, fontsize=6.6, color=INK2, va="top", ha="left", linespacing=1.55)
     name = "slide_param_vs_mbstoi"
     plt.savefig(OUT_SVG / f"{name}.svg")
     plt.savefig(OUT_PNG / f"{name}.png", dpi=300)
