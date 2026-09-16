@@ -72,3 +72,7 @@ T1、C1、D 與其他步驟無交互，Δ 不隨順序改變。投影片要標�
 cd /raid/R12K41024/18_w4a8_pow2_mixed_lmul_hw_handoff_20260530
 CUDA_VISIBLE_DEVICES= ~/miniforge3/envs/bcctn/bin/python scripts/count_params_official_to_hw.py
 ```
+
+## 7. Erratum（2026-09-16，同日追加）
+
+§5 寫「repo 裡所有原始 BCCTN FP32 的品質數字（0.8519 / 0.8114）都是 3.97 M 重現版的分數」— 錯。查證後：0.8519 / 0.8114 來自 fft 256 / 5 stage / 3,806,868 的 2025-06-02 ckpt；0.8535 / 0.8134（`fp32_512_ref_full`）來自 4,791,448 的 2025-05-10 ckpt，**正好就是 §2 表的 T1 列**。3,973,288 那個 (5,1) 模型從未被當參考分數評估。建議投影片的 FP32 參考改用 0.8535 / 0.8134 + 4,791,448，讓 §2 的參數鏈與品質數字落在同一個模型上。詳見 [RESULTS_FP32_REFERENCE_IDENTITY_2026-09-16.md](RESULTS_FP32_REFERENCE_IDENTITY_2026-09-16.md)。

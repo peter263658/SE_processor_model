@@ -41,7 +41,7 @@ Calibration 本身（dynamic activation deploy 0.8365 / 0.7912 → pow2 block-fl
 
 | # | 階段 | 模式 | VCTK | TIMIT | ΔstepV | ΔstepT | ΔcumV | ΔcumT | 來源 |
 |---|---|---|---:|---:|---:|---:|---:|---:|---|
-| 0 | 原始 BCCTN（fft 512 / embed 512 / 32 heads，3.97 M） | FP32 train | 0.8519 | 0.8114 | — | — | — | — | `BCCTN/results_May21/vctk_paper_style/` |
+| 0 | 原始 BCCTN（自製重現版；實為 fft 256 / 5 stage / 3.81 M，見 §7 Erratum） | FP32 train | 0.8519 | 0.8114 | — | — | — | — | `BCCTN/results_May21/vctk_paper_style/` |
 | 1 | HW-sized + FP8 QAT（fft 128 / embed 256 / 16 heads / attn_win 31 / depthwise-sep，830 K） | QAT | 0.8399 | 0.7966 | −0.0120 | −0.0148 | −0.0120 | −0.0148 | `main_model/results_May21/vctk_paper_style/` |
 | 2 | 09 Tied MHA（qat_scope=mha_only：MHA W4A8，full softmax） | FT 80 ep | 0.8411 | 0.7966 | +0.0012 | +0.0000 | −0.0108 | −0.0148 | `09_weight_tied_mha/results/finetune/` |
 | 3 | 09 strict：full-scope W4A8（conv 也 INT4）+ top-4 attention | QAT FT | 0.8383 | n/a | −0.0028 | n/a | −0.0136 | n/a | `09_weight_tied_mha/results/finetune_strict/` |
@@ -153,3 +153,7 @@ ACT_FP8_MODE=calibrated_pow2_e4m3 TAG=pow2_zeroshot_from_calibep2_full VCTK_ONLY
 ~/miniforge3/envs/bcctn/bin/python scripts/make_per_snr_deploy_vs_bcctn.py \
   docs/RESULTS_MBSTOI_STAGE_DROP_PER_SNR_2026-09-16_per_snr.csv
 ```
+
+## 7. Erratum（2026-09-16，同日追加）
+
+row 0 與 §2.2 的「原始 BCCTN FP32」= `BCCTN/results_May21/` 的 0.8519 / 0.8114，經查證來自 `BCCTN/outputs/2025-06-02/00-25-51/.../epoch=137` ckpt：**fft 256 / 5 stage / kernel (5,2) / projected transformer，3,806,868 參數**，不是 fft 512 / embed 512 / 3,973,288，也不是官方 11.09 M。§0 A 區段的說明文字「3.97 M → 830 K」應讀作「3.81 M → 830 K」；MBSTOI 數字本身不變。另一個 FP32 參考 `fp32_512_ref_full`（0.8535 / 0.8134，4,791,448，真正的 fft-512 模型）若改為起點，A 區段變成 −0.0136 / −0.0168、總掉分 −0.0178 / −0.0236。證據與建議見 [RESULTS_FP32_REFERENCE_IDENTITY_2026-09-16.md](RESULTS_FP32_REFERENCE_IDENTITY_2026-09-16.md)。
