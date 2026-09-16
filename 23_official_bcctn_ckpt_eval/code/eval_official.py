@@ -18,6 +18,9 @@ import hashlib
 import os
 import sys
 
+# the official repo tracks its own __pycache__/*.pyc; never rewrite them (keeps the submodule clean)
+sys.dont_write_bytecode = True
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 OFFICIAL_DIR = os.path.normpath(os.path.join(HERE, "..", "official_bcctn"))
 DIR18_CODE = os.path.normpath(os.path.join(HERE, "..", "..",
