@@ -1,0 +1,4 @@
+code_dir /raid/R12K41024/BCCTN
+run_dir /raid/R12K41024/BCCTN/outputs/2025-05-11/16-34-17
+ckpt /raid/R12K41024/BCCTN/outputs/2025-05-11/16-34-17/logs/lightning_logs/version_0/checkpoints/epoch=94-step=91960.ckpt
+params 3973288

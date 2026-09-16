@@ -1,0 +1,20 @@
+===== TIMIT PAPER STYLE AVERAGES =====
+Average MBSTOI Noisy: 0.7311
+Average MBSTOI Enhanced: 0.7871
+Average STOI Noisy: 0.7666
+Average STOI Enhanced: 0.8193
+Average PESQ Noisy (wb): 1.2667
+Average PESQ Enhanced (wb): 1.6455
+Average PESQ Noisy (nb): 1.7997
+Average PESQ Enhanced (nb): 2.1888
+Average SegSNR Noisy: 0.10
+Average SegSNR Enhanced: 2.92
+Average SegSNR Improvement: 2.82
+Average ILD Error Noisy: 3.2902 dB
+Average ILD Error Enhanced: 3.1108 dB
+Average IPD Error Noisy: 21.10 deg
+Average IPD Error Enhanced: 20.86 deg
+Average ITD Error Noisy: 5.48 us
+Average ITD Error Enhanced: 3.36 us
+Average IC Error Noisy: 0.3467
+Average IC Error Enhanced: 0.2385

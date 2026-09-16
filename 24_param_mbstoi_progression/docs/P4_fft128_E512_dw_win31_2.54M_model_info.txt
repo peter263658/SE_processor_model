@@ -1,0 +1,4 @@
+code_dir /raid/R12K41024/BCCTN_sep_conv_causal_slide_win
+run_dir /raid/R12K41024/BCCTN_sep_conv_causal_slide_win/outputs/2026-01-06/17-03-19
+ckpt /raid/R12K41024/BCCTN_sep_conv_causal_slide_win/outputs/2026-01-06/17-03-19/logs/lightning_logs/version_0/checkpoints/epoch=142-step=138424.ckpt
+params 2536540
