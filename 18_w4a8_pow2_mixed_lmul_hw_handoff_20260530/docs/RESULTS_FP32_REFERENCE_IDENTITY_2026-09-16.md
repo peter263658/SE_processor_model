@@ -58,3 +58,7 @@ grep -E '^MODEL_CHECKPOINT=|OUTPUT_DIR=' /raid/R12K41024/BCCTN/run_eval.sh
 grep -nE 'model_checkpoint|output_dir' /raid/R12K41024/20_pesq_finetune/fp32_512_pesq_ft/run_queue_eval.sh
 find /raid/R12K41024/BCCTN/results_May21 -name detailed_results.csv -printf '%TY-%Tm-%Td %TH:%TM %p\n' | sort
 ```
+
+## 4. 追加（2026-09-16 晚）：官方 ckpt 已用同一協定評完
+
+官方 11.09 M ckpt 在本 repo 協定下 **VCTK 0.7958 / TIMIT 0.7247**（TIMIT 低於 noisy 0.7311），且輸出帶固定 +24…+28 dB 增益；out-of-domain，不適合當量化代價的 FP32 參考。詳見 [23_official_bcctn_ckpt_eval/docs/RESULTS_OFFICIAL_CKPT_EVAL_2026-09-16.md](../../23_official_bcctn_ckpt_eval/docs/RESULTS_OFFICIAL_CKPT_EVAL_2026-09-16.md)。§0 的建議不變：FP32 參考用 0.8535 / 0.8134（4,791,448）。

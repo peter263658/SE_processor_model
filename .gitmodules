@@ -1,3 +1,6 @@
 [submodule "21_lbccn_baseline/lbccn_official"]
 	path = 21_lbccn_baseline/lbccn_official
 	url = https://github.com/jywanng/LBCCN.git
+[submodule "23_official_bcctn_ckpt_eval/official_bcctn"]
+	path = 23_official_bcctn_ckpt_eval/official_bcctn
+	url = https://github.com/VikasTokala/BCCTN

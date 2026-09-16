@@ -1112,6 +1112,22 @@ def evaluate_model_improved(model_checkpoint, test_dataset_path, clean_dataset_p
             f"  missing={model_missing}\n  unexpected={model_unexpected}")
     model = model.to(device)
     
+    return evaluate_model_object(
+        model, device, test_dataset_path, clean_dataset_path, output_dir,
+        specific_snr=specific_snr, batch_size=batch_size, limit_pairs=limit_pairs,
+        save_audio=save_audio, metric_workers=metric_workers,
+    )
+
+
+def evaluate_model_object(model, device, test_dataset_path, clean_dataset_path,
+                          output_dir, specific_snr=None, batch_size=8,
+                          limit_pairs=None, save_audio=True, metric_workers=1):
+    """
+    evaluate_model_improved with an already-constructed model object (same pair
+    discovery, inference, metric-worker pool and result files). Lets external
+    wrappers (e.g. 23_official_bcctn_ckpt_eval) evaluate a foreign model with
+    exactly this pipeline.
+    """
     # Create output directory
     os.makedirs(output_dir, exist_ok=True)
     if save_audio:
