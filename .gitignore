@@ -5,6 +5,9 @@ __pycache__/
 *.egg-info/
 .env
 
+# Regenerable caches (e.g. dataset file-list caches)
+.cache/
+
 # Model checkpoints & weights (通常很大)
 *.pth
 *.pt
