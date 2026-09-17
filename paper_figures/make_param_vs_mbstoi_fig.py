@@ -45,8 +45,15 @@ def new_point(tag: str) -> tuple[float | None, float | None]:
             avg(R24 / tag / "timit_paper_style_results_averages.txt"))
 
 
+# Official 11.09 M BCCTN: parameters counted from the released checkpoint; its MBSTOI is the value
+# REPORTED by GAF-Net (arXiv 2509.14076, Table 1) on THEIR HUTUBS / NOISEX-92 test set -> drawn as a
+# separate hollow grey marker, not joined to our series. (The released weights score 0.7958 on our
+# test set: out-of-domain, see 23_official_bcctn_ckpt_eval.)
+OFFICIAL = ("Official BCCTN (MHA @ 1024-d)", 11_086_488, 0.84)
+
 POINTS = [  # (label, params, vctk, timit)
-    ("Baseline\n(fft 512, E 512)", 3_973_288, *new_point("P0p_fft512_E512_full51_3.97M")),
+    ("+ attention in/out projection (1024->512)", 4_791_448, 0.8535, 0.8134),
+    ("+ causal conv (5,2)->(5,1)", 3_973_288, *new_point("P0p_fft512_E512_full51_3.97M")),
     ("+ depthwise-sep,\nfft 256", 2_798_940, *new_point("P2_fft256_E512_dw_2.80M")),
     ("+ fft 128", 2_536_540, *new_point("P3_fft128_E512_dw_2.54M")),
     ("+ 32-frame\nwindow", 2_536_540, *new_point("P4_fft128_E512_dw_win31_2.54M")),
@@ -66,23 +73,29 @@ def main() -> None:
     if missing:
         print("WARNING: no result yet for:", missing)
     x = np.array([p[1] for p in pts], float)
-    fig = plt.figure(figsize=(6.4, 3.2))
-    ax = fig.add_axes([0.09, 0.15, 0.56, 0.80])
+    fig = plt.figure(figsize=(7.0, 3.3))
+    ax = fig.add_axes([0.08, 0.15, 0.52, 0.80])
     for key, color, name, idx in (("VCTK", C1_BLUE, "VCTK (matched)", 2), ("TIMIT", C2_ORANGE, "TIMIT (unmatched)", 3)):
         y = np.array([p[idx] for p in pts], float)
         ax.plot(x, y, color=color, linewidth=1.6, marker="o", markersize=5.5, markerfacecolor="white",
                 markeredgecolor=color, markeredgewidth=1.6, zorder=3, label=name)
     # numbered points (both series); the key on the right names each step
-    offsets = [(0, 8), (0, 8), (-7, 7), (0, -13), (0, 8), (0, 8), (0, -13), (-7, -13), (5, 8)]
-    for i, p in enumerate(pts):
+    ax.plot([OFFICIAL[1]], [OFFICIAL[2]], marker="D", markersize=6, markerfacecolor="white",
+            markeredgecolor=MUTED, markeredgewidth=1.6, linestyle="none", zorder=3,
+            label="BCCTN as reported in GAF-Net\n(different test set)")
+    # no connector to our series: the cited value comes from a different test set
+    ax.annotate("0", (OFFICIAL[1], OFFICIAL[2]), textcoords="offset points", xytext=(0, 8), ha="center",
+                fontsize=6.5, color=INK, weight="bold", zorder=4)
+    offsets = [(0, 8), (0, 8), (0, 8), (-7, 7), (0, -13), (0, 8), (0, 8), (0, -13), (-7, -13), (5, 8)]
+    for i, p in enumerate(pts, start=1):
         for idx in (2, 3):
-            ax.annotate(str(i), (p[1], p[idx]), textcoords="offset points", xytext=offsets[i],
+            ax.annotate(str(i), (p[1], p[idx]), textcoords="offset points", xytext=offsets[i - 1],
                         ha="center", fontsize=6.5, color=INK, weight="bold", zorder=4)
     ax.set_xscale("log")
     ax.invert_xaxis()  # simplification proceeds left -> right
     ax.set_xlabel("Parameters", color=INK)
     ax.set_ylabel("MBSTOI", color=INK)
-    ax.set_xticks([4e6, 2e6, 1e6, 5e5, 3e5], ["4 M", "2 M", "1 M", "500 K", "300 K"])
+    ax.set_xticks([1e7, 4e6, 2e6, 1e6, 5e5, 3e5], ["10 M", "4 M", "2 M", "1 M", "500 K", "300 K"])
     ax.grid(True, which="major", color=GRID, linewidth=0.6, zorder=0)
     ax.set_axisbelow(True)
     for s_ in ("top", "right"):
@@ -90,9 +103,10 @@ def main() -> None:
     for s_ in ("left", "bottom"):
         ax.spines[s_].set_color(BASE)
     ax.tick_params(colors=MUTED)
-    ax.legend(frameon=False, loc="center left", bbox_to_anchor=(0.0, 0.42))
-    key = "\n".join(f"{i}  {p[0].replace(chr(10), ' ')}   {p[1]/1e6:.2f} M" for i, p in enumerate(pts))
-    fig.text(0.67, 0.93, key, fontsize=6.6, color=INK2, va="top", ha="left", linespacing=1.55)
+    ax.legend(frameon=False, loc="upper left", bbox_to_anchor=(1.03, 0.36), borderaxespad=0)
+    key = f"0  {OFFICIAL[0]}   {OFFICIAL[1]/1e6:.2f} M\n" + "\n".join(
+        f"{i}  {p[0].replace(chr(10), ' ')}   {p[1]/1e6:.2f} M" for i, p in enumerate(pts, start=1))
+    fig.text(0.62, 0.93, key, fontsize=6.6, color=INK2, va="top", ha="left", linespacing=1.55)
     name = "slide_param_vs_mbstoi"
     plt.savefig(OUT_SVG / f"{name}.svg")
     plt.savefig(OUT_PNG / f"{name}.png", dpi=300)

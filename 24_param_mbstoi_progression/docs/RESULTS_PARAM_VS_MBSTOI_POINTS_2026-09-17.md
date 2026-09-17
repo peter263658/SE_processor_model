@@ -43,3 +43,15 @@ GPU_ID=<free> bash run_missing_points.sh          # 4 points, ~15 min each, one 
 cd /raid/R12K41024/paper_figures && CUDA_VISIBLE_DEVICES= ~/miniforge3/envs/bcctn/bin/python make_param_vs_mbstoi_fig.py
 ```
 結果表副本：`docs/P*_{vctk,timit}_paper_style_results*.{csv,txt}`。
+
+## 4. 追加（2026-09-17）：起點改為官方 11.09 M
+
+圖的起點往前加兩個點，讓參數量與投影片引用的 11.09 M 一致：
+
+| # | 步驟 | 參數 | Δ 參數 | VCTK | TIMIT | 來源 |
+|---|---|---:|---:|---:|---:|---|
+| 0 | 官方 BCCTN（complex MHA 直接在 1024 維，無 projection；+ Linear 1024²） | 11,086,488 | — | 0.84（引用） | — | 參數：官方 ckpt；MBSTOI：GAF-Net（arXiv 2509.14076）Table 1 的 BCCTN 列，**HUTUBS / NOISEX-92 測試集，與本 repo 不同**，圖上以灰色菱形獨立標示、不與我方曲線相連 |
+| 1 | + attention input/output projection（1024→512→1024），非 causal (5,2) | 4,791,448 | −6,295,040（−56.8%） | 0.8535 | 0.8134 | `20_pesq_finetune/results/pesq_eval/fp32_512_ref_full` |
+| 2 | + causal conv (5,2)→(5,1)（原 §0 的點 0） | 3,973,288 | −818,160 | 0.8451 | 0.8032 | 本文 §0 |
+
+之後的點編號順延（原 1–8 → 3–10）。官方釋出權重在本 repo 測試集上為 0.7958 / 0.7247（out-of-domain，見 `23_official_bcctn_ckpt_eval`），不用於此圖。掉分計算的 FP32 起點 = 點 1（0.8535 / 0.8134）：到 deploy 共 −0.0178 / −0.0236，其中 causal 化一步 −0.0084 / −0.0102。
