@@ -1,0 +1,29 @@
+# Official VikasTokala/BCCTN settings (config/config.yaml + config/model.yaml + training.yaml decay
+# steps, Hydra 1.1 => config.yaml's own keys win): everything about the MODEL and OPTIMISATION is the
+# official value; only the dataset paths (ours) and the checkpoint policy (full state, resumable) differ.
+model:            # official config/model.yaml + config.yaml `model:` block; other args = DCNN.__init__ defaults
+  binaural: true  # (fft 512 / win 400 / hop 100, embed 1024, 32 heads, kernel (5,2), masking 'E')
+  attention: true
+  use_clstm: true
+  use_cbn: true
+loss:             # official config.yaml
+  ild_weight: 1
+  ipd_weight: 10
+  snr_loss_weight: 1
+  stoi_weight: 10
+training:
+  batch_size: 20                        # official config.yaml
+  learning_rate: 0.0001                 # official
+  n_epochs: 20                          # official (released ckpt = epoch 20)
+  learning_rate_decay_steps: [3, 8]     # official training.yaml
+  learning_rate_decay_values: 0.5
+  n_workers: 8
+  pin_memory: true
+  seed: 0
+  # official code builds an EarlyStopping callback but never passes it to the Trainer -> effectively off
+  early_stopping: false
+dataset:
+  noisy_training_dataset_dir: /raid/R12K41024/BCCTN/Dataset/noisy_trainset
+  target_training_dataset_dir: /raid/R12K41024/BCCTN/Dataset/clean_trainset
+  noisy_validation_dataset_dir: /raid/R12K41024/BCCTN/Dataset/noisy_valset
+  target_validation_dataset_dir: /raid/R12K41024/BCCTN/Dataset/clean_valset
