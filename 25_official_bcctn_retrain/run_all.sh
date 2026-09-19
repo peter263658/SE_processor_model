@@ -2,14 +2,14 @@
 # Train the official 11.09 M BCCTN on our dataset (official recipe, resumable), then evaluate with the
 # deploy-model protocol and push. Re-run the SAME command after a reboot: training resumes from
 # outputs/<TAG>/checkpoints/last.ckpt (full state: weights, loss buffers, Adam, LR scheduler, epoch).
-#   GPU_ID=<one free gpu> [TAG=official_recipe] bash run_all.sh        # ONE process, ONE GPU at a time
+#   GPU_ID=<one free gpu> [TAG=official_recipe] [MAX_EPOCHS=<override n_epochs, e.g. to extend a finished run>] bash run_all.sh        # ONE process, ONE GPU at a time
 set -uo pipefail
 D=/raid/R12K41024/25_official_bcctn_retrain; R=/raid/R12K41024
 GPU_ID="${GPU_ID:-1}"; TAG="${TAG:-official_recipe}"; OUT=$D/outputs/$TAG; mkdir -p $OUT $D/docs
 export CUDA_VISIBLE_DEVICES="$GPU_ID" NUMBA_CACHE_DIR=/tmp/numba_cache MPLCONFIGDIR=/tmp/mpl_cache
 PY="conda run --no-capture-output -n bcctn python"
 echo "[all] train start $(date '+%F %T') gpu=$GPU_ID out=$OUT"
-$PY $D/code/train_official.py --out $OUT 2>&1 | grep -av "it/s\]" >> $OUT/train.log
+$PY $D/code/train_official.py --out $OUT ${MAX_EPOCHS:+--max_epochs $MAX_EPOCHS} 2>&1 | grep -av --line-buffered "it/s\]" >> $OUT/train.log
 grep -aq "\[train\] finished" $OUT/train.log || { echo "[all] TRAINING DID NOT FINISH (killed / reboot?) - rerun this script to resume"; exit 1; }
 echo "[all] train done $(date '+%F %T')"
 # evaluate the best-validation epoch and the final epoch (each ~15 min), sequentially on the same GPU

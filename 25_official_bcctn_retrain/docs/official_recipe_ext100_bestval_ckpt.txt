@@ -1,0 +1,1 @@
+/raid/R12K41024/25_official_bcctn_retrain/outputs/official_recipe_ext100/checkpoints/all-epoch=98-validation_loss=-8.7311.ckpt
