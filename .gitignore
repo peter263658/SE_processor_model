@@ -74,3 +74,24 @@ novas.*
 
 # Third-party reference papers
 *.pdf
+
+# Local environments, credentials, and agent state
+.venv/
+venv/
+.env.*
+!.env.example
+*.pem
+*.key
+/.agents/
+/.codex/
+
+# Python test / analysis caches and OS metadata
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.DS_Store
+
+# Regenerable lint work directories (existing tracked reports are retained)
+spyglass-*/

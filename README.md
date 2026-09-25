@@ -1,134 +1,57 @@
 # Binaural Speech Enhancement — SE Processor Model
 
-Implementation and hardware-oriented experiments based on:
+Research code for binaural speech enhancement and hardware-oriented BCCTN optimization, from floating-point baselines to a W4A8 neural core and RTL verification.
 
-> **Binaural Speech Enhancement Using Deep Complex Convolutional Transformer Networks**
-> Vikas Tokala, Eric Grinstein, Mike Brookes, Simon Doclo, Jesper Jensen, Patrick A. Naylor
-> ICASSP 2024
+Based on **Binaural Speech Enhancement Using Deep Complex Convolutional Transformer Networks** (Tokala et al., ICASSP 2024). The model enhances stereo speech while evaluating spatial cues through ILD and IPD alongside intelligibility metrics.
 
-The model processes stereo audio to suppress noise while preserving spatial cues (ILD and IPD) using a complex-valued encoder-decoder with a multi-head attention transformer bottleneck.
+## Start here
 
----
+- **Hardware / RTL:** [19_algo_final](19_algo_final/README.md) contains the final handoff documentation, testbench patterns, SRAM images, and reference code. Start with its [hardware handoff](19_algo_final/docs/HANDOFF_HW_ZERO_MULTIPLIER_CORE.md).
+- **Training and export:** [18_w4a8_pow2_mixed_lmul](18_w4a8_pow2_mixed_lmul/README.md) and the [hardware export package](18_w4a8_pow2_mixed_lmul_hw_handoff_20260530/README.md).
+- **Experiment navigation:** [Project map](docs/PROJECT_MAP.md) groups the numbered experiments and reference implementations.
+- **Comparisons:** [Monaural baselines](21_mono_se_baselines/README.md), [official BCCTN evaluation](23_official_bcctn_ckpt_eval/README.md), [parameter progression](24_param_mbstoi_progression/README.md), and [official BCCTN retraining](25_official_bcctn_retrain/README.md).
+- **Research overview:** [English feature summary](PAPER_FEATURE_SUMMARY_2026-07-07.md) / [中文研究摘要](PAPER_FEATURE_SUMMARY_2026-07-07.zh.md).
 
-## Repository Structure
-
-| Directory | Description |
-|---|---|
-| `BCCTN/` | Baseline implementation (original paper architecture) |
-| `BCCTN_sep_conv/` | Depthwise separable convolution variant |
-| `BCCTN_sep_conv_causal/` | Causal (streaming-compatible) variant |
-| `BCCTN_sep_conv_causal_slide_win/` | Causal + sliding attention window — **current focus** |
-| `BCCTN_sep_conv_causal_slide_win_quant/` | Above + post-training quantization |
-| `BCCTN_sep_conv_causal_slide_win_quant_256dim/` | Above + 256-dim embedding |
-| `BCCTN_sep_conv_causal_slide_win_relu/` | Above + ReLU activation |
-| `BCCTN_quant/` | Standalone quantization experiment |
-| `BCCTN_quantization_pruning/` | Weight pruning + quantization experiments |
-| `BCCTN_hardware/` | Hardware deployment: PTQ, activation dumps, weight export |
-| `Dataset/` | Shared dataset root (not tracked in git) |
-
----
-
-## Environment Setup
+## Clone
 
 ```bash
-# Main environment (PyTorch 2.3.1, CUDA 12.1, Python 3.10)
-mamba env create -f bcctn.yml
-mamba activate bcctn
-
-# Quantization environment (PyTorch 2.2.0, CUDA 12.4, Python 3.9)
-mamba env create -f bcctn_quant.yml
-mamba activate bcctn_quant
+git clone --recurse-submodules https://github.com/peter263658/SE_processor_model.git
+cd SE_processor_model
 ```
 
-Use `mamba` instead of `conda` for faster dependency solving.
+For an existing checkout, run `git submodule update --init --recursive`. The LBCCN and official BCCTN references are pinned Git submodules.
 
----
+## Environment
 
-## Data Preparation
-
-Run from inside any variant directory:
+The repository contains multiple experiment snapshots, not one installable Python package. Start with the recorded main environment:
 
 ```bash
-python prepare_data.py \
-    --clean_dir /path/to/vctk \
-    --noise_dir /path/to/noisex92 \
-    --hrir_path /path/to/hrir \
-    --output_dir ./Dataset \
-    --dataset_type vctk   # or timit
+conda env create -f bcctn.yml
+conda activate bcctn
 ```
 
-This generates clean/noisy binaural pairs for training, validation, and testing. For TIMIT, separate directories are created for each SNR level (−6 to +15 dB).
+`mamba` can also create this environment. The exported environment targets Linux and includes Python 3.10, PyTorch 2.3.1, and CUDA dependencies; GPU drivers must be compatible. [bcctn_quant.yml](bcctn_quant.yml) records a separate quantization environment. Per-experiment `requirements.txt` files are historical snapshots and may pin different framework versions; consult the chosen experiment before installing them into an existing environment.
 
----
+## Data, checkpoints, and execution
 
-## Training
+Datasets and trained checkpoints are local inputs and are not included in a fresh clone. Prepare the required clean/noisy binaural data and obtain the checkpoint for the selected experiment before training, evaluation, or regenerating exports.
 
-All commands run from inside the target variant directory.
+Run commands from the experiment directory specified in its README. For the earlier sliding-window variant:
 
 ```bash
 cd BCCTN_sep_conv_causal_slide_win
-python train.py                         # uses config/ via Hydra
-HYDRA_FULL_ERROR=1 python train.py      # verbose error output
-CUDA_VISIBLE_DEVICES=1 python train.py
+python train.py  # Hydra configuration in config/
 ```
 
----
+Review dataset paths and training settings first. Some research scripts and configurations still contain workstation paths such as `/raid/R12K41024`; adapt those paths to your checkout. Hardware handoff patterns can be inspected without training, but regeneration requires the checkpoint and export tooling described in the handoff README.
 
-## Evaluation
+**Script side effects:** some historical orchestration scripts (including `25_official_bcctn_retrain/run_all.sh` and `24_param_mbstoi_progression/finish_and_push.sh`) also commit and push results. Inspect them before running; use the individual Python entry points when only training or evaluation is intended.
 
-```bash
-bash run_eval.sh
+## Hardware scope and results
 
-# Or directly:
-CUDA_VISIBLE_DEVICES=0 python eval.py \
-    --model_checkpoint "outputs/.../checkpoints/epoch=X-step=Y.ckpt" \
-    --vctk_test_dir   "./Dataset/noisy_testset" \
-    --vctk_clean_dir  "./Dataset/clean_testset" \
-    --timit_test_dir  "./Dataset/noisy_testset_timit" \
-    --timit_clean_dir "./Dataset/clean_testset_timit" \
-    --output_dir      "./results" \
-    --paper_style_eval \
-    --batch_size 8
-```
+The [final handoff](19_algo_final/README.md) reports VCTK / TIMIT MBSTOI of **0.8357 / 0.7898** for its W4A8 deploy point. These are recorded experiment results, not a fresh validation of this checkout. Its zero-general-multiplier claim applies to the neural inference core; STFT, iSTFT, windowing, and waveform mask application are outside that scope.
 
-Metrics reported: MBSTOI, SegSNR improvement, ILD error, IPD error.
-
----
-
-## Model Architecture
-
-- **Encoder**: 6 complex convolutional stages (`kernel_num = [16,32,64,128,256,256]`, depthwise separable)
-- **Bottleneck**: Complex multi-head attention transformer (32 heads, 512-dim, sliding window size 31)
-- **Decoder**: Mirrored 6-stage transposed convolution with skip connections
-- **Output**: Individual complex ratio masks for left and right channels
-- **STFT**: `win_len=128`, `win_inc=80`, `fft_len=128`
-
-### Loss Function
-
-```
-L = α·SNR + β·STOI + γ·ILD + κ·IPD
-  = 1·SNR + 10·STOI + 1·ILD + 10·IPD
-```
-
----
-
-## Key Hyperparameters
-
-| Parameter | Value | Notes |
-|---|---|---|
-| `model.kernel_num` | `[16,32,64,128,256,256]` | 6-stage encoder/decoder |
-| `model.kernel_size` | 5 | Conv kernel size |
-| `model.use_depthwise` | `true` | Depthwise separable conv |
-| `model.embed_dim` | 512 | Transformer embedding dim |
-| `model.num_heads` | 32 | Attention heads |
-| `model.attn_win` | 31 | Sliding attention window |
-| `model.win_len` | 128 | STFT window length |
-| `model.fft_len` | 128 | FFT size |
-| `training.batch_size` | 32 | |
-| `training.n_epochs` | 150 | |
-| `training.learning_rate` | 0.001 | Decays ×0.5 at epochs 3, 8 |
-
----
+The repository retains source code, configurations, documentation, selected result tables, and hardware patterns. Datasets, checkpoints, training output, simulator output, and local tooling are excluded through `.gitignore`. Existing tracked research artifacts remain available; ignoring a path does not remove already tracked files.
 
 ## Citation
 
@@ -142,6 +65,6 @@ L = α·SNR + β·STOI + γ·ILD + κ·IPD
 }
 ```
 
-## License
+## Third-party licensing
 
-MIT License — see [BCCTN/LICENSE](BCCTN/LICENSE).
+The baseline includes an [MIT license](BCCTN/LICENSE). Check each vendored component and submodule for its own license and attribution. This repository does not assign a new blanket license to all research and hardware files.
